@@ -32,6 +32,13 @@ module.exports = {
     backgroundColor: {
       red: "#ce1212",
     },
+    screens: {
+      xs: "330px",
+      sm: "450px",
+      md: "850px",
+      lg: "1024px",
+      xl: "1280px",
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {

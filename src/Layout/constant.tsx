@@ -13,6 +13,7 @@ import {
 import { IoLocationOutline } from "react-icons/io5";
 import { ReactNode } from "react";
 import clsx from "clsx";
+import { LoginDropdown } from "./interfaces/loginDropdown";
 
 const enum ENavBar {
   HOME = "Trang Chủ",
@@ -138,4 +139,18 @@ export const contacts: Contact<string | ReactNode>[] = [
       </div>
     ),
   },
+];
+
+const enum ELoginDropdown {
+  SIGNIN = "Đăng Nhập",
+  SIGNUP = "Đăng Kí",
+  BOOKINGSLOOKUP = "Tìm Đơn Đặt Bàn",
+  SUPPORT = "Hỗ Trợ",
+}
+
+export const loginDropdown: LoginDropdown[] = [
+  { content: ELoginDropdown.SIGNIN, href: "/auth/sign-in" },
+  { content: ELoginDropdown.SIGNUP, href: "/auth/sign-up" },
+  { content: ELoginDropdown.BOOKINGSLOOKUP, href: "/bookings-lookup" },
+  { content: ELoginDropdown.SUPPORT, href: "/support" },
 ];

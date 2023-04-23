@@ -57,7 +57,7 @@ export default function Events() {
           <SwiperSlide key={idx}>
             <div
               style={{ backgroundImage: `url('${item.srcImg}')` }}
-              className="relative min-h-[600px] bg-cover bg-no-repeat
+              className="relative w-full bg-cover bg-no-repeat
               before:absolute before:bg-[#00000099] before:w-full before:h-full before:left-0
               "
             >

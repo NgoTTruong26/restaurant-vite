@@ -3,24 +3,24 @@ import { BsPlayCircle } from "react-icons/bs";
 
 export default function BannerDesSwiper() {
   return (
-    <div className="flex w-[40%] items-center">
+    <div className="flex w-[40%] items-center max-sm:w-[90%] max-md:w-[80%]">
       <div className="flex flex-col">
-        <div className="text-[64px] mb-4 font-amatic line whitespace-pre-line font-[600]">
+        <div className="text-[64px] mb-4 font-amatic line whitespace-pre-line font-[600] max-xs:text-[40px] max-sm:text-[42px]">
           Enjoy Your Healthy{"\n"} Delicious Food
         </div>
         <div className="mb-4">
           Sed autem laudantium dolores. Voluptatem itaque ea consequatur
           eveniet. Eum quas beatae cumque eum quaerat.
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center justify-evenly">
           <div>
-            <Button className="bg-[#ce1212] rounded-full px-9 py-2 text-[#fff] shadow-xl shadow-[#ce121233] font-medium hover:bg-[#ce1212cc]">
+            <Button className="bg-[#ce1212] w-full rounded-full px-9 py-2 text-[#fff] shadow-xl shadow-[#ce121233] font-medium hover:bg-[#ce1212cc] max-xs:px-3 max-sm:px-6 max-xs:rounded-[23px]">
               Book a Table
             </Button>
           </div>
-          <div className="pl-6">
-            <Button className="flex items-center btn-ghost hover:!text-[#ce1212]">
-              <BsPlayCircle size={28} className="text-[#ce1212]" />
+          <div>
+            <Button className="flex items-center btn-ghost hover:!text-[#ce1212] max-xs:px-[2px] max-xs:rounded-xl max-sm:px-2">
+              <BsPlayCircle className="text-[#ce1212] text-[28px] max-xs:text-[20px]" />
               <div className="pl-2 font-medium">Watch Video</div>
             </Button>
           </div>

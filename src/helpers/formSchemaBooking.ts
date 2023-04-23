@@ -1,5 +1,5 @@
-import { Regex } from "config/constants";
-import yup from "config/yupGlobal";
+import { Regex } from "configs/constants";
+import yup from "configs/yupGlobal";
 
 import {
   validateInvalidMessage,

@@ -1,13 +1,13 @@
-import Header from "./customer/Header";
 import { Outlet } from "react-router-dom";
-import Footer from "./customer/Footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default function HomeLayout() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen ">
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }

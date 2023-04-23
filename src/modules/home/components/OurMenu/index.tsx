@@ -22,7 +22,7 @@ export default function OurMenu() {
         <Button
           className="btn bg-red hover:bg-[#f43434]"
           onClick={() => {
-            navigate("/dish-menu");
+            navigate("/dish-menu", { preventScrollReset: true });
             dispatch(setNavbarItemActive(""));
           }}
         >

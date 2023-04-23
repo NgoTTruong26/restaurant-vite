@@ -1,9 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
 import { Pagination, Autoplay, Navigation } from "swiper";
 import { useState } from "react";
 
@@ -14,7 +10,7 @@ export default function Banner() {
     <div
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
-      className="w-[50%] min-h-[530px] py-20"
+      className="w-[50%] min-h-[530px] py-20 max-sm:w-[90%] max-sm:min-h-[300px] max-md:w-[80%] max-md:pt-12 max-md:pb-0"
     >
       <div className="h-full overflow-hidden border-4 border-[#ce1212] shadow-xl shadow-[#ce121233] rounded-xl p-[5px] bg-[#fff]">
         <Swiper

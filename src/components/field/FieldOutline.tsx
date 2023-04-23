@@ -31,7 +31,7 @@ const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
         {label && (
           <label
             className={clsx(
-              `absolute text-[.875rem] font-medium px-1 mb-2 pointer-events-none bg-white top-[12px] left-3 text-[#777] ${
+              `absolute text-[.875rem] font-medium px-1 mb-2 pointer-events-none bg-white top-[12px] left-3 text-[#777] transition-all ${
                 labelClassName ?? ""
               }`,
               {

@@ -10,7 +10,7 @@ import Bookings from "./components/bookings";
 
 export default function Home() {
   return (
-    <>
+    <div id="main">
       <div id="home">
         <BannerSwiper />
         <AboutUs />
@@ -22,6 +22,6 @@ export default function Home() {
       <Bookings />
       <Gallery />
       <ContactUs />
-    </>
+    </div>
   );
 }

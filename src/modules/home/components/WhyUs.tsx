@@ -4,8 +4,8 @@ import { BsClipboardData, BsGem, BsInboxes } from "react-icons/bs";
 export default function WhyUs() {
   return (
     <div className="flex justify-center bg-[#eee]">
-      <div className="flex max-w-[1200px] w-full py-20">
-        <div className="w-[calc(100%/3)] px-3">
+      <div className="flex max-w-[1200px] w-full py-20 max-md:flex-col max-md:items-center max-sm:px-0 max-md:px-8">
+        <div className="w-[calc(100%/3)] px-3 max-sm:w-[90%]  max-md:w-[80%] ">
           <div className="bg-[#ce1212] p-7 text-[#fff]">
             <div className="text-[34px] pb-7 font-bold">Why Choose Yummy?</div>
             <div className="pb-6">
@@ -22,8 +22,8 @@ export default function WhyUs() {
             </div>
           </div>
         </div>
-        <div className="flex-1 flex justify-center items-center ">
-          <div className="flex-1 flex h-fit">
+        <div className="flex-1 flex justify-center items-center max-sm:w-[90%] max-md:w-[80%] max-md:px-3">
+          <div className="flex-1 flex h-fit max-md:flex-col max-md:[&>div]:pt-5">
             <div className="flex-1 px-3 scale-1 hover:scale-[1.1] cursor-pointer transition ease-in-out duration-150">
               <div className="flex flex-col text-center items-center p-7 bg-[#fff]">
                 <div className="flex pb-4 ">

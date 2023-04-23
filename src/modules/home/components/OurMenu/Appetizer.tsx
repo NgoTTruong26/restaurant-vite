@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { Course } from "interfaces/entities/MenuEntity";
 
 export default function Appetizer() {
@@ -47,11 +48,21 @@ export default function Appetizer() {
         Appetizer
       </div>
       <div className="flex">
-        <div className="flex flex-wrap">
+        <div
+          className={clsx(
+            "flex flex-wrap",
+            "max-sm:flex-col max-sm:items-center"
+          )}
+        >
           {data.map((item, idx) => (
             <div
               key={idx}
-              className="w-[calc(100%/3)] px-14 pb-10 flex flex-col justify-center items-center"
+              className={clsx(
+                "w-[calc(100%/3)] px-14 pb-10 flex flex-col justify-center items-center",
+                "max-md:w-[50%] max-md:px-4",
+                "max-sm:w-[80%] max-sm:px-0",
+                "max-sm:w-[90%]"
+              )}
             >
               <div className="pb-2">
                 <img src={item.srcImg} alt={item.alt} />
