@@ -18,9 +18,7 @@ export default function Column1() {
             size={35}
             className="relative text-[#fb9a01] pr-[15px] top-[-3px]"
           />
-          <div className="text-[16px]">
-            670 Đ. Kim Giang, Thanh Liệt, Thanh Trì, Hà Nội
-          </div>
+          <div>670 Đ. Kim Giang, Thanh Liệt, Thanh Trì, Hà Nội</div>
         </div>
       </div>
       <div className="flex pt-2">
@@ -29,9 +27,7 @@ export default function Column1() {
             size={35}
             className="relative text-[#fb9a01] pr-[15px] top-[-3px]"
           />
-          <a href="/" className="text-[16px]">
-            0988888888
-          </a>
+          <a href="/">0988888888</a>
         </div>
       </div>
     </div>

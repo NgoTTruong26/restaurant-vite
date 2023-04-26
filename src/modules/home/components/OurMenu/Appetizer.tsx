@@ -1,7 +1,13 @@
 import clsx from "clsx";
 import { Course } from "interfaces/entities/MenuEntity";
+import { Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Appetizer() {
+interface Props {
+  slidesPerView: number | null;
+}
+
+export default function Appetizer({ slidesPerView }: Props) {
   const data: Course[] = [
     {
       srcImg:
@@ -42,37 +48,45 @@ export default function Appetizer() {
   ];
 
   return (
-    <div className="flex flex-col items-center pt-5 pb-10">
+    <div className="flex flex-col items-center pt-5 pb-10 w-full">
       <div className="capitalize">Menu</div>
-      <div className="capitalize font-medium text-[36px] text-red leading-8 pb-20">
+      <div
+        className={clsx(
+          "capitalize font-medium text-[36px] text-red leading-8 pb-20",
+          "max-sm:text-[30px]"
+        )}
+      >
         Appetizer
       </div>
-      <div className="flex">
-        <div
-          className={clsx(
-            "flex flex-wrap",
-            "max-sm:flex-col max-sm:items-center"
-          )}
+      <div className="flex w-full">
+        <Swiper
+          slidesPerView={slidesPerView ?? 3}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper "
         >
           {data.map((item, idx) => (
-            <div
-              key={idx}
-              className={clsx(
-                "w-[calc(100%/3)] px-14 pb-10 flex flex-col justify-center items-center",
-                "max-md:w-[50%] max-md:px-4",
-                "max-sm:w-[80%] max-sm:px-0",
-                "max-sm:w-[90%]"
-              )}
-            >
-              <div className="pb-2">
-                <img src={item.srcImg} alt={item.alt} />
+            <SwiperSlide key={idx}>
+              <div
+                key={idx}
+                className={clsx(
+                  "px-10 pb-10 flex flex-col justify-center items-center",
+                  "max-md:w-[90%] max-md:px-4",
+                  "max-sm:px-0"
+                )}
+              >
+                <div className="pb-2">
+                  <img src={item.srcImg} alt={item.alt} />
+                </div>
+                <div className="capitalize font-shantell text-[22px]">
+                  {item.title}
+                </div>
               </div>
-              <div className="capitalize font-shantell text-[22px]">
-                {item.title}
-              </div>
-            </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
     </div>
   );

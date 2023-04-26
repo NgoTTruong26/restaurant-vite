@@ -10,7 +10,7 @@ interface Props {
 
 export default function Column3({ methods }: Props) {
   return (
-    <div className="flex-1 flex flex-col px-4">
+    <div className="flex-1 flex flex-col px-4  max-md:pt-3">
       <div className="flex flex-col">
         <FieldProgress
           id="name"
@@ -24,7 +24,7 @@ export default function Column3({ methods }: Props) {
           {...methods.register("name")}
         />
       </div>
-      <div className="flex flex-col pt-12">
+      <div className="flex flex-col pt-12 max-md:pt-3">
         <FieldProgress
           id="phoneNumber"
           placeholder="Nhập số điện thoại..."

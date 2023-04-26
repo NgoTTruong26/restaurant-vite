@@ -2,6 +2,7 @@ import FieldProgress from "components/field/FieldProgress";
 import { cssBeforeOnFocusInput } from "modules/home/constant.styles";
 import { UseFormReturn } from "react-hook-form";
 import { InputBooking } from "./hooks/useFormBooking";
+import clsx from "clsx";
 
 interface Props {
   methods: UseFormReturn<InputBooking>;
@@ -9,7 +10,7 @@ interface Props {
 
 export default function Column2({ methods }: Props) {
   return (
-    <div className="flex-1 flex flex-col px-4">
+    <div className="flex-1 flex flex-col px-4 max-md:pt-3">
       <div className="flex flex-col ">
         <FieldProgress
           id="numberPeople"
@@ -23,8 +24,13 @@ export default function Column2({ methods }: Props) {
           {...methods.register("numberPeople")}
         />
       </div>
-      <div className="flex pt-12">
-        <div className="w-[50%] mr-4 flex flex-col">
+      <div className="flex pt-12 max-sm:flex-col max-md:pt-3">
+        <div
+          className={clsx(
+            "w-[50%] mr-4 flex flex-col",
+            "max-sm:w-full max-sm:mr-0"
+          )}
+        >
           <FieldProgress
             id="date"
             type="date"
@@ -36,7 +42,12 @@ export default function Column2({ methods }: Props) {
             {...methods.register("date")}
           />
         </div>
-        <div className="w-[50%] ml-4 flex flex-col">
+        <div
+          className={clsx(
+            "w-[50%] mr-4 flex flex-col",
+            "max-sm:w-full max-sm:mr-0 max-sm:pt-3"
+          )}
+        >
           <FieldProgress
             id="time"
             type="time"
@@ -49,7 +60,7 @@ export default function Column2({ methods }: Props) {
           />
         </div>
       </div>
-      <div className="flex flex-col pt-12">
+      <div className="flex flex-col pt-12 max-md:pt-3">
         <FieldProgress
           id="note"
           type="text"

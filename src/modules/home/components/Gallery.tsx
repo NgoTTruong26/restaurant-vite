@@ -44,13 +44,18 @@ const data: Image[] = [
   },
 ];
 
-export default function Gallery() {
+interface Props {
+  slidesPerView: number | null;
+}
+
+export default function Gallery({ slidesPerView }: Props) {
   return (
-    <div className="flex bg-[#eee] justify-center py-16">
+    <div className="flex bg-[#eee] justify-center py-16 px-5">
       <div className="flex flex-col w-full max-w-[1200px] justify-center items-center">
         <div className="uppercase">Gallery</div>
-        <div className="font-amatic text-[48px] pb-5">
-          {"Check "} <span className="text-red">Our Gallery</span>
+        <div className="font-amatic text-[48px] pb-5 text-center max-xs:text-[38px]">
+          {"Check "}{" "}
+          <span className="text-red max-xs:text-[38px]">Our Gallery</span>
         </div>
         <Swiper
           loop
@@ -58,7 +63,7 @@ export default function Gallery() {
           effect={"coverflow"}
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView={3}
+          slidesPerView={slidesPerView ?? 3}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,

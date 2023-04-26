@@ -4,6 +4,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { DealsEntity } from "interfaces/entities/DealsEntity";
+import clsx from "clsx";
+
+interface Props {
+  slidesPerView: number | null;
+}
 
 const data: DealsEntity[] = [
   {
@@ -32,21 +37,28 @@ const data: DealsEntity[] = [
   },
 ];
 
-export default function Events() {
+export default function Events({ slidesPerView }: Props) {
   return (
     <div
       id="news"
-      className="flex flex-col justify-center items-center bg-[#eee] py-16"
+      className="flex flex-col justify-center items-center bg-[#eee] py-16 px-5"
     >
       <div className="uppercase">Events</div>
-      <div className="font-amatic text-[48px]">
+      <div
+        className={clsx(
+          "font-amatic text-[48px] text-center",
+          "max-xs:text-[38px]"
+        )}
+      >
         {"Share "}
-        <span className="text-red ">Your Moments</span>
+        <span className={clsx("text-red text-[48px]", "max-xs:text-[38px]")}>
+          Your Moments
+        </span>
         {" In Our Restaurant"}
       </div>
       <Swiper
-        slidesPerView={3}
-        spaceBetween={30}
+        slidesPerView={slidesPerView ?? 3}
+        spaceBetween={10}
         pagination={{
           clickable: true,
         }}
@@ -57,15 +69,18 @@ export default function Events() {
           <SwiperSlide key={idx}>
             <div
               style={{ backgroundImage: `url('${item.srcImg}')` }}
-              className="relative w-full bg-cover bg-no-repeat
-              before:absolute before:bg-[#00000099] before:w-full before:h-full before:left-0
-              "
+              className={clsx(
+                "relative w-full bg-cover bg-no-repeat",
+                " before:absolute before:bg-[#00000099] before:w-full before:h-full before:left-0"
+              )}
             >
               <div className="absolute flex flex-col items-start bottom-[5%] left-[5%] right-[5%] text-[#fff]">
-                <div className="border-b-2 border-b-red pb-1 font-bold text-[28px]">
+                <div className="border-b-2 border-b-red pb-1 font-bold text-[28px] max-md:text-[22px]">
                   {item.title}
                 </div>
-                <div className="text-left pt-3">{item.decription}</div>
+                <div className="line-clamp-2 text-left pt-3">
+                  {item.decription}
+                </div>
               </div>
               <img src={item.srcImg} alt={item.alt} className="invisible" />
             </div>

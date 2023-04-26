@@ -2,7 +2,7 @@ import { contacts } from "Layout/constant";
 
 export default function Footer() {
   return (
-    <div className="flex justify-center items-center bg-[#1f1f24] pt-16 pb-32">
+    <div className="flex justify-center items-center bg-[#1f1f24] pt-16 pb-32 px-5">
       <div className="flex flex-col justify-center items-center max-w-[1200px] w-full">
         <div className="flex justify-between w-full">
           {contacts.map((item, idx) => (

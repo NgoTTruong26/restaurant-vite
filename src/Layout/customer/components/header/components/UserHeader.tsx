@@ -12,8 +12,6 @@ interface Props {
 }
 
 const UserHeader: React.FC<Props> = (props: Props) => {
-  console.log(123);
-
   return (
     <div className="dropdown dropdown-hover ">
       <label tabIndex={0} className="flex m-1">

@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { Pagination, Autoplay, Navigation } from "swiper";
 import { useState } from "react";
+import clsx from "clsx";
 
 export default function Banner() {
   const [visible, setVisible] = useState<boolean>(false);
@@ -10,7 +11,11 @@ export default function Banner() {
     <div
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
-      className="w-[50%] min-h-[530px] py-20 max-sm:w-[90%] max-sm:min-h-[300px] max-md:w-[80%] max-md:pt-12 max-md:pb-0"
+      className={clsx(
+        "w-[50%] min-h-[530px] py-20",
+        "max-sm:w-[90%] max-sm:min-h-[300px]",
+        "max-md:w-[80%] max-md:pt-12 max-md:pb-0 max-md:min-h-[400px]"
+      )}
     >
       <div className="h-full overflow-hidden border-4 border-[#ce1212] shadow-xl shadow-[#ce121233] rounded-xl p-[5px] bg-[#fff]">
         <Swiper

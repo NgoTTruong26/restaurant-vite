@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Button from "components/Button";
 import { BsPlayCircle } from "react-icons/bs";
 
@@ -12,14 +13,23 @@ export default function BannerDesSwiper() {
           Sed autem laudantium dolores. Voluptatem itaque ea consequatur
           eveniet. Eum quas beatae cumque eum quaerat.
         </div>
-        <div className="flex items-center justify-evenly">
+        <div className="flex items-center justify-evenly max-sm:flex-col">
           <div>
-            <Button className="bg-[#ce1212] w-full rounded-full px-9 py-2 text-[#fff] shadow-xl shadow-[#ce121233] font-medium hover:bg-[#ce1212cc] max-xs:px-3 max-sm:px-6 max-xs:rounded-[23px]">
+            <Button
+              className={clsx(
+                "bg-[#ce1212] w-full rounded-full px-9 py-2 text-[#fff] shadow-xl shadow-[#ce121233] font-medium hover:bg-[#ce1212cc]"
+              )}
+            >
               Book a Table
             </Button>
           </div>
           <div>
-            <Button className="flex items-center btn-ghost hover:!text-[#ce1212] max-xs:px-[2px] max-xs:rounded-xl max-sm:px-2">
+            <Button
+              className={clsx(
+                "flex items-center btn-ghost hover:!text-[#ce1212] rounded-xl",
+                "max-sm:mt-3"
+              )}
+            >
               <BsPlayCircle className="text-[#ce1212] text-[28px] max-xs:text-[20px]" />
               <div className="pl-2 font-medium">Watch Video</div>
             </Button>

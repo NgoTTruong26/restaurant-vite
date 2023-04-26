@@ -75,8 +75,6 @@ export default function Header() {
       );
   }, [router.pathname, dispatch]);
 
-  console.log("re-render", navbarItem);
-
   const handleClickIntoView = (id: string) =>
     id &&
     document.querySelector(`#${id}`)?.scrollIntoView({ behavior: "smooth" });
@@ -84,7 +82,7 @@ export default function Header() {
   return (
     <div
       className={clsx(
-        "fixed top-0 w-full z-50 bg-[#fff] py-[5px] flex justify-center items-center border-b border-[#eee]",
+        "fixed top-0 w-full z-50 bg-[#fff] py-[5px] flex justify-center items-center border-b border-[#eee] px-5",
         {
           "opacity-95": scrollHeader,
         }
@@ -98,7 +96,7 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex flex-1 justify-center">
-          <div className="flex">
+          <div className="flex max-md:hidden">
             {navbarIcons.map((item, idx) => (
               <Link
                 to={`/`}
