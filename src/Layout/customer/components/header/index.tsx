@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setNavbarItemActive } from "redux/features/setActive/setActiveSlide";
 import { RootState } from "redux/app/store";
 import { useLocation } from "react-router-dom";
-import { loginDropdown, navbarIcons } from "Layout/constant";
-import UserHeader from "./header/components/UserHeader";
-import GuestHeader from "./header/components/GuestHeader";
+import { loginDropdown, navbarWithIcons } from "Layout/constant";
+import UserHeader from "./components/UserHeader";
+import GuestHeader from "./components/GuestHeader";
+import { NavbarWithIcons } from "Layout/interfaces/navbar";
+import DesktopNavbar from "./components/DesktopNavbar";
+import MobileNavbar from "./components/MobileNavbar";
 
 export default function Header() {
-  const [scrollHeader, setScrollHeader] = useState<boolean>(false);
-
   const navbarItem = useSelector(
     (state: RootState) => state.setNavbarItemActive.value.navbarItemActive
   );
@@ -45,9 +46,6 @@ export default function Header() {
       }, []);
 
       handleScroll = () => {
-        if (Math.ceil(window.pageYOffset) <= 10) {
-          setScrollHeader(false);
-        } else setScrollHeader(true);
         if (nodes.length > 0) {
           for (let idx = 0; idx < listNodes.length; idx++) {
             if (
@@ -75,56 +73,44 @@ export default function Header() {
       );
   }, [router.pathname, dispatch]);
 
-  const handleClickIntoView = (id: string) =>
-    id &&
-    document.querySelector(`#${id}`)?.scrollIntoView({ behavior: "smooth" });
+  const handleClickIntoView = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    item: NavbarWithIcons
+  ) => {
+    if (router.pathname === "/") {
+      e.preventDefault();
+      item.id &&
+        document
+          .querySelector(`#${item.id}`)
+          ?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    dispatch(setNavbarItemActive(item.id ?? ""));
+  };
 
   return (
     <div
       className={clsx(
-        "fixed top-0 w-full z-50 bg-[#fff] py-[5px] flex justify-center items-center border-b border-[#eee] px-5",
-        {
-          "opacity-95": scrollHeader,
-        }
+        "fixed top-0 w-full z-50 bg-[#fff] py-[5px] flex justify-center items-center border-b border-[#eee] px-5"
       )}
     >
       <div className="max-w-[1200px] w-full flex justify-between py-3 text-[#7f7f90]">
+        <MobileNavbar
+          navbarWithIcons={navbarWithIcons}
+          navbarItem={navbarItem}
+          handleClickIntoView={handleClickIntoView}
+        />
         <div className="flex items-center n mr-[20px]">
           <Link to={"/"} className="font-bold text-[28px] text-[#000000]">
             Restaurant
             <span className="font-bold text-[28px] text-red">.</span>
           </Link>
         </div>
-        <div className="flex flex-1 justify-center">
-          <div className="flex max-md:hidden">
-            {navbarIcons.map((item, idx) => (
-              <Link
-                to={`/`}
-                onClick={(e) => {
-                  if (router.pathname === "/") {
-                    e.preventDefault();
-                    handleClickIntoView(item.id || "");
-                  }
-
-                  dispatch(setNavbarItemActive(item.id ?? ""));
-                }}
-                key={idx}
-                className={clsx(
-                  `relative flex items-center px-[5px] hover:bg-[#ffffff33] hover:rounded-[10px] hover:cursor-pointer mx-[20px]
-                before:absolute before:w-full before:left-0 before:bottom-[8%] before:h-[2px] before:transform before:duration-150 before:bg-red
-                before:scale-x-0 hover:before:scale-x-100`,
-                  {
-                    "before:scale-x-100": item.id && item.id === navbarItem,
-                    " dropdown dropdown-hover": item.dropdown,
-                  }
-                )}
-              >
-                <div className="pr-[5px]">{item.icons}</div>
-                <div className="flex">{item.content}</div>
-              </Link>
-            ))}
-          </div>
-        </div>
+        <DesktopNavbar
+          navbarWithIcons={navbarWithIcons}
+          navbarItem={navbarItem}
+          handleClickIntoView={handleClickIntoView}
+        />
         <div className="flex items-center">
           {isLogin ? (
             <UserHeader

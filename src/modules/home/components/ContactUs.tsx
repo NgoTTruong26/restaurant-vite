@@ -39,8 +39,8 @@ export default function ContactUs() {
               )}
             >
               <div className="flex w-full bg-[#eee] p-7 rounded-md">
-                <div className="flex p-3 justify-center items-center bg-red text-[#fff] rounded-full">
-                  {item.icons}
+                <div className="flex justify-center items-center text-[#fff] ">
+                  <div className="p-3 bg-red rounded-full">{item.icons}</div>
                 </div>
                 <div className="pl-3">
                   <div className="uppercase font-bold">{item.title}</div>

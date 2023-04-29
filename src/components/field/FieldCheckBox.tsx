@@ -15,7 +15,7 @@
 
 import clsx from "clsx";
 import { Field } from "interfaces/field";
-import React from "react";
+import * as React from "react";
 
 const FieldCheckBox = React.forwardRef<HTMLInputElement, Field>(
   (

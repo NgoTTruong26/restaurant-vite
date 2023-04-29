@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Field } from "interfaces/field";
-import React from "react";
+import * as React from "react";
 
 const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
   (
@@ -20,7 +20,7 @@ const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
     ref
   ) => (
     <>
-      <div className={`relative`}>
+      <div className="relative w-full">
         <input
           ref={ref}
           className={`w-full px-[12px] py-[6px] border border-[#b0bec5] rounded-lg leading-8 [&~label]:focus:bg-[#fff] [&~label]:focus:top-[-11px] [&~label]:focus:text-[11px] ${inputClassName}`}

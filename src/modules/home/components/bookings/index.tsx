@@ -16,7 +16,7 @@ export default function Bookings() {
           <span className="text-red max-xs:text-[38px]">Your Stay</span>
           {" With Us"}
         </div>
-        <div className="px-5 w-full">
+        <div className="w-full">
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <div
               className={clsx(

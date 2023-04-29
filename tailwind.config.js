@@ -40,7 +40,7 @@ module.exports = {
       xl: "1280px",
     },
   },
-  plugins: [require("daisyui"), require("@tailwindcss/line-clamp")],
+  plugins: [require("daisyui")],
   daisyui: {
     styled: true,
     themes: true,

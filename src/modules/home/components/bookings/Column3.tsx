@@ -39,7 +39,7 @@ export default function Column3({ methods }: Props) {
       </div>
       <Button
         type="submit"
-        className="bg-red mt-8 py-5 rounded-full text-[#fff] font-medium hover:!bg-[#e51717]"
+        className="bg-red mb-5 mt-8 py-5 rounded-full text-[#fff] font-medium hover:!bg-[#e51717]"
       >
         Đặt bàn
       </Button>

@@ -13,7 +13,7 @@ interface Props {
 
 const UserHeader: React.FC<Props> = (props: Props) => {
   return (
-    <div className="dropdown dropdown-hover ">
+    <div className="dropdown dropdown-end ">
       <label tabIndex={0} className="flex m-1">
         <div className="cursor-pointer w-full">
           <FaUserCircle size={35} />

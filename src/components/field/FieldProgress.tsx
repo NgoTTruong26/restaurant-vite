@@ -1,5 +1,5 @@
 import { Field } from "interfaces/field";
-import React from "react";
+import * as React from "react";
 
 const FieldProgress = React.forwardRef<HTMLInputElement, Field>(
   (

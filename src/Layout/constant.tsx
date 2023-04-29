@@ -1,5 +1,3 @@
-import { Link } from "interfaces/link";
-import { Navbar } from "./interfaces/navbar";
 import { Contact } from "interfaces/contact";
 import { ImHome } from "react-icons/im";
 import { BiFoodMenu, BiMap, BiNews, BiTimeFive } from "react-icons/bi";
@@ -14,6 +12,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { ReactNode } from "react";
 import clsx from "clsx";
 import { LoginDropdown } from "./interfaces/loginDropdown";
+import { NavbarWithIcons } from "./interfaces/navbar";
 
 const enum ENavBar {
   HOME = "Trang Chủ",
@@ -32,7 +31,7 @@ const enum NavBarId {
   ADDRESS = "address",
 }
 
-export const navbarIcons: Navbar<Link>[] = [
+export const navbarWithIcons: NavbarWithIcons[] = [
   {
     content: ENavBar.HOME,
     icons: <ImHome size={20} />,
