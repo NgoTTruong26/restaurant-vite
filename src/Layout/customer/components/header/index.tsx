@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import clsx from "clsx";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -46,19 +46,17 @@ export default function Header() {
       }, []);
 
       handleScroll = () => {
-        if (nodes.length > 0) {
-          for (let idx = 0; idx < listNodes.length; idx++) {
-            if (
-              (listNodes[idx] as HTMLElement).offsetTop * 0.6 <=
-                Math.ceil(window.pageYOffset) &&
-              ((listNodes[idx] as HTMLElement).offsetHeight +
-                (listNodes[idx] as HTMLElement).offsetTop) *
-                0.95 >=
-                Math.ceil(window.pageYOffset)
-            ) {
-              dispatch(setNavbarItemActive((listNodes[idx] as HTMLElement).id));
-              return;
-            }
+        for (let idx = 0; idx < listNodes.length; idx++) {
+          if (
+            (listNodes[idx] as HTMLElement).offsetTop * 0.6 <=
+              Math.ceil(window.pageYOffset) &&
+            ((listNodes[idx] as HTMLElement).offsetHeight +
+              (listNodes[idx] as HTMLElement).offsetTop) *
+              0.95 >=
+              Math.ceil(window.pageYOffset)
+          ) {
+            dispatch(setNavbarItemActive((listNodes[idx] as HTMLElement).id));
+            return;
           }
         }
       };

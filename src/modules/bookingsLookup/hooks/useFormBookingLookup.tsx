@@ -4,12 +4,11 @@ import { formSchemaBookingLookup } from "helpers/formSchemaBookingLookup";
 
 interface InputBookingLookup {
   idBooking: string;
-  phoneNumber: string;
 }
 
 export function useFormBookingLookup() {
   const { formState, ...methods } = useForm<InputBookingLookup>({
-    defaultValues: { idBooking: "", phoneNumber: "" },
+    defaultValues: { idBooking: "" },
     resolver: yupResolver(formSchemaBookingLookup),
   });
 
