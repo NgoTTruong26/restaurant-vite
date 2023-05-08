@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { NewsEntity } from "interfaces/entities/NewsEntity";
 
 const data: NewsEntity[] = [
@@ -47,20 +48,36 @@ export default function NewsList() {
   return (
     <div className="flex flex-wrap">
       {data.map((item, index) => (
-        <div key={index} className="flex w-[calc(100%/3)] mb-[30px] ">
+        <div
+          key={index}
+          className={clsx(
+            "flex w-[calc(100%/3)] mb-[30px] ",
+            "max-md:w-[calc(100%/2)]",
+            "max-sm:w-full"
+          )}
+        >
           <div className="overflow-hidden flex flex-col bg-[#fdfdfd] mx-[20px] w-full hover:cursor-pointer [&>div>img]:hover:scale-105 shadow-lg border-2 rounded-lg">
-            <div className=" overflow-hidden">
+            <div
+              className={clsx(
+                "h-[180px] overflow-hidden",
+                "max-lg:h-[16vw]",
+                "max-md:h-[24vw]",
+                "max-sm:h-[38vw]"
+              )}
+            >
               <img
                 src={item.srcImg}
                 alt={item.content}
-                className="max-h-[207px] w-full object-cover transition-transform"
+                className="h-full w-full object-cover transition-transform"
               />
             </div>
 
             <div className="flex-1 px-[16px] pt-[26px] pb-[12px]">
               <div className="text-[#FF4500] font-medium">{item.date}</div>
-              <div className="font-bold pt-1">{item.alt}</div>
-              {item.content && <div className="pt-2">{item.content}</div>}
+              <div className="font-bold pt-1 line-clamp-2">{item.alt}</div>
+              {item.content && (
+                <div className="pt-2 line-clamp-3">{item.content}</div>
+              )}
             </div>
           </div>
         </div>

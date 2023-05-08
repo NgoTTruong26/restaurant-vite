@@ -98,7 +98,7 @@ export default function Header() {
           navbarItem={navbarItem}
           handleClickIntoView={handleClickIntoView}
         />
-        <div className="flex items-center n mr-[20px]">
+        <div className="flex items-center">
           <Link to={"/"} className="font-bold text-[28px] text-[#000000]">
             Restaurant
             <span className="font-bold text-[28px] text-red">.</span>

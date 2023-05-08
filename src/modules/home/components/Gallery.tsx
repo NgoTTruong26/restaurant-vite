@@ -55,7 +55,9 @@ export default function Gallery({ slidesPerView }: Props) {
         <div className="uppercase">Gallery</div>
         <div className="font-amatic text-[48px] pb-5 text-center max-xs:text-[38px]">
           {"Check "}{" "}
-          <span className="text-red max-xs:text-[38px]">Our Gallery</span>
+          <span className="text-red text-[48px] max-xs:text-[38px]">
+            Our Gallery
+          </span>
         </div>
         <Swiper
           loop

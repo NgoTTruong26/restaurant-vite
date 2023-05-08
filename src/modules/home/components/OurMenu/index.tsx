@@ -26,7 +26,9 @@ export default function OurMenu({ slidesPerView }: Props) {
           )}
         >
           {"Check Our "}
-          <span className={clsx("text-[#ce1212]", "max-xs:text-[38px]")}>
+          <span
+            className={clsx("text-[#ce1212] text-[48px]", "max-xs:text-[38px]")}
+          >
             Yummy Menu
           </span>
         </div>

@@ -195,7 +195,7 @@ export default function MainDishes({ slidesPerView }: Props) {
                     </div>
                     <div className="flex w-full">
                       <Swiper
-                        slidesPerView={slidesPerView ?? 3}
+                        slidesPerView={slidesPerView || 3}
                         pagination={{
                           clickable: true,
                         }}
@@ -234,7 +234,7 @@ export default function MainDishes({ slidesPerView }: Props) {
                   </div>
                   <div className="flex flex-wrap w-full">
                     <Swiper
-                      slidesPerView={slidesPerView ?? 3}
+                      slidesPerView={slidesPerView || 3}
                       pagination={{
                         clickable: true,
                       }}

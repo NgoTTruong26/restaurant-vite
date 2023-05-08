@@ -1,6 +1,7 @@
 @import "swiper/css";
 @import "swiper/css/pagination";
 @import "swiper/css/navigation";
+@import "swiper/css/grid";
 
 @tailwind base;
 @tailwind components;
@@ -178,7 +179,7 @@ a {
   animation: skeleton-loading 3s infinite;
 }
 
-@media only screen and (max-width: 330px) {
+@media only screen and (max-width: 450px) {
   * {
     font-size: 14px;
   }

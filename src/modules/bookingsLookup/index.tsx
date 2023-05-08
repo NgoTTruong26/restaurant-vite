@@ -18,7 +18,8 @@ export default function BookingLookup() {
     <div className="flex-1 flex items-center justify-center px-5 pt-36 pb-16">
       <div
         className={clsx(
-          "flex flex-col max-w-[800px] w-full items-center border shadow-xl py-5 px-6 rounded-xl transition-all duration-500"
+          "flex flex-col max-w-[800px] w-full items-center border shadow-xl py-5 px-6 rounded-xl transition-all duration-500",
+          " max-sm:py-2 max-sm:px-4"
         )}
       >
         <form
@@ -26,12 +27,12 @@ export default function BookingLookup() {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <div className="flex items-center pr-4">
-            <GoSearch size={28} />
+            <GoSearch className="text-[28px] max-sm:text-[14px]" />
           </div>
           <div className="w-full">
             <div className="flex w-full items-center">
               <input
-                className="flex-1 w-full text-[28px]"
+                className="flex-1 w-full text-[28px] max-sm:text-[14px]"
                 placeholder="Nhập ID đơn hàng"
                 type="text"
                 id="idBooking"
@@ -39,7 +40,10 @@ export default function BookingLookup() {
               />
               {methods.watch("idBooking") && (
                 <div
-                  className="px-4 font-medium underline underline-offset-4 text-[18px] cursor-pointer"
+                  className={clsx(
+                    "px-4 font-medium underline underline-offset-4 text-[18px] cursor-pointer",
+                    "max-sm:hidden max-sm:text-[14px]"
+                  )}
                   onClick={() => methods.setValue("idBooking", "")}
                 >
                   Clear
@@ -54,13 +58,20 @@ export default function BookingLookup() {
           </div>
 
           <Button
-            children="Tìm kiếm"
+            children={
+              <>
+                <div className="max-sm:hidden">Tìm kiếm</div>
+                <div className="min-[449px]:hidden">
+                  <GoSearch className="text-[14px]" />
+                </div>
+              </>
+            }
             className=" bg-red hover:bg-[#ce1212cc]"
             type="submit"
           />
         </form>
         {showOrder && <OrderDetails handleCloseOrder={handleCloseOrder} />}
-        {/* <LoadingOrderDetail /> */}
+        {!showOrder && <LoadingOrderDetail />}
       </div>
     </div>
   );

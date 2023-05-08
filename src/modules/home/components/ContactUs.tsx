@@ -8,7 +8,9 @@ export default function ContactUs() {
         <div className="uppercase">Contact</div>
         <div className="font-amatic text-[48px] pb-5 text-center max-xs:text-[38px]">
           {"Need Help? "}
-          <span className="text-red max-xs:text-[38px]">Contact Us</span>
+          <span className="text-red text-[48px] max-xs:text-[38px]">
+            Contact Us
+          </span>
         </div>
         <div className="flex w-full">
           <iframe

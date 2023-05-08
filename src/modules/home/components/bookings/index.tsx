@@ -13,7 +13,9 @@ export default function Bookings() {
         <div className="uppercase">Book A Table</div>
         <div className="font-amatic text-[48px] pb-5 text-center max-xs:text-[38px]">
           {"Book "}
-          <span className="text-red max-xs:text-[38px]">Your Stay</span>
+          <span className="text-red text-[48px] max-xs:text-[38px]">
+            Your Stay
+          </span>
           {" With Us"}
         </div>
         <div className="w-full">

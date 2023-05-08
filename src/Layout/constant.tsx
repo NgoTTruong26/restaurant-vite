@@ -93,11 +93,11 @@ export const contacts: Contact<string | ReactNode>[] = [
       <>
         <div>
           <span className="font-medium">Phone:</span>
-          {" +1 5589 55488 55"}
+          <span>{" +1 5589 55488 55"}</span>
         </div>
         <div>
           <span className="font-medium">Email:</span>
-          {" info@example.com"}
+          <span>{" info@example.com"}</span>
         </div>
       </>
     ),
@@ -109,11 +109,11 @@ export const contacts: Contact<string | ReactNode>[] = [
       <>
         <div>
           <span className="font-medium">Mon-Sat:</span>
-          {" 11AM - 23PM"}
+          <span>{" 11AM - 23PM"}</span>
         </div>
         <div>
           <span className="font-medium">Sunday:</span>
-          {" Closed"}
+          <span>{" Closed"}</span>
         </div>
       </>
     ),
@@ -121,18 +121,28 @@ export const contacts: Contact<string | ReactNode>[] = [
   {
     title: EContact.FOLLOW_US,
     content: (
-      <div className="flex">
+      <div className="flex flex-wrap">
         {icons.map((item, idx) => (
           <span
             key={idx}
             className={clsx(
-              "flex p-2 border border-[#ffffff33] !text-[#ffffffb3] rounded-full hover:border-[#eee] hover:!text-[#eee] hover:cursor-pointer",
+              "flex flex-wrap",
+              "max-md:w-[50%] max-md:pl-0",
+              "max-sm:w-fit max-sm:pt-0",
               {
-                "ml-2": idx > 0,
+                "pl-2": idx > 0,
+                "max-md:pt-2": idx > 1,
+                "max-sm:pl-2": idx > 0,
               }
             )}
           >
-            {item}
+            <div
+              className={clsx(
+                "p-2 border border-[#ffffff33] !text-[#ffffffb3] rounded-full hover:border-[#eee] hover:!text-[#eee] hover:cursor-pointer"
+              )}
+            >
+              {item}
+            </div>
           </span>
         ))}
       </div>
