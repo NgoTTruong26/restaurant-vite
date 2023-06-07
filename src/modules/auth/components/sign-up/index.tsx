@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import FormSignUp from "./FormSignUp";
 import FormSignIn from "../sign-in/FormSignIn";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/app/store";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
+  const user = useSelector((state: RootState) => state.setUser.value);
+
+  if (user) {
+    useEffect(() => {
+      navigate("/");
+      return;
+    }, []);
+  }
+
   const [displayFormSignUp, setDisplayFormSignUp] = useState<Boolean>(true);
+
   return (
     <div className="relative flex bg-[#eee] min-h-screen justify-center items-center">
       <div className="flex max-w-[1200px] w-full bg-[#fff] rounded-xl shadow-xl p-5">

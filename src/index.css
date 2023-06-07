@@ -167,16 +167,7 @@ a {
 }
 
 .skeleton-loading {
-  background: linear-gradient(
-    100deg,
-    #dfdfdf 30%,
-    #f0f0f0 38%,
-    #f0f0f0 40%,
-    #dfdfdf 48%
-  );
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  animation: skeleton-loading 3s infinite;
+  animation: skeleton-loading 1s linear infinite alternate;
 }
 
 @media only screen and (max-width: 450px) {
@@ -186,7 +177,11 @@ a {
 }
 
 @keyframes skeleton-loading {
+  0% {
+    background-color: #ececec;
+  }
+
   100% {
-    background-position: -50% 0;
+    background-color: #dfdfdf;
   }
 }

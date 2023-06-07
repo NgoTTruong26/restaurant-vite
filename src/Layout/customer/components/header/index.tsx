@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import clsx from "clsx";
-
 import { useDispatch, useSelector } from "react-redux";
 import { setNavbarItemActive } from "redux/features/setActive/setActiveSlide";
 import { RootState } from "redux/app/store";
 import { useLocation } from "react-router-dom";
-import { loginDropdown, navbarWithIcons } from "Layout/constant";
+import { loginDropdown, navbarWithIcons, userDropdown } from "Layout/constant";
 import UserHeader from "./components/UserHeader";
 import GuestHeader from "./components/GuestHeader";
 import { NavbarWithIcons } from "Layout/interfaces/navbar";
@@ -14,14 +13,15 @@ import DesktopNavbar from "./components/DesktopNavbar";
 import MobileNavbar from "./components/MobileNavbar";
 
 export default function Header() {
-  const navbarItem = useSelector(
-    (state: RootState) => state.setNavbarItemActive.value.navbarItemActive
-  );
+  const state = useSelector((state: RootState) => state);
+
   const dispatch = useDispatch();
 
   const router = useLocation();
 
-  const isLogin: boolean = true;
+  const navbarItem = state.setNavbarItemActive.value.navbarItemActive;
+
+  const user = state.setUser.value;
 
   useEffect(() => {
     const nodes = document.querySelector(`#main`)?.childNodes ?? [];
@@ -110,11 +110,11 @@ export default function Header() {
           handleClickIntoView={handleClickIntoView}
         />
         <div className="flex items-center">
-          {isLogin ? (
+          {user ? (
             <UserHeader
               dispatch={dispatch}
               router={router}
-              loginDropdown={loginDropdown}
+              loginDropdown={userDropdown}
             />
           ) : (
             <GuestHeader

@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import setNavbarItemActiveReducer from "../features/setActive/setActiveSlide";
+import setUserReducer from "../features/sign-in/setUserSlide";
 
 export const store = configureStore({
   reducer: {
     setNavbarItemActive: setNavbarItemActiveReducer,
+    setUser: setUserReducer,
   },
 });
 

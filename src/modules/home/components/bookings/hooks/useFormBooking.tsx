@@ -24,9 +24,7 @@ export default function useFormBooking() {
     resolver: yupResolver(formSchemaBooking),
   });
 
-  const onSubmit = (data: InputBooking) => {
-    console.log(data);
-  };
+  const onSubmit = (data: InputBooking) => {};
 
   return {
     methods,

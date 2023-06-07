@@ -35,7 +35,7 @@ const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
                 labelClassName ?? ""
               }`,
               {
-                "bg-[#fff] top-[-11px] text-[11px]": watch,
+                "bg-[#fff] !top-[-11px] text-[11px]": watch,
               }
             )}
             htmlFor={id}

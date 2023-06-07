@@ -1,13 +1,20 @@
 import { router } from "configs/router";
-import { Provider } from "react-redux";
+
 import { RouterProvider } from "react-router-dom";
-import { store } from "redux/app/store";
+
+import { Toaster } from "react-hot-toast";
+import useCheckAuth from "modules/auth/hooks/useCheckAuth";
+
+// Create a client
 
 function App() {
+  useCheckAuth();
+
   return (
-    <Provider store={store}>
+    <>
       <RouterProvider router={router} />
-    </Provider>
+      <Toaster position="top-center" reverseOrder={false} />
+    </>
   );
 }
 

@@ -9,7 +9,7 @@ export const formSchemaSignIn = yup.object({
     .string()
     .label("Tên đăng nhập")
     .required(validateRequireMessage),
-  password: yup.string().label("Mật khẩu").required(validateRequireMessage),
+  reqPassword: yup.string().label("Mật khẩu").required(validateRequireMessage),
   remember_account: yup
     .boolean()
     .label("Nhớ mật khẩu")

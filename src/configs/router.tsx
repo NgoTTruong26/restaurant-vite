@@ -1,12 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "modules/home";
+
 import BookingLookup from "modules/bookingsLookup";
 import Menu from "modules/menu";
-import SignIn from "modules/auth/components/sign-in";
-import SignUp from "modules/auth/components/sign-up";
-import HomeLayout from "Layout/customer";
 import LayoutBackToHomePage from "Layout/backToHomePage";
 import News from "modules/news";
+import { lazy } from "react";
+
+const HomeLayout = lazy(() => import("Layout/customer"));
+const Home = lazy(() => import("modules/home"));
+const SignIn = lazy(() => import("modules/auth/components/sign-in"));
+const SignUp = lazy(() => import("modules/auth/components/sign-up"));
+const UserProfile = lazy(() => import("modules/user"));
 
 export const router = createBrowserRouter([
   {
@@ -18,11 +22,15 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/bookings-lookup",
+        path: "bookings-lookup",
         element: <BookingLookup />,
       },
-      { path: "/dish-menu", element: <Menu /> },
-      { path: "/news", element: <News /> },
+      { path: "dish-menu", element: <Menu /> },
+      { path: "news", element: <News /> },
+      {
+        path: "user",
+        children: [{ path: "profile", element: <UserProfile /> }],
+      },
     ],
   },
   {

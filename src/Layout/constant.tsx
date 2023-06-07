@@ -157,9 +157,19 @@ const enum ELoginDropdown {
   SUPPORT = "Hỗ Trợ",
 }
 
+const enum EUserDropdown {
+  BOOKINGSLOOKUP = "Tìm Đơn Đặt Bàn",
+  SUPPORT = "Hỗ Trợ",
+}
+
 export const loginDropdown: LoginDropdown[] = [
   { content: ELoginDropdown.SIGNIN, href: "/auth/sign-in" },
   { content: ELoginDropdown.SIGNUP, href: "/auth/sign-up" },
   { content: ELoginDropdown.BOOKINGSLOOKUP, href: "/bookings-lookup" },
   { content: ELoginDropdown.SUPPORT, href: "/support" },
+];
+
+export const userDropdown: LoginDropdown[] = [
+  { content: EUserDropdown.BOOKINGSLOOKUP, href: "/bookings-lookup" },
+  { content: EUserDropdown.SUPPORT, href: "/support" },
 ];

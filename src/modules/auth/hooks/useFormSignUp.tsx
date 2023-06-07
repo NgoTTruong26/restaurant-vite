@@ -24,9 +24,7 @@ export function useFormSignUp() {
     resolver: yupResolver(formSchemaSignUp),
   });
 
-  const onSubmit = (data: InputSignUp) => {
-    console.log(data);
-  };
+  const onSubmit = (data: InputSignUp) => {};
 
   return {
     methods,

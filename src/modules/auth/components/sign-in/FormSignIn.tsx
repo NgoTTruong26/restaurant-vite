@@ -7,7 +7,8 @@ import { useFormSignIn } from "modules/auth/hooks/useFormSignIn";
 import { Link } from "react-router-dom";
 
 export default function FormSignIn() {
-  const { methods, onSubmit, formState } = useFormSignIn();
+  const { methods, onSubmit, formState, isLoading } = useFormSignIn();
+
   return (
     <div className="flex flex-col justify-between w-[58%]">
       <div className="w-full flex flex-col items-center">
@@ -30,14 +31,14 @@ export default function FormSignIn() {
           </div>
           <div className="relative mt-3 w-full">
             <FieldOutline
-              id="password"
+              id="reqPassword"
               label
               innerText="Mật khẩu"
               inputClassName="focus:border-[#e11b1e]"
-              watch={methods.watch("password")}
+              watch={methods.watch("reqPassword")}
               type="password"
-              error={formState.errors.password}
-              {...methods.register("password")}
+              error={formState.errors.reqPassword}
+              {...methods.register("reqPassword")}
             />
           </div>
           <div className="w-full flex justify-between items-center">
@@ -68,6 +69,7 @@ export default function FormSignIn() {
               className="w-full bg-red hover:!bg-[#e51717]"
             />
           </div>
+          {!isLoading || <div className="w-full pt-12">Loading...</div>}
         </form>
         <div className="w-full pt-7">
           <Button

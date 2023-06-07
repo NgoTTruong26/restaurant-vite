@@ -12,9 +12,7 @@ export function useFormBookingLookup() {
     resolver: yupResolver(formSchemaBookingLookup),
   });
 
-  const onSubmit = (data: InputBookingLookup) => {
-    console.log(data);
-  };
+  const onSubmit = (data: InputBookingLookup) => {};
 
   return {
     formState,

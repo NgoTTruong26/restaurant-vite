@@ -6,7 +6,6 @@ import {
   validateRequireMessage,
   validateRequireNumberType,
 } from "utils/getValidateMessage";
-import { MessageParams } from "yup";
 
 export const formSchemaBooking = yup.object({
   numberPeople: yup
@@ -35,7 +34,7 @@ export const formSchemaBooking = yup.object({
           ? true
           : false;
       },
-      message: ({ label }: MessageParams) =>
+      message: ({ label }) =>
         `${label} phải là từ ngày hôm nay đến 3 ngày gần nhất`,
     }),
   time: yup
@@ -51,7 +50,6 @@ export const formSchemaBooking = yup.object({
           0,
           0
         );
-        console.log(currentTime + "-------" + new Date(bookingTime));
 
         return (bookingTime > currentTime.setHours(9, 0, 0, 0) &&
           bookingTime < currentTime.setHours(14, 30, 0, 0)) ||
@@ -60,7 +58,7 @@ export const formSchemaBooking = yup.object({
           ? true
           : false;
       },
-      message: ({ label }: MessageParams) =>
+      message: ({ label }) =>
         `${label} không hợp lệ Sáng: 9h -> 14h30 Tối: 5h -> 11h30 `,
     }),
   name: yup.string().label("Tên").required(validateRequireMessage),

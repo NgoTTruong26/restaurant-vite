@@ -45,7 +45,6 @@ const MobileNavbar: React.FC<Props> = ({
         )}
         onClick={(e) => {
           setShowNavbarMenu(false);
-          console.log((e.target as HTMLDivElement).children);
         }}
       >
         <div
