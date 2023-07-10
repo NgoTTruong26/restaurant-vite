@@ -6,14 +6,14 @@ import { store } from "redux/app/store.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense } from "react";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <Suspense fallback={<div>loading...</div>}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <Suspense fallback={<div>loading...</div>}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
-    </Provider>
-  </Suspense>
+    </Suspense>
+  </Provider>
 );

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { IAxiosResponse, api } from "configs/api";
-import { ResponseAuth } from "modules/user/interfaces/user.interface";
 import { useDispatch } from "react-redux";
 import { setUser } from "redux/features/sign-in/setUserSlide";
+import { IAdmin } from "../dto/admin.dto";
 
 export default function useCheckAuth() {
   const dispatch = useDispatch();
@@ -11,11 +11,11 @@ export default function useCheckAuth() {
     localStorage.getItem(import.meta.env.VITE_ACCESS_TOKEN) || null;
 
   const { status, data, error, isFetching } = useQuery({
-    queryKey: ["auth"],
+    queryKey: ["check_auth"],
     queryFn: async () => {
       const { data } = await api.get<
-        IAxiosResponse<Omit<ResponseAuth, "accessToken">>
-      >("/v1/auth/profile", {
+        IAxiosResponse<Omit<IAdmin, "accessToken">>
+      >("/auth/profile", {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined,
         },

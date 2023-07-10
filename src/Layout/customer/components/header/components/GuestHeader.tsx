@@ -14,8 +14,8 @@ interface Props {
 
 const GuestHeader: React.FC<Props> = (props: Props) => {
   return (
-    <div className="dropdown dropdown-hover">
-      <label tabIndex={0} className="flex m-1">
+    <div className="dropdown dropdown-hover h-full">
+      <label tabIndex={0} className="flex items-center h-full">
         <div className="flex">Xem Thêm</div>
         <div className="pl-[5px]">
           <IoIosArrowDown size={25} />

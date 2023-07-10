@@ -1,11 +1,11 @@
 import clsx from "clsx";
-import { Course } from "interfaces/entities/MenuEntity";
+import { GetDishDTO } from "../dto/dish.dto";
 
 interface Props {
-  itemHotPot: Course;
+  dish: GetDishDTO;
 }
 
-const MenuHotPot: React.FC<Props> = ({ itemHotPot }) => {
+const Dish: React.FC<Props> = ({ dish }) => {
   return (
     <div
       className={clsx(
@@ -15,13 +15,11 @@ const MenuHotPot: React.FC<Props> = ({ itemHotPot }) => {
       )}
     >
       <div className="pb-2">
-        <img src={itemHotPot.srcImg} alt={itemHotPot.alt} />
+        <img src={dish.image} alt={dish.name} />
       </div>
-      <div className="capitalize font-shantell text-center">
-        {itemHotPot.title}
-      </div>
+      <div className="capitalize font-shantell text-center">{dish.name}</div>
     </div>
   );
 };
 
-export default MenuHotPot;
+export default Dish;

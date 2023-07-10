@@ -17,7 +17,12 @@ export const setActiveSlide = createSlice({
   initialState,
   reducers: {
     setNavbarItemActive: (state, actions: PayloadAction<string>) => {
-      state.value.navbarItemActive = actions.payload;
+      return {
+        ...state,
+        value: {
+          navbarItemActive: actions.payload,
+        },
+      };
     },
   },
 });

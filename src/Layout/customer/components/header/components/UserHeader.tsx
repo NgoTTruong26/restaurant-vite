@@ -1,7 +1,7 @@
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import { LoginDropdown } from "Layout/interfaces/loginDropdown";
 import clsx from "clsx";
-import { User } from "modules/user/interfaces/user.interface";
+import { IUser } from "modules/user/interfaces/user.interface";
 import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, Location } from "react-router-dom";
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const UserHeader: React.FC<Props> = (props: Props) => {
-  const user = useSelector((state: RootState) => state.setUser.value as User);
+  const user = useSelector((state: RootState) => state.setUser.value as IUser);
 
   return (
     <div className="dropdown dropdown-hover dropdown-left dropdown-bottom">
