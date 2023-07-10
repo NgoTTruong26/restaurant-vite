@@ -4,8 +4,6 @@ import { Icons } from "interfaces/icons";
 import { useEffect, useState } from "react";
 import { BiFoodMenu } from "react-icons/bi";
 import { ImGlass } from "react-icons/im";
-import MenuGrilled from "./components/MenuGrilled";
-import MenuHotPot from "./components/Dish";
 import LoadingDish from "./components/LoadingDish";
 import Dish from "./components/Dish";
 import LoadingMenuBuffet from "./components/LoadingMenuBuffet";

@@ -1,8 +1,4 @@
-import {
-  InfiniteData,
-  QueryFunctionContext,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
 import { IAxiosResponse, api } from "configs/api";
 import { GetSetDishDTO } from "../dto/dish.dto";
 
@@ -11,13 +7,6 @@ export interface IPageParam {
   idSetDish?: string;
   limit?: string;
   offset?: string;
-}
-
-enum EInitPageParam {
-  ID_BUFFET_MENU = "cliydv7hx0001vvhkrgfy01pa",
-  ID_SET_DISH = "clj6ubvbh0000vv1swb4rqenx",
-  LIMIT = "3",
-  OFFSET = "0",
 }
 
 export default function useGetDishes() {
