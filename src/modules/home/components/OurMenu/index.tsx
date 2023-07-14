@@ -38,7 +38,6 @@ export default function OurMenu({ slidesPerView }: Props) {
           className="btn bg-red hover:bg-[#f43434]"
           onClick={() => {
             navigate("/dish-menu", { preventScrollReset: true });
-            dispatch(setNavbarItemActive(""));
           }}
         >
           See more

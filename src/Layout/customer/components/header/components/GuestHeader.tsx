@@ -4,7 +4,6 @@ import { LoginDropdown } from "Layout/interfaces/loginDropdown";
 import clsx from "clsx";
 import { IoIosArrowDown } from "react-icons/io";
 import { Link, Location } from "react-router-dom";
-import { setNavbarItemActive } from "redux/features/setActive/setActiveSlide";
 
 interface Props {
   dispatch: Dispatch<AnyAction>;
@@ -29,7 +28,6 @@ const GuestHeader: React.FC<Props> = (props: Props) => {
           <li key={idx}>
             <Link
               to={item.href}
-              onClick={() => props.dispatch(setNavbarItemActive(""))}
               className={clsx(
                 "flex capitalize focus:bg-[#c7c8ca] hover:text-red",
                 {

@@ -28,7 +28,7 @@ export default function Header() {
 
     let listNodes: ChildNode[] = [];
 
-    let handleScroll: null | (() => any) = null;
+    let handleScroll = () => {};
 
     if (nodes.length > 0) {
       if (navbarItem) {
@@ -60,15 +60,13 @@ export default function Header() {
           }
         }
       };
+    } else {
+      dispatch(setNavbarItemActive(""));
     }
 
-    window.addEventListener("scroll", handleScroll ? handleScroll : () => {});
+    window.addEventListener("scroll", handleScroll);
 
-    return () =>
-      window.removeEventListener(
-        "scroll",
-        handleScroll ? handleScroll : () => {}
-      );
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [router.pathname, dispatch]);
 
   const handleClickIntoView = (
@@ -83,8 +81,10 @@ export default function Header() {
           ?.scrollIntoView({ behavior: "smooth" });
     }
 
-    dispatch(setNavbarItemActive(item.id ?? ""));
+    if (item.id) dispatch(setNavbarItemActive(item.id));
   };
+
+  console.log(navbarItem);
 
   return (
     <div

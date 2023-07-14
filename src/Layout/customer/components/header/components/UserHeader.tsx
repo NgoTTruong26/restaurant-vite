@@ -34,7 +34,6 @@ const UserHeader: React.FC<Props> = (props: Props) => {
         <li>
           <Link
             to={"/user/profile"}
-            onClick={() => props.dispatch(setNavbarItemActive(""))}
             className={clsx(
               "flex capitalize focus:bg-[#c7c8ca] hover:text-red",
               {
