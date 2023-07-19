@@ -1,19 +1,14 @@
 import clsx from "clsx";
-import Button from "components/Button";
 import { Icons } from "interfaces/icons";
 import { useEffect, useState } from "react";
 import { BiFoodMenu } from "react-icons/bi";
 import { ImGlass } from "react-icons/im";
 import LoadingDish from "./components/LoadingDish";
-import Dish from "./components/Dish";
 import LoadingMenuBuffet from "./components/LoadingMenuBuffet";
 import SkeletonLoading from "components/SkeletonLoading";
 import LoadingSetDish from "./components/LoadingSetDish";
-import useGetDishes, { IPageParam } from "./hooks/useGetDishes";
-import { queryClient } from "main";
-import { IAxiosResponse } from "configs/api";
-import { GetSetDishDTO } from "./dto/dish.dto";
 import useGetListBuffetMenu from "./hooks/useGetBuffetMenu";
+import ListDish from "./components/ListDish";
 
 const icons: Icons[] = [
   {
@@ -33,19 +28,11 @@ const icons: Icons[] = [
   },
 ];
 
-interface IQueryGetDishes {
-  pageParams: IPageParam[];
-  pages: IAxiosResponse<GetSetDishDTO>[];
-}
-
 export default function Menu() {
   const [buffet, setBuffet] = useState<string>();
   const [setDish, setSetDish] = useState<string>();
-  const [offset, setOffset] = useState<string>("0");
 
   const { data, status } = useGetListBuffetMenu();
-
-  const getDishes = useGetDishes();
 
   useEffect(() => {
     if (data) {
@@ -53,81 +40,28 @@ export default function Menu() {
       const specialSetDish = specialMenu?.setDishes.find(
         (menu) => menu.special === true
       );
+
       setBuffet(specialMenu?.id);
       setSetDish(specialSetDish?.id);
     }
   }, [data]);
 
-  useEffect(() => {
-    if (data) {
-      const specialMenu = data.find((menu) => menu.id === buffet);
-      const specialSetDish = specialMenu?.setDishes.find(
-        (menu) => menu.special === true
-      );
-      setSetDish(specialSetDish?.id);
-    }
-  }, [buffet]);
-
-  useEffect(() => {
-    setOffset("0");
-  }, [buffet, setDish]);
-
-  useEffect(() => {
-    (async () => {
-      await getDishes.fetchNextPage({
-        pageParam: {
-          idBuffetMenu: buffet,
-          idSetDish: setDish,
-          limit: "3",
-          offset: offset,
-        } as IPageParam,
-      });
-
-      if (queryClient.getQueryData(["get_dishes"])) {
-        const pageParams = queryClient.getQueryData<IQueryGetDishes>([
-          "get_dishes",
-        ])!.pageParams;
-        if (pageParams.length >= 2) {
-          console.log(
-            parseInt(offset),
-            parseInt(pageParams[pageParams.length - 1]?.offset!)
-          );
-
-          if (
-            pageParams[pageParams.length - 2]?.idBuffetMenu !== buffet ||
-            pageParams[pageParams.length - 2]?.idSetDish !== setDish
-          ) {
-            return queryClient.setQueryData(["get_dishes"], (data: any) => {
-              if (
-                parseInt(offset) <
-                parseInt(pageParams[pageParams.length - 1]?.offset!)
-              )
-                return {
-                  pages: [undefined],
-                  pageParams: [undefined],
-                };
-              return {
-                pages: data?.pages?.splice(-1),
-                pageParams: data?.pageParams?.splice(-1),
-              };
-            });
-          }
-        }
+  const handleSetBuffet = (argBuffet: string) => {
+    if (argBuffet !== buffet) {
+      setBuffet(argBuffet);
+      if (data) {
+        const specialMenu = data.find((menu) => menu.id === argBuffet);
+        const specialSetDish = specialMenu?.setDishes.find(
+          (menu) => menu.special === true
+        );
+        setSetDish(specialSetDish?.id);
       }
-    })();
-  }, [offset, buffet, setDish, data]);
-
-  const handleSetBuffet = (buffet: string) => {
-    setBuffet(buffet);
+    }
   };
 
-  const handleSetSetDish = (setDish: string) => {
-    setSetDish(setDish);
-  };
-
-  const handleGetDishes = () => {
-    if (getDishes.data?.pages[getDishes.data?.pages.length - 1]?.nextPage) {
-      setOffset((prevs) => (parseInt(prevs) + 3).toString());
+  const handleSetSetDish = (argSetDish: string) => {
+    if (argSetDish !== setDish) {
+      setSetDish(argSetDish);
     }
   };
 
@@ -149,8 +83,13 @@ export default function Menu() {
           {status === "loading" ? (
             <LoadingMenuBuffet />
           ) : (
-            <div className="flex w-full pb-10">
-              <div className="tabs bg-red rounded-xl">
+            <div className={clsx("flex w-full pb-10")}>
+              <div
+                className={clsx(
+                  "tabs bg-red rounded-xl",
+                  "max-xs:flex-col max-xs:flex-nowrap max-xs:w-full max-xs:[&>div]:w-full"
+                )}
+              >
                 {data?.map((buffetMenu, idx) => (
                   <div
                     key={idx}
@@ -179,10 +118,7 @@ export default function Menu() {
             )}
           </div>
 
-          {status === "loading" ||
-          (getDishes.isFetching &&
-            buffet !==
-              (getDishes?.data?.pageParams[0] as IPageParam)?.idBuffetMenu) ? (
+          {status === "loading" ? (
             <div className="w-full">
               <div className="flex flex-col items-center w-full">
                 <LoadingSetDish />
@@ -201,7 +137,8 @@ export default function Menu() {
                       <div
                         className={clsx(
                           "flex leading-loose font-medium text-[28px] text-[#ce121280] ",
-                          "[&>div]:px-3 [&>div]:border-b-2 [&>div]:border-b-solid [&>div]:border-[#ce121280]"
+                          "[&>div]:px-3 [&>div]:border-b-2 [&>div]:border-b-solid [&>div]:border-[#ce121280]",
+                          "max-xs:flex-col max-xs:flex-nowrap max-xs:max-w-[70%] max-xs:w-full max-xs:[&>div]:w-full max-xs:[&>div]:text-center "
                         )}
                       >
                         {buffetMenu.setDishes.map((item, idx) => (
@@ -218,44 +155,14 @@ export default function Menu() {
                           </div>
                         ))}
                       </div>
-
-                      <div className="py-10 w-full">
-                        <div key={idx} className="flex flex-col items-center">
-                          {getDishes.isFetching &&
-                          setDish !==
-                            (getDishes.data?.pageParams[0] as IPageParam)
-                              ?.idSetDish ? (
-                            <LoadingDish />
-                          ) : (
-                            <div className="flex flex-wrap w-full">
-                              {getDishes.data?.pages?.map((page) =>
-                                page?.dishes?.map((dish, idx) => (
-                                  <Dish key={idx} dish={dish} />
-                                ))
-                              )}
-
-                              {!getDishes.isFetchingNextPage || (
-                                <LoadingDish numberOfDishes={3} />
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                      {buffet && setDish && (
+                        <ListDish buffet={buffet} setDish={setDish} />
+                      )}
                     </div>
                   )
               )}
             </div>
           )}
-
-          <Button
-            className="btn bg-red hover:bg-[#f43434]"
-            onClick={() => handleGetDishes()}
-            disabled={
-              !getDishes.data?.pages[getDishes.data?.pages.length - 1]?.nextPage
-            }
-          >
-            See more
-          </Button>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { formSchemaSignIn } from "helpers/formSchemaSignIn";
 
 import { useDispatch } from "react-redux";
-import { setUser } from "redux/features/sign-in/setUserSlide";
+import { setUser } from "redux/features/sign-in/setUserSlice";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "../services/useSignIn.service";

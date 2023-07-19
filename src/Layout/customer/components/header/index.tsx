@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
-import { setNavbarItemActive } from "redux/features/setActive/setActiveSlide";
+import { setNavbarItemActive } from "redux/features/set-active/setActiveSlice";
 import { RootState } from "redux/app/store";
 import { useLocation } from "react-router-dom";
 import { loginDropdown, navbarWithIcons, userDropdown } from "Layout/constant";
@@ -83,8 +83,6 @@ export default function Header() {
 
     if (item.id) dispatch(setNavbarItemActive(item.id));
   };
-
-  console.log(navbarItem);
 
   return (
     <div

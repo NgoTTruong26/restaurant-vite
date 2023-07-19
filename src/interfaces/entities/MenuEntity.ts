@@ -1,16 +1,1 @@
-import { Image } from "interfaces/image";
-
-export interface Course extends Image {
-  title: string;
-}
-
-export interface MenuDataMainDishes {
-  name: string;
-  buffetGrilled?: Course[];
-  buffetHotPot: Course[];
-}
-
-export interface Deals extends Image {
-  title: string;
-  decription: string;
-}
+// entities để đẩy dữ liệu lên db cho đúng các fields

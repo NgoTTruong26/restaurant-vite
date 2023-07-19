@@ -22,7 +22,7 @@ const GuestHeader: React.FC<Props> = (props: Props) => {
       </label>
       <ul
         tabIndex={0}
-        className="bg-[#eee] top-10 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 "
+        className="bg-[#eee] top-10 right-0 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 "
       >
         {loginDropdown.map((item, idx) => (
           <li key={idx}>

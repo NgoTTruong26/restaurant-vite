@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const user = useSelector((state: RootState) => state.setUser.value);
-  console.log(user);
 
   const navigate = useNavigate();
 

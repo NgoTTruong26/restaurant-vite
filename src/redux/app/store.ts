@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import setNavbarItemActiveReducer from "../features/setActive/setActiveSlide";
-import setUserReducer from "../features/sign-in/setUserSlide";
+import setNavbarItemActiveReducer from "../features/set-active/setActiveSlice";
+import setUserReducer from "../features/sign-in/setUserSlice";
+import listLastPageSliceReducer from "redux/features/get-menu/listLastPageSlice";
 
 export const store = configureStore({
   reducer: {
     setNavbarItemActive: setNavbarItemActiveReducer,
     setUser: setUserReducer,
+    setListLastPage: listLastPageSliceReducer,
   },
 });
 

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { IAxiosResponse, api } from "configs/api";
 import { useDispatch } from "react-redux";
-import { setUser } from "redux/features/sign-in/setUserSlide";
+import { setUser } from "redux/features/sign-in/setUserSlice";
 import { IAdmin } from "../dto/admin.dto";
 
 export default function useCheckAuth() {

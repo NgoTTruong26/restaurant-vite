@@ -1,8 +1,8 @@
 import { RootState } from "redux/Interfaces/RootState";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ResponseAuth } from "modules/user/interfaces/user.interface";
+import { IUser } from "modules/user/interfaces/user.interface";
 
-const initialState: RootState<Omit<ResponseAuth, "accessToken"> | null> = {
+const initialState: RootState<Omit<IUser, "accessToken"> | null> = {
   value: null,
   status: "idle",
 };
@@ -13,7 +13,7 @@ export const setUserSlide = createSlice({
   reducers: {
     setUser: (
       state,
-      actions: PayloadAction<Omit<ResponseAuth, "accessToken"> | null>
+      actions: PayloadAction<Omit<IUser, "accessToken"> | null>
     ) => {
       state.value = actions.payload;
     },

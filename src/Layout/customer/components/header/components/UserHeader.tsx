@@ -6,7 +6,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, Location } from "react-router-dom";
 import { RootState } from "redux/app/store";
-import { setNavbarItemActive } from "redux/features/setActive/setActiveSlide";
+import { setNavbarItemActive } from "redux/features/set-active/setActiveSlice";
 
 interface Props {
   dispatch: Dispatch<AnyAction>;

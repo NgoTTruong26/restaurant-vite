@@ -9,7 +9,7 @@ const Dish: React.FC<Props> = ({ dish }) => {
   return (
     <div
       className={clsx(
-        "w-[calc(100%/3)] px-14 pb-5 flex flex-col justify-center items-center text-[18px]",
+        "w-[calc(100%/4)] px-5 pb-5 flex flex-col justify-center items-center text-[18px]",
         "max-md:w-[calc(100%/2)] max-md:px-10",
         " max-sm:px-3 "
       )}

@@ -3,7 +3,10 @@ import { contacts } from "../constant";
 
 export default function ContactUs() {
   return (
-    <div id="address" className="flex justify-center items-center py-16 px-5">
+    <div
+      id="address"
+      className="flex justify-center items-center py-16 px-5 bg-[#eee]"
+    >
       <div className="max-w-[1200px] w-full flex flex-col justify-center items-center">
         <div className="uppercase">Contact</div>
         <div className="font-amatic text-[48px] pb-5 text-center max-xs:text-[38px]">
@@ -40,7 +43,7 @@ export default function ContactUs() {
                 }
               )}
             >
-              <div className="flex w-full bg-[#eee] p-7 rounded-md">
+              <div className="flex w-full bg-[#ffffff] p-7 rounded-md">
                 <div className="flex justify-center items-center text-[#fff] ">
                   <div className="p-3 bg-red rounded-full">{item.icons}</div>
                 </div>

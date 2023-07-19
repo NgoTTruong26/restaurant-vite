@@ -8,6 +8,7 @@ import Events from "./components/Events";
 import ContactUs from "./components/ContactUs";
 import Bookings from "./components/bookings";
 import { useEffect, useState } from "react";
+import NewsPreview from "./components/News/NewsPreview";
 
 export default function Home() {
   const [slidesPerView, setSlidesPerView] = useState<number | null>(null);
@@ -57,6 +58,7 @@ export default function Home() {
       <Events slidesPerView={slidesPerView} />
       <Bookings />
       <Gallery slidesPerView={slidesPerView} />
+      <NewsPreview slidesPerView={slidesPerView} />
       <ContactUs />
     </div>
   );

@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <div
       className={clsx(
-        "flex justify-center items-center bg-[#1f1f24] pt-16 pb-32 px-5",
+        "flex justify-center items-center bg-[#1f1f24] pt-16 pb-32 px-5 h-full",
         "max-md:pb-12"
       )}
     >
