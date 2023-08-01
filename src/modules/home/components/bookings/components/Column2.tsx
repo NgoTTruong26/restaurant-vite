@@ -1,16 +1,35 @@
 import FieldProgress from "components/field/FieldProgress";
 import { cssBeforeOnFocusInput } from "modules/home/constant.styles";
 import { UseFormReturn } from "react-hook-form";
-import { InputBooking } from "./hooks/useFormBooking";
+
 import clsx from "clsx";
 
+import { queryClient } from "main";
+import { GetBuffetMenuDTO } from "modules/menu/dto/get-dish.dto";
+import { CreateBookingDTO } from "../dto/booking.dto";
+
 interface Props {
-  methods: UseFormReturn<InputBooking>;
+  methods: UseFormReturn<CreateBookingDTO>;
 }
 
 export default function Column2({ methods }: Props) {
+  const buffetMenus = queryClient.getQueryData<GetBuffetMenuDTO[]>([
+    "get_list_buffet_menu_preview",
+  ]);
+
+  console.log(
+    queryClient.getQueryData<GetBuffetMenuDTO[]>([
+      "get_list_buffet_menu_preview",
+    ])
+  );
+
   return (
-    <div className="flex-1 flex flex-col px-4 max-md:pt-3">
+    <div
+      className={clsx(
+        "flex-1 flex flex-col px-4 max-md:pt-3",
+        "[&>div+div]:pt-8"
+      )}
+    >
       <div className="flex flex-col ">
         <FieldProgress
           id="numberPeople"
@@ -24,7 +43,7 @@ export default function Column2({ methods }: Props) {
           {...methods.register("numberPeople")}
         />
       </div>
-      <div className="flex pt-12 max-sm:flex-col max-md:pt-3">
+      <div className="flex max-sm:flex-col max-md:pt-3">
         <div
           className={clsx(
             "w-[50%] mr-4 flex flex-col",
@@ -32,14 +51,14 @@ export default function Column2({ methods }: Props) {
           )}
         >
           <FieldProgress
-            id="date"
+            id="bookingTime"
             type="date"
             label
-            innerText="Ngày"
+            innerText="Ngày đặt bàn"
             spanClassName={cssBeforeOnFocusInput}
             inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-            error={methods.formState.errors.date}
-            {...methods.register("date")}
+            error={methods.formState.errors.bookingDate}
+            {...methods.register("bookingDate")}
           />
         </div>
         <div
@@ -49,18 +68,39 @@ export default function Column2({ methods }: Props) {
           )}
         >
           <FieldProgress
-            id="time"
+            id="bookingTime"
             type="time"
             label
-            innerText="Giờ"
+            innerText="Giờ đặt bàn"
             spanClassName={cssBeforeOnFocusInput}
             inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-            error={methods.formState.errors.time}
-            {...methods.register("time")}
+            error={methods.formState.errors.bookingTime}
+            {...methods.register("bookingTime")}
           />
         </div>
       </div>
-      <div className="flex flex-col pt-12 max-md:pt-3">
+      <div>
+        <select
+          className="select select-bordered w-full"
+          {...methods.register("buffetMenu")}
+        >
+          <option value="default" disabled>
+            Select Buffet Menu
+          </option>
+          {buffetMenus?.map((buffetMenu, idx) => (
+            <option key={idx} value={buffetMenu.id}>
+              Set{" " + buffetMenu.name}K
+            </option>
+          ))}
+        </select>
+        {methods.getFieldState("buffetMenu").error?.message && (
+          <p className="text-red pl-2 pt-1">
+            {methods.getFieldState("buffetMenu").error?.message}
+          </p>
+        )}
+      </div>
+
+      <div className="flex flex-col max-md:pt-3">
         <FieldProgress
           id="note"
           type="text"
@@ -68,6 +108,7 @@ export default function Column2({ methods }: Props) {
           innerText="Ghi chú"
           spanClassName={cssBeforeOnFocusInput}
           inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
+          {...methods.register("note")}
         />
       </div>
     </div>

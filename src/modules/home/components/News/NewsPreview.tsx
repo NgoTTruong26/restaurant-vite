@@ -4,19 +4,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import clsx from "clsx";
-import useGetListNewsPreview from "./hooks/useGetNewsListPreview";
+import useGetNewsListPreview from "./hooks/useGetNewsListPreview";
 import LoadingNewsPreview from "./components/LoadingNewsPreview";
+import { NavBarId } from "Layout/constant";
+import Button from "components/Button";
+import { IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   slidesPerView: number | null;
 }
 
 export default function NewsPreview({ slidesPerView }: Props) {
-  const { data, status } = useGetListNewsPreview();
+  const { data, status } = useGetNewsListPreview();
+
+  const navigate = useNavigate();
 
   return (
     <div
-      id="news"
+      id={NavBarId.NEWS}
       className="flex flex-col justify-center items-center py-16 px-5"
     >
       <div className="uppercase">News</div>
@@ -34,8 +40,8 @@ export default function NewsPreview({ slidesPerView }: Props) {
           {" for you"}
         </span>
       </div>
-      <div className="flex flex-wrap w-full">
-        <div className="flex flex-wrap w-full">
+      <div className="flex justify-center flex-wrap w-full">
+        <div className="flex flex-wrap max-w-[1200px] w-full py-4">
           {status === "loading" ? (
             <LoadingNewsPreview slidesPerView={slidesPerView} />
           ) : (
@@ -45,11 +51,21 @@ export default function NewsPreview({ slidesPerView }: Props) {
                 clickable: true,
               }}
               modules={[Pagination]}
-              className="mySwiper [&>.swiper-wrapper>.swiper-slide]:flex"
+              className={clsx(
+                "mySwiper",
+                " [&>.swiper-wrapper>.swiper-slide]:flex",
+                "[&>.swiper-pagination>.swiper-pagination-bullet]:!bg-[#d1d1d7]",
+                "[&>.swiper-pagination>.swiper-pagination-bullet-active]:!bg-[#d1d1d7]"
+              )}
             >
               {data?.map((item, idx) => (
                 <SwiperSlide key={idx}>
-                  <div className={clsx("flex h-full")}>
+                  <div
+                    onClick={() => {
+                      navigate(`/news/${item.id}`);
+                    }}
+                    className={clsx("flex h-full")}
+                  >
                     <div className="overflow-hidden flex flex-col bg-[#fdfdfd] mx-[20px] w-full hover:cursor-pointer [&>div>img]:hover:scale-105 shadow-lg border-2 rounded-lg">
                       <div
                         className={clsx(
@@ -61,7 +77,7 @@ export default function NewsPreview({ slidesPerView }: Props) {
                       >
                         <img
                           src={item.srcImg}
-                          alt={item.content}
+                          alt={item.title}
                           className="h-full w-full object-cover transition-transform"
                         />
                       </div>
@@ -73,9 +89,9 @@ export default function NewsPreview({ slidesPerView }: Props) {
                         <div className="font-bold pt-1 line-clamp-2">
                           {item.title}
                         </div>
-                        {item.content && (
+                        {item.introduce && (
                           <div className="pt-2 line-clamp-3">
-                            {item.content}
+                            {item.introduce}
                           </div>
                         )}
                       </div>
@@ -86,6 +102,19 @@ export default function NewsPreview({ slidesPerView }: Props) {
             </Swiper>
           )}
         </div>
+      </div>
+      <div className="flex justify-center w-full mt-4">
+        <Button
+          className="btn bg-red hover:bg-[#f43434]"
+          onClick={() => {
+            navigate("/news", { preventScrollReset: true });
+          }}
+        >
+          See more
+          <span className="pl-2">
+            <IoIosArrowForward />
+          </span>
+        </Button>
       </div>
     </div>
   );

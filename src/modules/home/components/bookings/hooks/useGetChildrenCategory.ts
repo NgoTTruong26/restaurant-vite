@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { IAxiosResponse, api } from "configs/api";
-import { GetBuffetMenuDTO } from "modules/menu/dto/get-dish.dto";
+import { GetChildrenCategoryDTO } from "../dto/get-children-category.dto";
 
-export default function useGetListBuffetMenuPreview() {
+export default function useGetChildrenCategory() {
   const { status, data, error, isFetching, isLoading } = useQuery({
-    queryKey: ["get_list_buffet_menu_preview"],
+    queryKey: ["get_children_category"],
     queryFn: async () => {
-      const { data } = await api.get<IAxiosResponse<GetBuffetMenuDTO[]>>(
-        "/buffet/list-buffet-menu"
+      const { data } = await api.get<IAxiosResponse<GetChildrenCategoryDTO[]>>(
+        `/booking-table/children-category`
       );
 
       return data.data;

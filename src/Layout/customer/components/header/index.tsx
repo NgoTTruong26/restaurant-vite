@@ -34,7 +34,7 @@ export default function Header() {
       if (navbarItem) {
         document
           .querySelector(`#${navbarItem}`)
-          ?.scrollIntoView({ behavior: "smooth" });
+          ?.scrollIntoView({ behavior: "auto" });
       }
 
       dispatch(setNavbarItemActive("home"));
@@ -87,7 +87,7 @@ export default function Header() {
   return (
     <div
       className={clsx(
-        "fixed top-0 w-full z-50 bg-[#fff] py-[5px] flex justify-center items-center border-b border-[#eee] px-5"
+        "fixed top-0 w-full z-20 bg-[#fff] py-[5px] flex justify-center items-center border-b border-[#eee] px-5"
       )}
     >
       <div className="max-w-[1200px] w-full flex justify-between py-3 text-[#7f7f90]">

@@ -6,6 +6,19 @@ import {
   validateRequireMessage,
   validateRequireNumberType,
 } from "utils/getValidateMessage";
+import { object } from "yup";
+
+const test = {
+  quantity: yup
+    .number()
+    .label("Trẻ em")
+    .typeError(validateRequireNumberType)
+
+    .test({
+      test: (value) => (value === 0 || value ? value >= 0 || false : false),
+      message: "Trẻ em ít nhất là 0 người",
+    }),
+};
 
 export const formSchemaBooking = yup.object({
   numberPeople: yup
@@ -18,7 +31,7 @@ export const formSchemaBooking = yup.object({
       test: (value) => (value >= 1 ? true : false),
       message: "Số người ít nhất là 1 người",
     }),
-  date: yup
+  bookingDate: yup
     .string()
     .label("Ngày đặt bàn")
     .required(validateRequireMessage)
@@ -37,7 +50,7 @@ export const formSchemaBooking = yup.object({
       message: ({ label }) =>
         `${label} phải là từ ngày hôm nay đến 3 ngày gần nhất`,
     }),
-  time: yup
+  bookingTime: yup
     .string()
     .label("Giờ đặt bàn")
     .required(validateRequireMessage)
@@ -61,10 +74,19 @@ export const formSchemaBooking = yup.object({
       message: ({ label }) =>
         `${label} không hợp lệ Sáng: 9h -> 14h30 Tối: 5h -> 11h30 `,
     }),
-  name: yup.string().label("Tên").required(validateRequireMessage),
+  author: yup.string().label("Tên").required(validateRequireMessage),
   phoneNumber: yup
     .string()
     .label("Số điện thoại")
     .required(validateRequireMessage)
     .matches(Regex.PHONENUMBER, validateInvalidMessage),
+  buffetMenu: yup
+    .string()
+    .label("Buffet Menu")
+    .required(validateRequireMessage)
+    .test({
+      test: (value) => (value !== "default" ? true : false),
+      message: validateRequireMessage,
+    }),
+  bookingsForChildren: yup.array().of(object().shape(test)),
 });

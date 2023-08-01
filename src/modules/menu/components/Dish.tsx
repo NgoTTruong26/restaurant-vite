@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { GetDishDTO } from "../dto/dish.dto";
+import { GetDishDTO } from "../dto/get-dish.dto";
 
 interface Props {
   dish: GetDishDTO;

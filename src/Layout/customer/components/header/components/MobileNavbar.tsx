@@ -29,9 +29,9 @@ const MobileNavbar: React.FC<Props> = ({
   }, [showNavbarMenu]);
 
   return (
-    <div className="hidden max-lg:block">
+    <div className="hidden max-xl:block">
       <div
-        className="flex items-center h-full "
+        className="flex items-center h-full cursor-pointer"
         onClick={() => {
           setShowNavbarMenu(true);
         }}

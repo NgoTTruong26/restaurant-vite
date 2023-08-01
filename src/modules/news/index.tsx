@@ -1,6 +1,4 @@
-import Button from "components/Button";
-import NewsList from "./components/NewsList";
-import LoadingNewsList from "./components/LoadingNewsList";
+import NewsList from "./components/news/components/NewsList";
 
 export default function News() {
   return (
@@ -16,15 +14,11 @@ export default function News() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center pt-5 px-5">
+      <div className="flex justify-center pt-5 px-5 w-full">
         <div className="max-w-[1200px] w-full ">
           <NewsList />
-          <LoadingNewsList />
         </div>
       </div>
-      <Button className="btn bg-red hover:bg-[#f43434]" onClick={() => {}}>
-        See more
-      </Button>
     </div>
   );
 }

@@ -10,6 +10,11 @@ export default function LoadingOrderDetail() {
             <SkeletonLoading />
           </div>
         </div>
+        <div className="flex justify-center pt-3">
+          <div className="w-[80%] h-8 rounded-full overflow-hidden">
+            <SkeletonLoading />
+          </div>
+        </div>
         <div className="py-5">
           <div className="font-medium ">
             <div className="w-[40%] h-4 rounded-full overflow-hidden">
@@ -18,24 +23,24 @@ export default function LoadingOrderDetail() {
             <div className="flex justify-between mt-3 py-3 leading-8 bg-[#eee] px-5 rounded-2xl max-sm:flex-col">
               <div className="w-[40%] max-sm:w-full">
                 <div className="flex items-center">
-                  <div className="w-full h-2 rounded-full overflow-hidden">
+                  <div className="w-full h-3 rounded-full overflow-hidden">
                     <SkeletonLoading />
                   </div>
                 </div>
                 <div className="flex items-center mt-1 ">
-                  <div className="w-full h-2 rounded-full overflow-hidden">
+                  <div className="w-full h-3 rounded-full overflow-hidden">
                     <SkeletonLoading />
                   </div>
                 </div>
               </div>
               <div className="w-[40%] max-sm:pt-2 max-sm:w-full">
                 <div className="flex items-center">
-                  <div className="w-full h-2 rounded-full overflow-hidden">
+                  <div className="w-full h-3 rounded-full overflow-hidden">
                     <SkeletonLoading />
                   </div>
                 </div>
                 <div className="flex items-center mt-1">
-                  <div className="w-full h-2 rounded-full overflow-hidden">
+                  <div className="w-full h-3 rounded-full overflow-hidden">
                     <SkeletonLoading />
                   </div>
                 </div>
@@ -43,12 +48,12 @@ export default function LoadingOrderDetail() {
             </div>
             <div className="flex justify-between mt-3 py-3 px-5 bg-[#eee] rounded-2xl max-sm:flex-col">
               <div className="w-[40%] rounded-full overflow-hidden max-sm:w-full">
-                <div className="h-2">
+                <div className="h-3">
                   <SkeletonLoading />
                 </div>
               </div>
               <div className="w-[40%] rounded-full overflow-hidden max-sm:mt-1 max-sm:w-full">
-                <div className="h-2">
+                <div className="h-3">
                   <SkeletonLoading />
                 </div>
               </div>
@@ -72,15 +77,12 @@ export default function LoadingOrderDetail() {
                 </div>
                 <div
                   className={clsx(
-                    "flex justify-between items-center w-full pl-5 font-medium",
-                    "max-sm:flex-col"
+                    "flex gap-10 justify-between items-center w-full pl-5 font-medium",
+                    "max-sm:flex-col max-sm:gap-0 max-sm:w-[40%]"
                   )}
                 >
                   <div
-                    className={clsx(
-                      "w-[80%] pr-5",
-                      " max-sm:w-full max-sm:p-0"
-                    )}
+                    className={clsx("w-[40%] pr-5", "max-sm:w-full max-sm:p-0")}
                   >
                     <div className="w-full rounded-full overflow-hidden">
                       <div className="h-2">
@@ -93,7 +95,7 @@ export default function LoadingOrderDetail() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex-1 w-full rounded-full overflow-hidden mt-1">
+                  <div className="w-[20%] rounded-full overflow-hidden mt-1 max-sm:w-full">
                     <div className="h-2">
                       <SkeletonLoading />
                     </div>
@@ -103,39 +105,44 @@ export default function LoadingOrderDetail() {
             </div>
           </div>
         </div>
-        <div className="pt-5 border-t leading-8">
-          <div className="flex justify-between">
-            <div className="w-[60%] h-2 rounded-full overflow-hidden">
-              <SkeletonLoading />
-            </div>
-            <div className="w-[20%] h-2 rounded-full overflow-hidden">
-              <SkeletonLoading />
-            </div>
+        <div className="py-5 border-t leading-8 ">
+          <div className="w-[40%] h-4 rounded-full overflow-hidden">
+            <SkeletonLoading />
           </div>
-
-          <div className="flex justify-between pt-3">
+          <div className="pl-5 pt-3 [&>div+div]:pt-3">
             <div className="w-[30%] h-2 rounded-full overflow-hidden">
               <SkeletonLoading />
             </div>
-            <div className="w-[50%] h-2 rounded-full overflow-hidden">
-              <SkeletonLoading />
+            <div className="pl-5 [&>div+div]:pt-3">
+              {Array(3)
+                .fill("")
+                .map((item, val) => (
+                  <div key={val} className="flex justify-between gap-10">
+                    <div className="w-[30%] h-2 rounded-full overflow-hidden">
+                      <SkeletonLoading />
+                    </div>
+                    <div className="w-[20%] h-2 rounded-full overflow-hidden">
+                      <SkeletonLoading />
+                    </div>
+                  </div>
+                ))}
             </div>
-          </div>
 
-          <div className="flex justify-between pt-3">
-            <div className="w-[30%] h-2 rounded-full overflow-hidden">
-              <SkeletonLoading />
+            <div className="flex justify-between gap-10">
+              <div className="w-[30%] h-2 rounded-full overflow-hidden">
+                <SkeletonLoading />
+              </div>
+              <div className="w-[40%] h-2 rounded-full overflow-hidden">
+                <SkeletonLoading />
+              </div>
             </div>
-            <div className="w-[50%] h-2 rounded-full overflow-hidden">
-              <SkeletonLoading />
-            </div>
-          </div>
-          <div className="flex justify-between font-medium pt-3">
-            <div className="w-[60%] h-2 rounded-full overflow-hidden">
-              <SkeletonLoading />
-            </div>
-            <div className="w-[20%] h-2 rounded-full overflow-hidden">
-              <SkeletonLoading />
+            <div className="flex justify-between gap-10">
+              <div className="w-[30%] h-2 rounded-full overflow-hidden">
+                <SkeletonLoading />
+              </div>
+              <div className="w-[40%] h-2 rounded-full overflow-hidden">
+                <SkeletonLoading />
+              </div>
             </div>
           </div>
         </div>

@@ -1,16 +1,20 @@
 import clsx from "clsx";
 import SkeletonLoading from "components/SkeletonLoading";
 
-export default function LoadingNewsList() {
+interface Props {
+  number?: number;
+}
+
+export default function LoadingNewsList({ number = 8 }: Props) {
   return (
-    <div className="flex flex-wrap">
-      {Array(6)
+    <div className="flex flex-wrap w-full">
+      {Array(number)
         .fill("")
         .map((value, idx) => (
           <div
             key={idx}
             className={clsx(
-              "flex w-[calc(100%/3)] mb-[30px] ",
+              "flex w-[calc(100%/4)] mb-[30px] ",
               "max-md:w-[calc(100%/2)]",
               "max-sm:w-full"
             )}

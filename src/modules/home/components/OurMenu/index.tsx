@@ -3,9 +3,11 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import ListDishesPreview from "./components/ListDishesPreview";
+import DishesListPreview from "./components/DishesListPreview";
 import LoadingSetDish from "modules/menu/components/LoadingSetDish";
 import useGetListBuffetMenuPreview from "./hooks/useGetListBuffetMenuPreview";
+import { NavBarId } from "Layout/constant";
+import LoadingDishesList from "./components/LoadingDishesList";
 
 interface Props {
   slidesPerView: number | null;
@@ -45,7 +47,7 @@ export default function OurMenu({ slidesPerView }: Props) {
   };
 
   return (
-    <div id="our_menu" className="flex justify-center py-16 px-5">
+    <div id={NavBarId.OUR_MENU} className="flex justify-center py-16 px-5">
       <div className="flex flex-col max-w-[1200px] w-full items-center">
         <div className="capitalize">Our Menu</div>
         <div
@@ -74,7 +76,10 @@ export default function OurMenu({ slidesPerView }: Props) {
               Main Dishes
             </div>
             {status === "loading" ? (
-              <LoadingSetDish />
+              <div>
+                <LoadingSetDish />
+                <LoadingDishesList slidesPerView={slidesPerView} />
+              </div>
             ) : (
               <div
                 className={clsx(
@@ -101,7 +106,7 @@ export default function OurMenu({ slidesPerView }: Props) {
           </div>
         </div>
         {buffet && setDish && (
-          <ListDishesPreview
+          <DishesListPreview
             slidesPerView={slidesPerView}
             buffet={buffet}
             setDish={setDish}

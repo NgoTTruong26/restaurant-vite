@@ -13,11 +13,14 @@ interface Props {
 
 const GuestHeader: React.FC<Props> = (props: Props) => {
   return (
-    <div className="dropdown dropdown-hover h-full">
-      <label tabIndex={0} className="flex items-center h-full">
+    <div className=" dropdown dropdown-hover h-full [&>label>div>svg]:hover:animate-spin-180 [&>label>div>svg]:hover:rotate-180">
+      <label tabIndex={0} className="flex items-center h-full cursor-pointer">
         <div className="flex">Xem Thêm</div>
         <div className="pl-[5px]">
-          <IoIosArrowDown size={25} />
+          <IoIosArrowDown
+            className="rotate-0 transition duration-300"
+            size={25}
+          />
         </div>
       </label>
       <ul

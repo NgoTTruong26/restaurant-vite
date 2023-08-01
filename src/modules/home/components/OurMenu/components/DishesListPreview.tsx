@@ -3,7 +3,7 @@ import useGetSetDishPreview from "modules/home/components/OurMenu/hooks/useGetSe
 import React from "react";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ListDishesLoading from "./LoadingListDishes";
+import DishesListLoading from "./LoadingDishesList";
 
 interface Props {
   slidesPerView: number | null;
@@ -11,7 +11,7 @@ interface Props {
   setDish: string;
 }
 
-const ListDishesPreview: React.FC<Props> = ({
+const DishesListPreview: React.FC<Props> = ({
   slidesPerView,
   buffet,
   setDish,
@@ -21,7 +21,7 @@ const ListDishesPreview: React.FC<Props> = ({
   return (
     <div className="flex justify-center pb-5 w-full">
       {status === "loading" ? (
-        <ListDishesLoading slidesPerView={slidesPerView} />
+        <DishesListLoading slidesPerView={slidesPerView} />
       ) : (
         <div className="flex flex-col items-center w-full">
           {data?.map((setDish, idx) => (
@@ -69,4 +69,4 @@ const ListDishesPreview: React.FC<Props> = ({
   );
 };
 
-export default ListDishesPreview;
+export default DishesListPreview;

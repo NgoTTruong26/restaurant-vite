@@ -17,7 +17,7 @@ const DesktopNavbar: React.FC<Props> = ({
   handleClickIntoView,
 }) => {
   return (
-    <div className="flex flex-1 justify-center max-lg:hidden">
+    <div className="flex flex-1 justify-center max-xl:hidden">
       <div className="flex">
         {navbarWithIcons.map((item, idx) => (
           <Link

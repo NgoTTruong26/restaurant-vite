@@ -8,7 +8,7 @@ interface Props {
   slidesPerView: number | null;
 }
 
-const LoadingListDishes: React.FC<Props> = ({ slidesPerView }) => {
+const LoadingDishesList: React.FC<Props> = ({ slidesPerView }) => {
   return (
     <div className="flex flex-wrap w-full h-full">
       {Array(3)
@@ -62,4 +62,4 @@ const LoadingListDishes: React.FC<Props> = ({ slidesPerView }) => {
   );
 };
 
-export default LoadingListDishes;
+export default LoadingDishesList;

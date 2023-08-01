@@ -1,10 +1,11 @@
 import clsx from "clsx";
 import { contacts } from "../constant";
+import { NavBarId } from "Layout/constant";
 
 export default function ContactUs() {
   return (
     <div
-      id="address"
+      id={NavBarId.ADDRESS}
       className="flex justify-center items-center py-16 px-5 bg-[#eee]"
     >
       <div className="max-w-[1200px] w-full flex flex-col justify-center items-center">

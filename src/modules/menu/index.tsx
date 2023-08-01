@@ -8,7 +8,7 @@ import LoadingMenuBuffet from "./components/LoadingMenuBuffet";
 import SkeletonLoading from "components/SkeletonLoading";
 import LoadingSetDish from "./components/LoadingSetDish";
 import useGetListBuffetMenu from "./hooks/useGetBuffetMenu";
-import ListDish from "./components/ListDish";
+import DishesList from "./components/DishesList";
 
 const icons: Icons[] = [
   {
@@ -37,7 +37,7 @@ export default function Menu() {
   useEffect(() => {
     if (data) {
       const specialMenu = data.find((menu) => menu.special === true);
-      const specialSetDish = specialMenu?.setDishes.find(
+      const specialSetDish = specialMenu?.setDishes?.find(
         (menu) => menu.special === true
       );
 
@@ -51,7 +51,7 @@ export default function Menu() {
       setBuffet(argBuffet);
       if (data) {
         const specialMenu = data.find((menu) => menu.id === argBuffet);
-        const specialSetDish = specialMenu?.setDishes.find(
+        const specialSetDish = specialMenu?.setDishes?.find(
           (menu) => menu.special === true
         );
         setSetDish(specialSetDish?.id);
@@ -141,7 +141,7 @@ export default function Menu() {
                           "max-xs:flex-col max-xs:flex-nowrap max-xs:max-w-[70%] max-xs:w-full max-xs:[&>div]:w-full max-xs:[&>div]:text-center "
                         )}
                       >
-                        {buffetMenu.setDishes.map((item, idx) => (
+                        {buffetMenu?.setDishes?.map((item, idx) => (
                           <div
                             key={idx}
                             onClick={() => {
@@ -156,7 +156,7 @@ export default function Menu() {
                         ))}
                       </div>
                       {buffet && setDish && (
-                        <ListDish buffet={buffet} setDish={setDish} />
+                        <DishesList buffet={buffet} setDish={setDish} />
                       )}
                     </div>
                   )

@@ -2,6 +2,7 @@ import { Contact } from "interfaces/contact";
 import { ImHome } from "react-icons/im";
 import { BiFoodMenu, BiMap, BiNews, BiTimeFive } from "react-icons/bi";
 import { BsFacebook, BsTelephone } from "react-icons/bs";
+import { GiPartyPopper } from "react-icons/gi";
 import {
   AiFillLinkedin,
   AiOutlineInstagram,
@@ -13,6 +14,7 @@ import { ReactNode } from "react";
 import clsx from "clsx";
 import { LoginDropdown } from "./interfaces/loginDropdown";
 import { NavbarWithIcons } from "./interfaces/navbar";
+import { type } from "os";
 
 const enum ENavBar {
   HOME = "Trang Chủ",
@@ -21,15 +23,25 @@ const enum ENavBar {
   BOOKINGS = "Đặt Bàn",
   ADDRESS = "Địa Chỉ",
   PHONE_NUMBER = "Gọi Đặt Bàn",
+  EVENT = "Sự kiện",
 }
 
-const enum NavBarId {
+export const enum NavBarId {
   HOME = "home",
   OUR_MENU = "our_menu",
   NEWS = "news",
   BOOKINGS = "bookings",
   ADDRESS = "address",
+  EVENTS = "events",
 }
+
+export type TypeNavBarId =
+  | "home"
+  | "our_menu"
+  | "news"
+  | "bookings"
+  | "address"
+  | "events";
 
 export const navbarWithIcons: NavbarWithIcons[] = [
   {
@@ -43,15 +55,21 @@ export const navbarWithIcons: NavbarWithIcons[] = [
     id: NavBarId.OUR_MENU,
   },
   {
-    content: ENavBar.NEWS,
-    icons: <BiNews size={22} />,
-    id: NavBarId.NEWS,
+    content: ENavBar.EVENT,
+    icons: <GiPartyPopper size={22} />,
+    id: NavBarId.EVENTS,
   },
 
   {
     content: ENavBar.BOOKINGS,
     icons: <AiOutlineSchedule size={25} />,
     id: NavBarId.BOOKINGS,
+  },
+
+  {
+    content: ENavBar.NEWS,
+    icons: <BiNews size={22} />,
+    id: NavBarId.NEWS,
   },
 
   {

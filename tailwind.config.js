@@ -16,9 +16,22 @@ module.exports = {
           "50%": { transform: "translateX(-5px)" },
           "100%": { transform: "translateX(0px)" },
         },
+        "spin-180": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(180deg)" },
+        },
+        "drop-top": {
+          "0%": {
+            transform: "translateY(-100%) scale(0)",
+            opacity: 0,
+          },
+          "100%": { transform: "translateY(0%) scale(1)", opacity: 1 },
+        },
       },
       animation: {
         "transfer-left": "transfer-left 1s linear infinite",
+        "spin-180": "spin-180 0.3s linear",
+        "drop-top": "drop-top 0.3s linear",
       },
     },
     fontFamily: {

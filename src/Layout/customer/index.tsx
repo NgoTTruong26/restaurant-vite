@@ -1,10 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Footer from "./components/Footer";
-
-import { lazy } from "react";
-
-const Header = lazy(() => import("./components/header"));
+import Header from "./components/header";
 
 export default function HomeLayout() {
   return (

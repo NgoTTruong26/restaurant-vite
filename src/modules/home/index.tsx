@@ -9,6 +9,7 @@ import ContactUs from "./components/ContactUs";
 import Bookings from "./components/bookings";
 import { useEffect, useState } from "react";
 import NewsPreview from "./components/News/NewsPreview";
+import { NavBarId } from "Layout/constant";
 
 export default function Home() {
   const [slidesPerView, setSlidesPerView] = useState<number | null>(null);
@@ -48,7 +49,7 @@ export default function Home() {
 
   return (
     <div id="main">
-      <div id="home">
+      <div id={NavBarId.HOME}>
         <BannerSwiper />
         <AboutUs />
         <WhyUs />

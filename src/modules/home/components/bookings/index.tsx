@@ -1,14 +1,31 @@
 import useFormBooking from "./hooks/useFormBooking";
-import Column1 from "./Column1";
-import Column2 from "./Column2";
-import Column3 from "./Column3";
 import clsx from "clsx";
+import { NavBarId } from "Layout/constant";
+import Column1 from "./components/Column1";
+import Column2 from "./components/Column2";
+import Column3 from "./components/Column3";
+import { useState } from "react";
+import BookingsBill from "./components/bookingsBill/components/BookingsBill";
+import { CreateBookingDTO } from "./dto/booking.dto";
 
 export default function Bookings() {
-  const { methods, onSubmit } = useFormBooking();
+  const [showBill, setShowBill] = useState<boolean>(false);
+  const [dataBooking, setDataBooking] = useState<CreateBookingDTO>();
+
+  const { methods, bookingsForChildren } = useFormBooking();
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+
+    setDataBooking(data);
+    setShowBill(true);
+  };
 
   return (
-    <div id="bookings" className="flex justify-center items-center py-16 px-5">
+    <div
+      id={NavBarId.BOOKINGS}
+      className="flex justify-center items-center py-16 px-5"
+    >
       <div className="flex flex-col max-w-[1200px] w-full justify-center items-center">
         <div className="uppercase">Book A Table</div>
         <div className="font-amatic text-[48px] pb-5 text-center max-xs:text-[38px]">
@@ -29,11 +46,15 @@ export default function Bookings() {
             >
               <Column1 />
               <Column2 methods={methods} />
-              <Column3 methods={methods} />
+              <Column3
+                methods={methods}
+                bookingsForChildren={bookingsForChildren}
+              />
             </div>
           </form>
         </div>
       </div>
+      {showBill && dataBooking && <BookingsBill dataBooking={dataBooking} />}
     </div>
   );
 }

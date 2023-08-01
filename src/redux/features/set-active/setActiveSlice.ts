@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../Interfaces/RootState";
+import { TypeNavBarId } from "Layout/constant";
 
 export interface NavbarItemActiveState {
   navbarItemActive: string;
@@ -16,7 +17,7 @@ export const setActiveSlide = createSlice({
   name: "setActive",
   initialState,
   reducers: {
-    setNavbarItemActive: (state, actions: PayloadAction<string>) => {
+    setNavbarItemActive: (state, actions: PayloadAction<TypeNavBarId>) => {
       return {
         ...state,
         value: {

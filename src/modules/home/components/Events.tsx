@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { DealsEntity } from "interfaces/entities/DealsEntity";
 import clsx from "clsx";
+import { NavBarId } from "Layout/constant";
 
 interface Props {
   slidesPerView: number | null;
@@ -40,7 +41,7 @@ const data: DealsEntity[] = [
 export default function Events({ slidesPerView }: Props) {
   return (
     <div
-      id="news"
+      id={NavBarId.EVENTS}
       className="flex flex-col justify-center items-center bg-[#eee] py-16 px-5"
     >
       <div className="uppercase">Events</div>
@@ -75,7 +76,7 @@ export default function Events({ slidesPerView }: Props) {
               )}
             >
               <div className="absolute flex flex-col items-start bottom-[5%] left-[5%] right-[5%] text-[#fff]">
-                <div className="border-b-2 border-b-red pb-1 font-bold text-[28px] max-md:text-[22px]">
+                <div className="border-b-2 border-b-red pb-1 font-bold text-[28px] max-md:text-[22px] line-clamp-1">
                   {item.title}
                 </div>
                 <div className="line-clamp-2 text-left pt-3">

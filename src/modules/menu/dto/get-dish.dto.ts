@@ -1,4 +1,4 @@
-export interface GetListDishDTO {
+export interface GetDishesListDTO {
   dishes: GetDishDTO[];
   _count: {
     dishes: number;
@@ -27,6 +27,7 @@ export interface GetSetDishDTO {
 export interface GetBuffetMenuDTO {
   id: string;
   name: string;
+  price: number;
   image: string;
   special: boolean;
   setDishes?: GetSetDishDTO[];

@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { IAxiosResponse, api } from "configs/api";
-import { GetBuffetMenuDTO } from "modules/menu/dto/get-dish.dto";
+import { GetNewsDTO } from "modules/news/dto/get-news.dto";
 
-export default function useGetListBuffetMenuPreview() {
+export default function useGetPost(id?: string) {
   const { status, data, error, isFetching, isLoading } = useQuery({
-    queryKey: ["get_list_buffet_menu_preview"],
+    queryKey: ["get_post", id],
     queryFn: async () => {
-      const { data } = await api.get<IAxiosResponse<GetBuffetMenuDTO[]>>(
-        "/buffet/list-buffet-menu"
-      );
+      const { data } = await api.get<IAxiosResponse<GetNewsDTO>>(`/news/${id}`);
 
       return data.data;
     },

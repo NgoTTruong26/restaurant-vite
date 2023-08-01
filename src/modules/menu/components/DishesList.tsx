@@ -29,7 +29,7 @@ const ListDish: React.FC<Props> = ({ setDish, buffet }) => {
   return (
     <div className="py-10 w-full">
       <div className="flex flex-col items-center">
-        {status === "loading" || isLoading ? (
+        {status === "loading" ? (
           <LoadingDish />
         ) : (
           <>
@@ -44,6 +44,7 @@ const ListDish: React.FC<Props> = ({ setDish, buffet }) => {
             </div>
           </>
         )}
+
         <Button
           className={clsx("btn bg-red hover:bg-[#f43434]")}
           onClick={() => handleGetDishes()}

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { IAxiosResponse, api } from "configs/api";
-import { GetSetDishDTO } from "modules/menu/dto/dish.dto";
+import { GetSetDishDTO } from "modules/menu/dto/get-dish.dto";
 
 interface Props {
   buffet?: string;

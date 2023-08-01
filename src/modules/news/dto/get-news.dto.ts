@@ -6,3 +6,8 @@ export interface GetNewsDTO {
   content: string;
   createdAt: string;
 }
+
+export interface GetNewsListDTO {
+  newsList: GetNewsDTO[];
+  nextPage: number | null;
+}

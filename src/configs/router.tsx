@@ -3,8 +3,11 @@ import { createBrowserRouter } from "react-router-dom";
 import BookingLookup from "modules/bookingsLookup";
 import Menu from "modules/menu";
 import LayoutBackToHomePage from "Layout/backToHomePage";
-import News from "modules/news";
+
 import { lazy } from "react";
+import Post from "modules/news/components/posts/components/Post";
+import News from "modules/news";
+import Booking from "modules/booking";
 
 const HomeLayout = lazy(() => import("Layout/customer"));
 const Home = lazy(() => import("modules/home"));
@@ -26,7 +29,18 @@ export const router = createBrowserRouter([
         element: <BookingLookup />,
       },
       { path: "dish-menu", element: <Menu /> },
-      { path: "news", element: <News /> },
+      {
+        path: "booking-table",
+        element: <Booking />,
+      },
+      {
+        path: "news",
+        element: <News />,
+      },
+      {
+        path: "news/:id",
+        element: <Post />,
+      },
       {
         path: "user",
         children: [{ path: "profile", element: <UserProfile /> }],
