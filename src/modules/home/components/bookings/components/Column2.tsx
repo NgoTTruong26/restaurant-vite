@@ -7,21 +7,17 @@ import clsx from "clsx";
 import { queryClient } from "main";
 import { GetBuffetMenuDTO } from "modules/menu/dto/get-dish.dto";
 import { CreateBookingDTO } from "../dto/booking.dto";
+import useGetListBuffetMenuPreview from "../../OurMenu/hooks/useGetListBuffetMenuPreview";
 
 interface Props {
   methods: UseFormReturn<CreateBookingDTO>;
 }
 
 export default function Column2({ methods }: Props) {
-  const buffetMenus = queryClient.getQueryData<GetBuffetMenuDTO[]>([
-    "get_list_buffet_menu_preview",
-  ]);
-
-  console.log(
+  const buffetMenus =
     queryClient.getQueryData<GetBuffetMenuDTO[]>([
       "get_list_buffet_menu_preview",
-    ])
-  );
+    ]) || useGetListBuffetMenuPreview().data;
 
   return (
     <div

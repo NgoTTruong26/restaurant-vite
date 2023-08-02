@@ -6,7 +6,7 @@ import { CreateBookingDTO } from "../dto/booking.dto";
 export default function useFormBooking() {
   const methods = useForm<CreateBookingDTO>({
     defaultValues: {
-      buffetMenu: "",
+      buffetMenu: "default",
       phoneNumber: "",
       author: "",
       bookingTime: "",

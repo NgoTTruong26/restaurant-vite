@@ -4,8 +4,8 @@ import { NavBarId } from "Layout/constant";
 import Column1 from "./components/Column1";
 import Column2 from "./components/Column2";
 import Column3 from "./components/Column3";
-import { useState } from "react";
-import BookingsBill from "./components/bookingsBill/components/BookingsBill";
+import { useEffect, useState } from "react";
+import BookingBill from "./components/bookingsBill/components/BookingBill";
 import { CreateBookingDTO } from "./dto/booking.dto";
 
 export default function Bookings() {
@@ -14,11 +14,21 @@ export default function Bookings() {
 
   const { methods, bookingsForChildren } = useFormBooking();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  useEffect(() => {
+    if (showBill) {
+      document.body.classList.add("overflow-hidden", "touch-pan-y");
+      return;
+    }
+    document.body.classList.remove("overflow-hidden");
+  }, [showBill]);
 
+  const onSubmit = (data: CreateBookingDTO) => {
     setDataBooking(data);
     setShowBill(true);
+  };
+
+  const handleCloseBill = () => {
+    setShowBill(false);
   };
 
   return (
@@ -54,7 +64,12 @@ export default function Bookings() {
           </form>
         </div>
       </div>
-      {showBill && dataBooking && <BookingsBill dataBooking={dataBooking} />}
+      {showBill && dataBooking && (
+        <BookingBill
+          dataBooking={dataBooking}
+          handleCloseBill={handleCloseBill}
+        />
+      )}
     </div>
   );
 }

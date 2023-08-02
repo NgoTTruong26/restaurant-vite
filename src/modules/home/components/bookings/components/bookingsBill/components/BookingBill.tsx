@@ -2,19 +2,29 @@ import clsx from "clsx";
 import { AiOutlineUser } from "react-icons/ai";
 import { BiPhone, BiTime } from "react-icons/bi";
 import { BsCalendar2Date } from "react-icons/bs";
-
-import Button from "components/Button";
 import { CreateBookingDTO } from "modules/home/components/bookings/dto/booking.dto";
 import useGetBuffetMenu from "../hooks/useGetBuffetMenu";
+import { GrFormClose } from "react-icons/gr";
+import React, { useRef } from "react";
+import LoadingBookingBill from "./LoadingBookingBill";
+import useCreateBooking from "../hooks/useCreateBooking";
+import { toast } from "react-hot-toast";
 
 interface Props {
   dataBooking: CreateBookingDTO;
+  handleCloseBill: () => void;
 }
 
-export default function BookingsBill({ dataBooking }: Props) {
+const BookingBill: React.FC<Props> = ({ dataBooking, handleCloseBill }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
   const { data, status } = useGetBuffetMenu({
     idBuffetMenu: dataBooking.buffetMenu,
   });
+
+  const createBooking = useCreateBooking();
+
+  console.log(createBooking.status);
 
   const totalBill: number =
     dataBooking.bookingsForChildren.reduce((prevs: number, curr) => {
@@ -23,15 +33,62 @@ export default function BookingsBill({ dataBooking }: Props) {
       );
     }, (data?.price || 0) * dataBooking.numberPeople) * 1000;
 
-  return (
-    <div className="fixed top-0 flex w-full h-full items-center justify-center bg-[#0009] z-30">
-      <div className="bg-[#fff] max-h-[60vh] rounded-3xl border-2 border-[#eee] overflow-hidden ">
+  if (createBooking.status === "loading") {
+    toast.loading("Waiting...", { id: "loading_create_booking" });
+  }
+
+  const onSubmit = (dataBooking: CreateBookingDTO) => {
+    createBooking.mutate(dataBooking, {
+      onSuccess({ status }) {
+        console.log(status);
+
+        toast.success("Create Booking Success");
+      },
+      onError() {
+        toast.error("Create Booking Failed");
+      },
+      onSettled() {
+        toast.dismiss("loading_create_booking");
+        ref.current?.classList.add("!opacity-0");
+      },
+    });
+  };
+
+  return status === "loading" ? (
+    <LoadingBookingBill />
+  ) : (
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        ref.current?.classList.add("!opacity-0");
+      }}
+      className="fixed top-0 flex w-full h-full items-center justify-center bg-[#0009] z-30 px-5 "
+    >
+      <div
+        ref={ref}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        onTransitionEnd={() => {
+          handleCloseBill();
+        }}
+        className=" max-w-[700px] w-full animate-opacity bg-[#fff] max-h-[80vh] rounded-3xl border-2 border-[#eee] overflow-hidden opacity-100 transition-all duration-150"
+      >
         <div
           className={clsx(
-            "py-10 px-8 max-h-[60vh] overflow-y-auto ",
+            "relative py-10 px-8 max-h-[80vh] h-full overflow-y-auto ",
             "max-sm:p-5 "
           )}
         >
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+              ref.current?.classList.add("!opacity-0");
+            }}
+            className="sticky flex justify-end right-4 top-0 hover:cursor-pointer"
+          >
+            <GrFormClose size={25} />
+          </span>
           <div className="text-[38px] font-medium text-center max-sm:text-[28px]">
             My Order
           </div>
@@ -134,7 +191,6 @@ export default function BookingsBill({ dataBooking }: Props) {
                           SL:{" "}
                           {dataBooking.bookingsForChildren.reduce(
                             (prevs: number, curr) => {
-                              console.log(prevs, curr);
                               return prevs + curr.quantity;
                             },
                             dataBooking.numberPeople
@@ -160,15 +216,18 @@ export default function BookingsBill({ dataBooking }: Props) {
                       <div>Người Lớn:</div>
                       <div>{dataBooking.numberPeople}</div>
                     </div>
-                    {dataBooking.bookingsForChildren.map((children, idx) => (
-                      <div
-                        key={idx}
-                        className="flex gap-20 justify-between items-center"
-                      >
-                        <div>Trẻ Em {children.childrenCategory}:</div>
-                        <div>{children.quantity}</div>
-                      </div>
-                    ))}
+                    {dataBooking.bookingsForChildren.map(
+                      (children, idx) =>
+                        children.quantity > 0 && (
+                          <div
+                            key={idx}
+                            className="flex gap-20 justify-between items-center"
+                          >
+                            <div>Trẻ Em {children.childrenCategory}:</div>
+                            <div>{children.quantity}</div>
+                          </div>
+                        )
+                    )}
                   </div>
                 </div>
               </div>
@@ -200,26 +259,30 @@ export default function BookingsBill({ dataBooking }: Props) {
                     )}
                   </div>
                 </div>
-                {dataBooking.bookingsForChildren.map((children, idx) => (
-                  <div key={idx} className="flex gap-20 justify-between">
-                    <div className="flex gap-2 items-center">
-                      <div className="font-medium">
-                        {children.quantity} x Set trẻ em dưới 1m3 {data?.name}K
+                {dataBooking.bookingsForChildren.map(
+                  (children, idx) =>
+                    children.quantity > 0 && (
+                      <div key={idx} className="flex gap-20 justify-between">
+                        <div className="flex gap-2 items-center">
+                          <div className="font-medium">
+                            {children.quantity} x Set trẻ em dưới 1m3{" "}
+                            {data?.name}K
+                          </div>
+                          <div className="py-1 px-2 text-red bg-[#faebd7]">
+                            <div>-{children.deals}%</div>
+                          </div>
+                        </div>
+                        <div>
+                          {new Intl.NumberFormat().format(
+                            ((100 - children.deals) / 100) *
+                              (data?.price || 0) *
+                              children.quantity *
+                              1000
+                          )}
+                        </div>
                       </div>
-                      <div className="py-1 px-2 text-red bg-[#faebd7]">
-                        <div>-{children.deals}%</div>
-                      </div>
-                    </div>
-                    <div>
-                      {new Intl.NumberFormat().format(
-                        ((100 - children.deals) / 100) *
-                          (data?.price || 0) *
-                          children.quantity *
-                          1000
-                      )}
-                    </div>
-                  </div>
-                ))}
+                    )
+                )}
                 <div className="flex gap-20 justify-between">
                   <div className="font-medium">Thuế VAT 5%</div>
                   <div>{new Intl.NumberFormat().format(totalBill * 0.05)}</div>
@@ -237,10 +300,20 @@ export default function BookingsBill({ dataBooking }: Props) {
             </div>
           </div>
           <div className="flex justify-end pt-5 px-8">
-            <Button className="bg-red hover:!bg-[#e51717]">Xác Nhận</Button>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                onSubmit(dataBooking);
+              }}
+              className="p-3 font-medium text-[#ffffff] bg-red hover:!bg-[#e51717] rounded-xl cursor-pointer"
+            >
+              Xác nhận
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default BookingBill;

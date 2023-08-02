@@ -27,11 +27,16 @@ module.exports = {
           },
           "100%": { transform: "translateY(0%) scale(1)", opacity: 1 },
         },
+        opacity: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
       },
       animation: {
         "transfer-left": "transfer-left 1s linear infinite",
         "spin-180": "spin-180 0.3s linear",
         "drop-top": "drop-top 0.3s linear",
+        opacity: "opacity 0.15s linear",
       },
     },
     fontFamily: {

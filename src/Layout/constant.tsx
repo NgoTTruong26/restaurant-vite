@@ -41,7 +41,8 @@ export type TypeNavBarId =
   | "news"
   | "bookings"
   | "address"
-  | "events";
+  | "events"
+  | "";
 
 export const navbarWithIcons: NavbarWithIcons[] = [
   {

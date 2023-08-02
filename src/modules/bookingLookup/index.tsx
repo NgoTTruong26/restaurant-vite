@@ -1,19 +1,37 @@
 import clsx from "clsx";
 import Button from "components/Button";
 import { GoSearch } from "react-icons/go";
-import { useFormBookingLookup } from "./hooks/useFormBookingLookup";
-import { useState } from "react";
-import LoadingOrderDetail from "./components/LoadingOrderDetail";
+import {
+  InputBookingLookup,
+  useFormBookingLookup,
+} from "./hooks/useFormBookingLookup";
+import { useEffect, useState } from "react";
 import OrderDetails from "./components/OrderDetails";
 
 export default function BookingLookup() {
-  const { formState, methods, onSubmit } = useFormBookingLookup();
+  const { formState, methods } = useFormBookingLookup();
 
-  const [showOrder, setShowOrder] = useState<boolean>(true);
+  const [showOrder, setShowOrder] = useState<boolean>(false);
+
+  const [getBooking, setGetBooking] = useState<string>();
+
+  useEffect(() => {
+    if (showOrder) {
+      document.body.classList.add("overflow-hidden", "touch-pan-y");
+      return;
+    }
+    document.body.classList.remove("overflow-hidden");
+  }, [showOrder]);
 
   const handleCloseOrder = () => {
     setShowOrder(false);
   };
+
+  const onSubmit = (data: InputBookingLookup) => {
+    setGetBooking(data.idBooking);
+    setShowOrder(true);
+  };
+
   return (
     <div className="flex-1 flex items-center justify-center px-5 pt-36 pb-16">
       <div
@@ -70,8 +88,12 @@ export default function BookingLookup() {
             type="submit"
           />
         </form>
-        {showOrder && <OrderDetails handleCloseOrder={handleCloseOrder} />}
-        {!showOrder && <LoadingOrderDetail />}
+        {showOrder && getBooking && (
+          <OrderDetails
+            handleCloseOrder={handleCloseOrder}
+            getBooking={getBooking}
+          />
+        )}
       </div>
     </div>
   );

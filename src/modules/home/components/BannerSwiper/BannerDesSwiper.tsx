@@ -1,3 +1,4 @@
+import { TypeNavBarId } from "Layout/constant";
 import clsx from "clsx";
 import Button from "components/Button";
 import { BsPlayCircle } from "react-icons/bs";
@@ -16,6 +17,11 @@ export default function BannerDesSwiper() {
         <div className="flex items-center justify-evenly max-sm:flex-col">
           <div>
             <Button
+              onClick={() => {
+                document
+                  .querySelector(`#${"bookings" as TypeNavBarId}`)
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
               className={clsx(
                 "bg-[#ce1212] w-full rounded-full px-9 py-2 text-[#fff] shadow-xl shadow-[#ce121233] font-medium hover:bg-[#ce1212cc]"
               )}

@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setNavbarItemActive } from "redux/features/set-active/setActiveSlice";
 import { RootState } from "redux/app/store";
 import { useLocation } from "react-router-dom";
-import { loginDropdown, navbarWithIcons, userDropdown } from "Layout/constant";
+import {
+  TypeNavBarId,
+  loginDropdown,
+  navbarWithIcons,
+  userDropdown,
+} from "Layout/constant";
 import UserHeader from "./components/UserHeader";
 import GuestHeader from "./components/GuestHeader";
 import { NavbarWithIcons } from "Layout/interfaces/navbar";
@@ -55,7 +60,11 @@ export default function Header() {
               0.95 >=
               Math.ceil(window.pageYOffset)
           ) {
-            dispatch(setNavbarItemActive((listNodes[idx] as HTMLElement).id));
+            dispatch(
+              setNavbarItemActive(
+                (listNodes[idx] as HTMLElement).id as TypeNavBarId
+              )
+            );
             return;
           }
         }
@@ -81,7 +90,7 @@ export default function Header() {
           ?.scrollIntoView({ behavior: "smooth" });
     }
 
-    if (item.id) dispatch(setNavbarItemActive(item.id));
+    if (item.id) dispatch(setNavbarItemActive(item.id as TypeNavBarId));
   };
 
   return (
