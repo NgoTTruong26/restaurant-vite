@@ -18,12 +18,10 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
     getBooking: getBooking,
   });
 
-  console.log(data);
-
   const ref = useRef<HTMLDivElement>(null);
 
   const totalBill: number =
-    (data?.bookingsForChildren.reduce((prevs: number, curr) => {
+    (data?.bookingsForChildren?.reduce((prevs: number, curr) => {
       return (
         prevs +
         ((100 - curr.childrenCategory.deals) / 100) *

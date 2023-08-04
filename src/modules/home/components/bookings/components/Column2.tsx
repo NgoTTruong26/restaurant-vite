@@ -4,8 +4,6 @@ import { UseFormReturn } from "react-hook-form";
 
 import clsx from "clsx";
 
-import { queryClient } from "main";
-import { GetBuffetMenuDTO } from "modules/menu/dto/get-dish.dto";
 import { CreateBookingDTO } from "../dto/booking.dto";
 import useGetListBuffetMenuPreview from "../../OurMenu/hooks/useGetListBuffetMenuPreview";
 
@@ -14,10 +12,7 @@ interface Props {
 }
 
 export default function Column2({ methods }: Props) {
-  const buffetMenus =
-    queryClient.getQueryData<GetBuffetMenuDTO[]>([
-      "get_list_buffet_menu_preview",
-    ]) || useGetListBuffetMenuPreview().data;
+  const buffetMenus = useGetListBuffetMenuPreview().data;
 
   return (
     <div

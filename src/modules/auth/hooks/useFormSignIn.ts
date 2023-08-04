@@ -41,6 +41,10 @@ export function useFormSignIn() {
       },
       onError() {
         dispatch(setUser(null));
+        toast.error("Sign In Failure");
+      },
+      onSettled() {
+        toast.dismiss("loading_sign_in");
       },
     });
   };

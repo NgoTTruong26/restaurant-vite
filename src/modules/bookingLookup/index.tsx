@@ -33,10 +33,10 @@ export default function BookingLookup() {
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center px-5 pt-36 pb-16">
+    <div className="flex-1 flex items-center justify-center px-5 pt-36 pb-16 bg-[url('http://cdn.gastrotheme.com/wp/wp-content/uploads/2017/01/background-20.jpg')] bg-cover bg-bottom bg-no-repeat">
       <div
         className={clsx(
-          "flex flex-col max-w-[800px] w-full items-center border shadow-xl py-5 px-6 rounded-xl transition-all duration-500",
+          "flex flex-col bg-[#ffffff] max-w-[800px] w-full items-center border shadow-xl py-5 px-6 rounded-xl transition-all duration-500",
           " max-sm:py-2 max-sm:px-4"
         )}
       >

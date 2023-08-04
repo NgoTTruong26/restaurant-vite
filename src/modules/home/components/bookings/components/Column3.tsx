@@ -52,8 +52,6 @@ export default function Column3({ methods, bookingsForChildren }: Props) {
     []
   );
 
-  console.log(methods.formState.errors);
-
   return (
     <div
       className={clsx(

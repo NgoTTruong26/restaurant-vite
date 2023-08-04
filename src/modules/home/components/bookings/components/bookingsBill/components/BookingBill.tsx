@@ -24,8 +24,6 @@ const BookingBill: React.FC<Props> = ({ dataBooking, handleCloseBill }) => {
 
   const createBooking = useCreateBooking();
 
-  console.log(createBooking.status);
-
   const totalBill: number =
     dataBooking.bookingsForChildren.reduce((prevs: number, curr) => {
       return (
@@ -33,15 +31,12 @@ const BookingBill: React.FC<Props> = ({ dataBooking, handleCloseBill }) => {
       );
     }, (data?.price || 0) * dataBooking.numberPeople) * 1000;
 
-  if (createBooking.status === "loading") {
-    toast.loading("Waiting...", { id: "loading_create_booking" });
-  }
-
   const onSubmit = (dataBooking: CreateBookingDTO) => {
+    if (createBooking.status === "loading") {
+      toast.loading("Waiting...", { id: "loading_create_booking" });
+    }
     createBooking.mutate(dataBooking, {
-      onSuccess({ status }) {
-        console.log(status);
-
+      onSuccess() {
         toast.success("Create Booking Success");
       },
       onError() {

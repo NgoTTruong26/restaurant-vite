@@ -5,9 +5,14 @@ import { FcGoogle } from "react-icons/fc";
 import srcLogoT12 from "images/logoT12-2.png";
 import { useFormSignIn } from "modules/auth/hooks/useFormSignIn";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 export default function FormSignIn() {
   const { methods, onSubmit, formState, isLoading } = useFormSignIn();
+
+  if (isLoading) {
+    toast.loading("Waiting...", { id: "loading_sign_in" });
+  }
 
   return (
     <div className="flex flex-col justify-between w-[58%]">
@@ -69,7 +74,6 @@ export default function FormSignIn() {
               className="w-full bg-red hover:!bg-[#e51717]"
             />
           </div>
-          {!isLoading || <div className="w-full pt-12">Loading...</div>}
         </form>
         <div className="w-full pt-7">
           <Button

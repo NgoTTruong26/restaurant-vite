@@ -1,19 +1,15 @@
-import { useEffect } from "react";
+import AxiosInterceptorResponse from "configs/axiosInterceptor";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+
 import { RootState } from "redux/app/store";
 
-export default function UserProfile() {
-  const navigate = useNavigate();
-
+export default async function UserProfile() {
   const user = useSelector((state: RootState) => state.setUser.value);
 
-  if (!user) {
-    useEffect(() => {
-      navigate("/auth/sign-in");
-      return;
-    }, []);
-  }
+  // check refreshToken nếu k họp lệ bên be sẽ xóa refreshToken và accessToken và dùng hàm next(),
+  // bên service kiểm tra nếu k có accessToken sẽ trả về 200 data = null
+  await AxiosInterceptorResponse(() => {}).get("");
 
-  return <div>Profile</div>;
+  return user ? <div>Profile</div> : <Navigate to={"/auth/sign-in"} />;
 }

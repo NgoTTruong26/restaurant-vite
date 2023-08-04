@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "modules/user/interfaces/user.interface";
 
 const initialState: RootState<Omit<IUser, "accessToken"> | null> = {
-  value: null,
+  value: {} as IUser,
   status: "idle",
 };
 
