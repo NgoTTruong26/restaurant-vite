@@ -117,7 +117,7 @@ export default function Header() {
           handleClickIntoView={handleClickIntoView}
         />
         <div className="flex items-center">
-          {user ? (
+          {user?.id ? (
             <UserHeader
               dispatch={dispatch}
               router={router}

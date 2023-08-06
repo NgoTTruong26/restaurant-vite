@@ -10,10 +10,6 @@ import { toast } from "react-hot-toast";
 export default function FormSignIn() {
   const { methods, onSubmit, formState, isLoading } = useFormSignIn();
 
-  if (isLoading) {
-    toast.loading("Waiting...", { id: "loading_sign_in" });
-  }
-
   return (
     <div className="flex flex-col justify-between w-[58%]">
       <div className="w-full flex flex-col items-center">
