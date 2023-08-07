@@ -17,8 +17,9 @@ export default function useGetProfile({ userId }: Props) {
 
   const apiInterceptor = AxiosInterceptorResponse(() => {});
 
-  const token: string | null =
-    localStorage.getItem(import.meta.env.VITE_ACCESS_TOKEN) || null;
+  const token: string | null = localStorage.getItem(
+    import.meta.env.VITE_ACCESS_TOKEN
+  );
 
   const getProfile = useQuery({
     queryKey: [`get_profile_${userId}`],

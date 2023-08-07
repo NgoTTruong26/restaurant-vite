@@ -18,6 +18,7 @@ interface GetBookingsForChildren {
 export interface CreateBookingDTO {
   buffetMenu: string;
   phoneNumber: string;
+  userId?: string;
   author: string;
   bookingTime: string;
   bookingDate: string;

@@ -7,10 +7,14 @@ import Column3 from "./components/Column3";
 import { useEffect, useState } from "react";
 import BookingBill from "./components/bookingsBill/components/BookingBill";
 import { CreateBookingDTO } from "./dto/booking.dto";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/app/store";
 
 export default function Bookings() {
   const [showBill, setShowBill] = useState<boolean>(false);
   const [dataBooking, setDataBooking] = useState<CreateBookingDTO>();
+
+  const userId = useSelector((state: RootState) => state.setUser.value?.id);
 
   const { methods, bookingsForChildren } = useFormBooking();
 
@@ -23,7 +27,15 @@ export default function Bookings() {
   }, [showBill]);
 
   const onSubmit = (data: CreateBookingDTO) => {
-    setDataBooking(data);
+    setDataBooking(() => {
+      if (userId) {
+        return {
+          ...data,
+          userId,
+        };
+      }
+      return data;
+    });
     setShowBill(true);
   };
 

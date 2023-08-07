@@ -21,14 +21,14 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const totalBill: number =
-    (data?.bookingsForChildren?.reduce((prevs: number, curr) => {
+    data?.bookingsForChildren?.reduce((prevs: number, curr) => {
       return (
         prevs +
         ((100 - curr.childrenCategory.deals) / 100) *
           (data?.buffetMenu.price || 0) *
           curr.quantity
       );
-    }, (data?.buffetMenu.price || 0) * (data?.numberPeople || 0)) || 0) * 1000;
+    }, (data?.buffetMenu.price || 0) * (data?.numberPeople || 0)) || 0;
 
   return status === "loading" ? (
     <LoadingOrderDetail />
@@ -175,7 +175,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                               <div>
                                 Giá:{" "}
                                 {new Intl.NumberFormat().format(
-                                  data.buffetMenu.price * 1000
+                                  data.buffetMenu.price
                                 )}
                                 <span className="relative font-bold text-[12px] top-[-1.5px]">
                                   ₫
@@ -252,8 +252,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                       <div>
                         {new Intl.NumberFormat().format(
                           (data?.buffetMenu.price || 0) *
-                            (data?.numberPeople || 0) *
-                            1000
+                            (data?.numberPeople || 0)
                         )}
                       </div>
                     </div>
@@ -278,8 +277,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                                 ((100 - children.childrenCategory.deals) /
                                   100) *
                                   (data?.buffetMenu.price || 0) *
-                                  children.quantity *
-                                  1000
+                                  children.quantity
                               )}
                             </div>
                           </div>

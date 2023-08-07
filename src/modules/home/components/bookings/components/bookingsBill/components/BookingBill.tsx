@@ -5,7 +5,7 @@ import { BsCalendar2Date } from "react-icons/bs";
 import { CreateBookingDTO } from "modules/home/components/bookings/dto/booking.dto";
 import useGetBuffetMenu from "../hooks/useGetBuffetMenu";
 import { GrFormClose } from "react-icons/gr";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import LoadingBookingBill from "./LoadingBookingBill";
 import useCreateBooking from "../hooks/useCreateBooking";
 import { toast } from "react-hot-toast";
@@ -18,23 +18,28 @@ interface Props {
 const BookingBill: React.FC<Props> = ({ dataBooking, handleCloseBill }) => {
   const ref = useRef<HTMLDivElement>(null);
 
+  const createBooking = useCreateBooking();
+
+  useEffect(() => {
+    if (createBooking.isLoading) {
+      toast.loading("Waiting...", { id: "loading_create_booking" });
+    }
+  }, [createBooking.isLoading]);
+
   const { data, status } = useGetBuffetMenu({
     idBuffetMenu: dataBooking.buffetMenu,
   });
 
-  const createBooking = useCreateBooking();
-
-  const totalBill: number =
-    dataBooking.bookingsForChildren.reduce((prevs: number, curr) => {
+  const totalBill: number = dataBooking.bookingsForChildren.reduce(
+    (prevs: number, curr) => {
       return (
         prevs + ((100 - curr.deals) / 100) * (data?.price || 0) * curr.quantity
       );
-    }, (data?.price || 0) * dataBooking.numberPeople) * 1000;
+    },
+    (data?.price || 0) * dataBooking.numberPeople
+  );
 
   const onSubmit = (dataBooking: CreateBookingDTO) => {
-    if (createBooking.status === "loading") {
-      toast.loading("Waiting...", { id: "loading_create_booking" });
-    }
     createBooking.mutate(dataBooking, {
       onSuccess() {
         toast.success("Create Booking Success");
@@ -175,8 +180,7 @@ const BookingBill: React.FC<Props> = ({ dataBooking, handleCloseBill }) => {
                         <div>
                           <div>Set {data.name}K</div>
                           <div>
-                            Giá:{" "}
-                            {new Intl.NumberFormat().format(data.price * 1000)}
+                            Giá: {new Intl.NumberFormat().format(data.price)}
                             <span className="relative font-bold text-[12px] top-[-1.5px]">
                               ₫
                             </span>
@@ -250,7 +254,7 @@ const BookingBill: React.FC<Props> = ({ dataBooking, handleCloseBill }) => {
                   </div>
                   <div>
                     {new Intl.NumberFormat().format(
-                      (data?.price || 0) * dataBooking.numberPeople * 1000
+                      (data?.price || 0) * dataBooking.numberPeople
                     )}
                   </div>
                 </div>
@@ -271,8 +275,7 @@ const BookingBill: React.FC<Props> = ({ dataBooking, handleCloseBill }) => {
                           {new Intl.NumberFormat().format(
                             ((100 - children.deals) / 100) *
                               (data?.price || 0) *
-                              children.quantity *
-                              1000
+                              children.quantity
                           )}
                         </div>
                       </div>
