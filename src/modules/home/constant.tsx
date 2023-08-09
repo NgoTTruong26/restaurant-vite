@@ -1,7 +1,6 @@
 import { AiOutlineMail } from "react-icons/ai";
 import { BsMap, BsShare } from "react-icons/bs";
 import { IoCallOutline } from "react-icons/io5";
-import { Contact } from "interfaces/contact";
 import { ReactNode } from "react";
 
 const enum EContact {
@@ -9,6 +8,12 @@ const enum EContact {
   EMAIL = "Địa chỉ EMAIL",
   PHONENUMBER = "Số Điện Thoại",
   SCHEDULE = "Lịch Trình",
+}
+
+interface Contact<T> {
+  icons?: ReactNode;
+  title: string;
+  content: T;
 }
 
 export const contacts: Contact<ReactNode>[] = [

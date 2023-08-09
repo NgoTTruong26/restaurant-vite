@@ -7,7 +7,6 @@ import { setUser } from "redux/features/sign-in/setUserSlice";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "../services/useSignIn.service";
-import { useEffect } from "react";
 
 interface InputSignIn {
   username: string;
@@ -27,15 +26,10 @@ export function useFormSignIn() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading("Waiting...", { id: "loading_sign_in" });
-    }
-  }, [isLoading]);
-
   const onSubmit = (data: InputSignIn) => {
     mutate(data, {
       onSuccess({ data }) {
+        toast.success("Sign In Success");
         const { accessToken, ...user } = data.data!;
 
         localStorage.setItem(
@@ -43,12 +37,11 @@ export function useFormSignIn() {
           data.data!.accessToken
         );
         dispatch(setUser(user));
-        toast.success("Sign In Success");
         navigate("/", { replace: true });
       },
       onError() {
-        dispatch(setUser(null));
         toast.error("Sign In Failure");
+        dispatch(setUser(null));
       },
       onSettled() {
         toast.dismiss("loading_sign_in");

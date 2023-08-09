@@ -6,9 +6,16 @@ import srcLogoT12 from "images/logoT12-2.png";
 import { useFormSignIn } from "modules/auth/hooks/useFormSignIn";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
 export default function FormSignIn() {
   const { methods, onSubmit, formState, isLoading } = useFormSignIn();
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading("Waiting...", { id: "loading_sign_in" });
+    }
+  }, [isLoading]);
 
   return (
     <div className="flex flex-col justify-between w-[58%]">

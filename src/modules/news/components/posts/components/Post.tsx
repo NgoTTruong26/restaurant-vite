@@ -28,7 +28,7 @@ export default function Post() {
                 <div className="text-xl">
                   <Link
                     to={"/news"}
-                    className="hover:cursor-pointer hover:text-red border-b-2"
+                    className="hover:cursor-pointer hover:text-red hover:border-b"
                   >
                     Tin tức
                   </Link>
