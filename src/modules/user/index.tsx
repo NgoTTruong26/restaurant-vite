@@ -1,15 +1,32 @@
 import { useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-
 import { RootState } from "redux/app/store";
-import useGetProfile from "./hooks/useGetProfile";
 import SideBar from "./components/SideBar";
-import Profile from "./components/Profile";
-import SecurityAndConnectivity from "./components/SecurityAndConnectivity";
+import clsx from "clsx";
+import React, { useState } from "react";
+import { ESideBar } from "./constant";
+import AccountInformation from "./components/accountInformation";
+
+interface Components {
+  id: keyof typeof ESideBar;
+  component: React.ReactNode;
+}
 
 export default function UserProfile() {
   const user = useSelector((state: RootState) => state.setUser.value);
-  const { error, data } = useGetProfile({ userId: user?.id || "" });
+
+  const [utilities, setUtilities] = useState<keyof typeof ESideBar>("PROFILE");
+
+  const components: Components[] = [
+    {
+      id: "PROFILE",
+      component: <AccountInformation />,
+    },
+  ];
+
+  const handleSetUtilities = (value: keyof typeof ESideBar) => {
+    setUtilities(value);
+  };
 
   return !user ? (
     <Navigate to={"/auth/sign-in"} />
@@ -26,7 +43,7 @@ export default function UserProfile() {
           <span>{" > Thông tin tài khoản"}</span>
         </div>
         <div className="flex gap-5">
-          <div className="flex w-[20%]">
+          <div className={clsx("flex w-[20%]", "max-md:hidden")}>
             <div className="sticky top-24 w-full h-fit">
               <div className="flex items-center gap-3 mb-3">
                 <img
@@ -36,20 +53,21 @@ export default function UserProfile() {
                 />
                 <div className="flex flex-col">
                   <span>Tài Khoản của</span>
-                  <span className="font-medium">{`${data?.firstName} ${data?.lastName}`}</span>
+                  <span className="font-medium">{`${user?.firstName} ${user?.lastName}`}</span>
                 </div>
               </div>
-              <SideBar />
+              <SideBar
+                utilities={utilities}
+                handleSetUtilities={handleSetUtilities}
+              />
             </div>
           </div>
-          <div className="flex-1 h-full">
-            <div className="text-2xl mb-4">Thông tin tài khoản</div>
-            <div className="flex bg-[#ffffff] [&>div]:py-4 h-full shadow-xl rounded-2xl p-5">
-              <Profile />
-              <div className="my-4 border-l-2 border-l-[#ebebf0]"></div>
-              <SecurityAndConnectivity />
+
+          {components.map((val, idx) => (
+            <div key={idx} className="flex-1 h-full">
+              {utilities === val.id && val.component}
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

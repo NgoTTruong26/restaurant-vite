@@ -18,35 +18,38 @@ const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
       ...props
     },
     ref
-  ) => (
-    <>
-      <div className="relative w-full">
-        <input
-          ref={ref}
-          className={`w-full px-[12px] py-[6px] border border-[#b0bec5] rounded-lg leading-8 [&~label]:focus:bg-[#fff] [&~label]:focus:top-[-11px] [&~label]:focus:text-[11px] ${inputClassName}`}
-          id={id}
-          name={id}
-          {...props}
-        />
-        {label && (
-          <label
-            className={clsx(
-              `absolute text-[.875rem] font-medium px-1 mb-2 pointer-events-none bg-white top-[12px] left-3 text-[#777] transition-all ${
-                labelClassName ?? ""
-              }`,
-              {
-                "bg-[#fff] !top-[-11px] text-[11px]": watch,
-              }
-            )}
-            htmlFor={id}
-          >
-            {innerText}
-          </label>
-        )}
-      </div>
-      {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
-    </>
-  )
+  ) => {
+    return (
+      <>
+        <div className="relative w-full">
+          <input
+            ref={ref}
+            className={`w-full px-[12px] py-[6px] border border-[#b0bec5] rounded-lg leading-8 [&~label]:focus:bg-[#fff] [&~label]:focus:top-[-11px] [&~label]:focus:text-[11px] ${inputClassName}`}
+            id={id}
+            name={id}
+            {...props}
+          />
+          {label && (
+            <label
+              className={clsx(
+                `absolute text-[.875rem] font-medium px-1 mb-2 pointer-events-none bg-white top-[12px] left-3 text-[#777] transition-all ${
+                  labelClassName ?? ""
+                }`,
+                {
+                  "bg-[#fff] !top-[-11px] text-[11px]":
+                    watch || props.defaultValue,
+                }
+              )}
+              htmlFor={id}
+            >
+              {innerText}
+            </label>
+          )}
+        </div>
+        {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
+      </>
+    );
+  }
 );
 
 export default FieldOutline;

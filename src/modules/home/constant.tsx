@@ -10,13 +10,13 @@ const enum EContact {
   SCHEDULE = "Lịch Trình",
 }
 
-interface Contact<T> {
+export interface Contact<T, R> {
   icons?: ReactNode;
-  title: string;
+  title: R;
   content: T;
 }
 
-export const contacts: Contact<ReactNode>[] = [
+export const contacts: Contact<ReactNode, EContact>[] = [
   {
     icons: <BsMap size={25} />,
     title: EContact.ADDRESS,

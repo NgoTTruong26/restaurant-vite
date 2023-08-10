@@ -5,10 +5,16 @@ import { FcGoogle } from "react-icons/fc";
 import { IoMdNotifications } from "react-icons/io";
 import { RiBookReadFill } from "react-icons/ri";
 
-const enum ESideBar {
+export const enum ESideBar {
   PROFILE = "Thông tin tài khoản",
   NOTIFICATION = "Thông báo của tôi",
   ORDER_MANAGEMENT = "Quản lý đơn hàng",
+}
+
+const enum ELinkSideBar {
+  PROFILE = "",
+  NOTIFICATION = "notification",
+  ORDER_MANAGEMENT = "order-management",
 }
 
 const enum EConnectSociety {
@@ -16,7 +22,7 @@ const enum EConnectSociety {
   GOOGLE = "Google",
 }
 
-const enum EGender {
+export const enum EGender {
   MALE = "male",
   FEMALE = "female",
   OTHER = "other",
@@ -24,13 +30,14 @@ const enum EGender {
 
 interface SideBar {
   icons: ReactNode;
-  title: string;
-  href: string;
+  title: ESideBar;
+  id: keyof typeof ESideBar;
+  href: ELinkSideBar;
 }
 
-interface IconWithTitle {
+interface IconWithTitle<T> {
   icons: ReactNode;
-  title: string;
+  title: T;
 }
 
 interface Gender {
@@ -42,21 +49,24 @@ export const sideBar: SideBar[] = [
   {
     icons: <BiSolidUser size={25} />,
     title: ESideBar.PROFILE,
-    href: "",
+    id: "PROFILE",
+    href: ELinkSideBar.PROFILE,
   },
   {
     icons: <IoMdNotifications size={25} />,
     title: ESideBar.NOTIFICATION,
-    href: "notification",
+    id: "NOTIFICATION",
+    href: ELinkSideBar.NOTIFICATION,
   },
   {
     icons: <RiBookReadFill size={25} />,
     title: ESideBar.ORDER_MANAGEMENT,
-    href: "order-management",
+    id: "ORDER_MANAGEMENT",
+    href: ELinkSideBar.ORDER_MANAGEMENT,
   },
 ];
 
-export const connectSociety: IconWithTitle[] = [
+export const connectSociety: IconWithTitle<EConnectSociety>[] = [
   {
     icons: <BsFacebook className="text-[#1877f2]" size={25} />,
     title: EConnectSociety.FACEBOOK,

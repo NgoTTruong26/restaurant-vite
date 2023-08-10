@@ -1,4 +1,3 @@
-import { Contact } from "interfaces/contact";
 import { ImHome } from "react-icons/im";
 import { BiFoodMenu, BiMap, BiNews, BiTimeFive } from "react-icons/bi";
 import { BsFacebook, BsTelephone } from "react-icons/bs";
@@ -14,7 +13,7 @@ import { ReactNode } from "react";
 import clsx from "clsx";
 import { LoginDropdown } from "./interfaces/loginDropdown";
 import { NavbarWithIcons } from "./interfaces/navbar";
-import { type } from "os";
+import { Contact } from "modules/home/constant";
 
 const enum ENavBar {
   HOME = "Trang Chủ",
@@ -99,7 +98,7 @@ enum EContact {
   FOLLOW_US = "Theo dõi chúng tôi",
 }
 
-export const contacts: Contact<string | ReactNode>[] = [
+export const contacts: Contact<string | ReactNode, EContact>[] = [
   {
     icons: <BiMap size={35} />,
     title: EContact.ADDRESS,

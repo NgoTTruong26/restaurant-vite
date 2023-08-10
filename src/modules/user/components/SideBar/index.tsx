@@ -1,23 +1,32 @@
-import { Link } from "react-router-dom";
-import { sideBar } from "../../constant";
+import { ESideBar, sideBar } from "../../constant";
 import clsx from "clsx";
+import React from "react";
 
-export default function SideBar() {
+interface Props {
+  handleSetUtilities: (val: keyof typeof ESideBar) => void;
+  utilities: keyof typeof ESideBar;
+}
+
+const SideBar: React.FC<Props> = ({ handleSetUtilities, utilities }) => {
   return (
     <ul className="[&>li]:px-3 [&>li]:py-2">
       {sideBar.map((val, idx) => (
         <li
+          onClick={() => handleSetUtilities(val.id)}
           key={idx}
-          className={clsx({
-            "text-red border border-red rounded-2xl bg-[#fee]": idx === 0,
+          className={clsx("hover:cursor-pointer", {
+            "text-red border border-red rounded-2xl bg-[#fee]":
+              utilities === val.id,
           })}
         >
-          <Link to={val.href} className="flex gap-6">
+          <div className="flex gap-6">
             <span>{val.icons}</span>
             <span>{val.title}</span>
-          </Link>
+          </div>
         </li>
       ))}
     </ul>
   );
-}
+};
+
+export default SideBar;
