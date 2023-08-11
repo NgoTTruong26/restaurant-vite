@@ -4,23 +4,39 @@ import Months from "components/Date/Months";
 import Years from "components/Date/Years";
 import FieldOutline from "components/field/FieldOutline";
 import { gender } from "../../../constant";
-import { IUser } from "modules/user/interfaces/user.interface";
-import {
-  InputUpdateProfile,
-  useFormUpdateProfile,
-} from "../hooks/useFormUpdateProfile";
+import { useFormUpdateProfile } from "../hooks/useFormUpdateProfile";
+import { IUpdateProfileDTO } from "modules/user/dto/update-profile.dto";
+import { GetUserProfileDTO } from "../dto/get-user.dto";
+import useUpdateProfile from "../hooks/useUpdateProfile";
 
 interface Props {
-  data: Omit<IUser, "accessToken">;
+  data: GetUserProfileDTO;
+}
+
+export interface IInputProfileDTO {
+  lastname: string;
+  firstname: string;
+  day: string;
+  month: string;
+  year: string;
+  gender: string;
+  nationality: string;
 }
 
 export default function Profile({ data }: Props) {
   const { formState, methods } = useFormUpdateProfile();
 
-  console.log(methods.watch());
+  const { mutate } = useUpdateProfile();
 
-  const onSubmit = (data: InputUpdateProfile) => {
-    console.log(data);
+  const onSubmit = (input: IInputProfileDTO) => {
+    mutate(
+      { ...input, id: data.id },
+      {
+        onSuccess: (data) => {
+          console.log(data.data);
+        },
+      }
+    );
   };
 
   return (
@@ -91,14 +107,41 @@ export default function Profile({ data }: Props) {
                 )}
               >
                 <Days
+                  defaultValue={
+                    data.dateBirth
+                      ? new Date(data.dateBirth).getUTCDate()
+                      : "default"
+                  }
+                  month={
+                    methods.watch("month") ||
+                    (data.dateBirth
+                      ? (new Date(data.dateBirth).getUTCMonth() + 1).toString()
+                      : undefined)
+                  }
+                  year={
+                    methods.watch("year") ||
+                    (data.dateBirth
+                      ? new Date(data.dateBirth).getUTCFullYear().toString()
+                      : undefined)
+                  }
                   error={formState.errors.day}
                   {...methods.register("day")}
                 />
                 <Months
+                  defaultValue={
+                    (data.dateBirth
+                      ? new Date(data.dateBirth).getUTCMonth() + 1
+                      : methods.watch("month")) || "default"
+                  }
                   error={formState.errors.month}
                   {...methods.register("month")}
                 />
                 <Years
+                  defaultValue={
+                    (data.dateBirth
+                      ? new Date(data.dateBirth).getUTCFullYear()
+                      : methods.watch("year")) || "default"
+                  }
                   error={formState.errors.year}
                   {...methods.register("year")}
                 />
@@ -118,7 +161,8 @@ export default function Profile({ data }: Props) {
                       <input
                         type="radio"
                         id="gender"
-                        defaultValue={val.value}
+                        value={val.value}
+                        defaultChecked={val.value === data.gender?.gender}
                         className="radio checked:bg-red-500"
                         {...methods.register("gender")}
                       />
@@ -132,14 +176,15 @@ export default function Profile({ data }: Props) {
               <div>Quốc tịch</div>
               <div className={clsx("flex-1")}>
                 <select
+                  defaultValue={data.nationality || "default"}
                   className="select select-bordered w-full max-w-md"
                   {...methods.register("nationality")}
                 >
-                  <option disabled selected>
+                  <option value={"default"} disabled>
                     Chọn quốc tịch
                   </option>
-                  <option>Việt Nam</option>
-                  <option>Hàn Quốc</option>
+                  <option value={"vietnam"}>Việt Nam</option>
+                  <option value={"korea"}>Hàn Quốc</option>
                 </select>
               </div>
             </div>

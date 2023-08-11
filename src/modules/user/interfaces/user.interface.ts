@@ -10,6 +10,7 @@ export interface IUser {
   age: number | null;
   email: string | null;
   phone: string | null;
+  nationality: string | null;
   createdAt: Date;
   updatedAt: Date;
   accessToken: string;

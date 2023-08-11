@@ -7,10 +7,11 @@ const Months = React.forwardRef<HTMLSelectElement, PropsFieldSelect>(
       <div className="flex flex-col">
         <select
           ref={ref}
+          defaultValue={props.defaultValue}
           className="select select-bordered select-sm w-full max-w-xs"
           {...props}
         >
-          <option disabled selected>
+          <option value="default" disabled>
             Tháng
           </option>
           {Array(12)

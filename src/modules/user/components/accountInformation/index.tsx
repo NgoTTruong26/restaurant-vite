@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import Profile from "./components/Profile";
 import SecurityAndConnectivity from "./components/SecurityAndConnectivity";
-import useGetProfile from "modules/user/hooks/useGetProfile";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/app/store";
+import useGetUserProfile from "./hooks/useGetUserProfile";
 
 export default function AccountInformation() {
   const user = useSelector((state: RootState) => state.setUser.value);
 
-  const { error, data } = useGetProfile({ userId: user?.id || "" });
+  const { error, data } = useGetUserProfile({ userId: user?.id || "" });
 
   return (
     <>

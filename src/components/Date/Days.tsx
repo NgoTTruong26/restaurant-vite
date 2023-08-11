@@ -3,12 +3,14 @@ import { PropsFieldSelect } from "./interfaces/PropsFieldSelect.interface";
 import React from "react";
 
 interface Props extends PropsFieldSelect {
-  year?: number;
-  month?: number;
+  year?: string;
+  month?: string;
 }
 
-function GetDaysInMonth(year: number, month: number) {
-  const daysInMonth = new Date(year, month, 0).getDate();
+function GetDaysInMonth(year: string, month: string) {
+  const daysInMonth = new Date(parseInt(year), parseInt(month), 0).getDate();
+
+  console.log(new Date(parseInt(year), parseInt(month)));
 
   return Array(daysInMonth)
     .fill("")
@@ -16,30 +18,29 @@ function GetDaysInMonth(year: number, month: number) {
 }
 
 const Days = React.forwardRef<HTMLSelectElement, Props>(
-  (
-    {
-      year = new Date().getUTCFullYear(),
-      month = new Date().getUTCMonth() + 1,
-      className,
-      error,
-      ...props
-    },
-    ref
-  ) => {
+  ({ year, month, className, error, ...props }, ref) => {
     return (
       <div className="flex flex-col">
         <select
           ref={ref}
+          defaultValue={props.defaultValue}
           className={clsx(
             "select select-bordered select-sm w-full max-w-xs",
             className
           )}
           {...props}
         >
-          <option disabled selected>
+          <option value="default" disabled>
             Ngày
           </option>
-          {GetDaysInMonth(year, month).map((val) => (
+          {GetDaysInMonth(
+            year && year !== "default"
+              ? year
+              : new Date().getUTCFullYear().toString(),
+            month && month !== "default"
+              ? month
+              : (new Date().getUTCMonth() + 1).toString()
+          ).map((val) => (
             <option key={val} value={val}>
               {val}
             </option>

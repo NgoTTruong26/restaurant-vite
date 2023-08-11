@@ -2,12 +2,12 @@ import { AiFillLock, AiOutlineMail } from "react-icons/ai";
 import { BsTelephone } from "react-icons/bs";
 import clsx from "clsx";
 import { connectSociety } from "modules/user/constant";
-import { IUser } from "modules/user/interfaces/user.interface";
 import ChangePassword from "./ChangePassword";
 import { useState } from "react";
+import { GetUserProfileDTO } from "../dto/get-user.dto";
 
 interface Props {
-  data: Omit<IUser, "accessToken">;
+  data: GetUserProfileDTO;
 }
 
 export default function SecurityAndConnectivity({ data }: Props) {
@@ -75,7 +75,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
               onClick={() => setShowChangePassword(true)}
               className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]"
             >
-              {"Cập nhật"}
+              Cập nhật
             </button>
           </div>
         </div>

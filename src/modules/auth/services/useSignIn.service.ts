@@ -1,10 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { SignInDTO } from "../dto/sign-in.dto";
 import { IAxiosResponse, api } from "configs/api";
-import { IAdmin } from "../dto/admin.dto";
+import { IUser } from "modules/user/interfaces/user.interface";
 
 export default function useSignIn() {
-  return useMutation((data: SignInDTO) =>
-    api.post<IAxiosResponse<IAdmin>>("/auth/sign-in", data)
+  return useMutation(
+    async (data: SignInDTO) =>
+      await api.post<IAxiosResponse<IUser>>("/auth/sign-in", data)
   );
 }
