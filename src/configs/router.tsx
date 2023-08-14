@@ -13,6 +13,9 @@ const Home = lazy(() => import("modules/home"));
 const SignIn = lazy(() => import("modules/auth/components/sign-in"));
 const SignUp = lazy(() => import("modules/auth/components/sign-up"));
 const UserProfile = lazy(() => import("modules/user"));
+export const AccountInformation = lazy(
+  () => import("modules/user/components/accountInformation")
+);
 
 export const router = createBrowserRouter([
   {

@@ -4,6 +4,7 @@ import AxiosInterceptorResponse from "configs/axiosInterceptor";
 import { IUpdateProfileDTO } from "modules/user/dto/update-profile.dto";
 import { GetUserProfileDTO } from "../dto/get-user.dto";
 import { DataUpdateDTO } from "../dto/update-user.dto";
+import { toast } from "react-hot-toast";
 
 export default function useUpdateProfile() {
   return useMutation(async (inputUpdateProfile: IUpdateProfileDTO) => {
@@ -20,11 +21,18 @@ export default function useUpdateProfile() {
         `${month}/${parseInt(day) + 1}/${year}`
       );
     }
-    console.log(dataUpdateProfile);
+    const data = await toast.promise(
+      AxiosInterceptorResponse(() => {}).put<IAxiosResponse<GetUserProfileDTO>>(
+        "users/update-profile",
+        dataUpdateProfile
+      ),
+      {
+        loading: "Loading",
+        success: "Update Profile Success",
+        error: "Update Profile failed",
+      }
+    );
 
-    const data = await AxiosInterceptorResponse(() => {}).put<
-      IAxiosResponse<GetUserProfileDTO>
-    >("users/update-profile", dataUpdateProfile);
     return data.data;
   });
 }

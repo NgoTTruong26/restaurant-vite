@@ -6,32 +6,52 @@ import {
   InputChangePassword,
   useFormChangePassword,
 } from "../hooks/useFormChangePassword";
+import useChangePassword from "../hooks/useChangePassword";
+import { GetUserProfileDTO } from "../dto/get-user.dto";
 
 interface Props {
   handleCloseShowChangePassword: () => void;
+
+  data: GetUserProfileDTO;
 }
 
-const ChangePassword: React.FC<Props> = ({ handleCloseShowChangePassword }) => {
+const ChangePassword: React.FC<Props> = ({
+  handleCloseShowChangePassword,
+  data,
+}) => {
   const { methods, formState } = useFormChangePassword();
+
+  const { mutate } = useChangePassword();
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const onSubmit = (data: InputChangePassword) => {
-    console.log(data);
-    handleCloseShowChangePassword();
+  const onSubmit = (dataInput: InputChangePassword) => {
+    mutate(
+      {
+        id: data.id,
+        password: dataInput.old_password,
+        newPassword: dataInput.new_password,
+        repeatNewPassword: dataInput.repeat_new_password,
+      },
+      {
+        onSettled: (res) => {
+          console.log(res);
+          handleCloseShowChangePassword();
+        },
+      }
+    );
   };
 
   return (
     <div
-      onClick={(e) => {
-        e.stopPropagation();
-        handleCloseShowChangePassword();
-      }}
       className={clsx(
         "flex justify-center items-center fixed top-0 left-0 z-20 w-full h-full bg-[#0009] overflow-hidden "
       )}
     >
       <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         ref={ref}
         className="z-30 px-5 max-w-[500px] w-full animate-drop-top opacity-100 transition-all duration-100"
       >

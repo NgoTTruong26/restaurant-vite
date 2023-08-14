@@ -1,9 +1,9 @@
 import { RootState } from "redux/Interfaces/RootState";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IUser } from "modules/user/interfaces/user.interface";
+import { GetPreviewProfileDTO } from "modules/user/components/accountInformation/dto/get-user.dto";
 
-const initialState: RootState<Omit<IUser, "accessToken"> | null> = {
-  value: {} as IUser,
+const initialState: RootState<GetPreviewProfileDTO | null> = {
+  value: {} as GetPreviewProfileDTO,
   status: "idle",
 };
 
@@ -11,10 +11,7 @@ export const setUserSlide = createSlice({
   name: "setUser",
   initialState,
   reducers: {
-    setUser: (
-      state,
-      actions: PayloadAction<Omit<IUser, "accessToken"> | null>
-    ) => {
+    setUser: (state, actions: PayloadAction<GetPreviewProfileDTO | null>) => {
       state.value = actions.payload;
     },
   },

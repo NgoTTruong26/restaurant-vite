@@ -6,11 +6,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "redux/features/sign-in/setUserSlice";
 import { useNavigate } from "react-router-dom";
 
-interface Props {
-  userId: string;
-}
-
-export default function useGetProfile({ userId }: Props) {
+export default function useGetProfile() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -22,7 +18,7 @@ export default function useGetProfile({ userId }: Props) {
   );
 
   const getProfile = useQuery({
-    queryKey: [`get_profile_${userId}`],
+    queryKey: [`get_profile_${token}`],
     queryFn: async () => {
       try {
         const response = await apiInterceptor.get<

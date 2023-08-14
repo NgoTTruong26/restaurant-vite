@@ -26,25 +26,23 @@ export function useFormSignIn() {
 
   const navigate = useNavigate();
 
-  const onSubmit = (data: InputSignIn) => {
-    mutate(data, {
-      onSuccess({ data }) {
-        toast.success("Sign In Success");
-        const { accessToken, ...user } = data.data!;
+  const onSubmit = (inputSign: InputSignIn) => {
+    mutate(inputSign, {
+      onSuccess(data) {
+        const { accessToken, ...user } = data!;
 
         localStorage.setItem(
           import.meta.env.VITE_ACCESS_TOKEN,
-          data.data!.accessToken
+          data!.accessToken
         );
+
+        console.log(user, 123);
+
         dispatch(setUser(user));
         navigate("/", { replace: true });
       },
       onError() {
-        toast.error("Sign In Failure");
         dispatch(setUser(null));
-      },
-      onSettled() {
-        toast.dismiss("loading_sign_in");
       },
     });
   };

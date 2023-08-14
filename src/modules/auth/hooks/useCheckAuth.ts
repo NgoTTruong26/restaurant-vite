@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { IAxiosResponse, api } from "configs/api";
 import { useDispatch } from "react-redux";
 import { setUser } from "redux/features/sign-in/setUserSlice";
-import { IUser } from "modules/user/interfaces/user.interface";
 import AxiosInterceptorResponse from "configs/axiosInterceptor";
+import { GetPreviewProfileDTO } from "modules/user/components/accountInformation/dto/get-user.dto";
 
 export default function useCheckAuth() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function useCheckAuth() {
     queryKey: ["check_auth"],
     queryFn: async () => {
       const { data } = await apiInterceptor.get<
-        IAxiosResponse<Omit<IUser, "accessToken">>
+        IAxiosResponse<GetPreviewProfileDTO>
       >("/auth/profile", {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined,

@@ -13,3 +13,10 @@ export interface GetUserProfileDTO {
   phone: string | null;
   nationality: string | null;
 }
+
+export interface GetPreviewProfileDTO {
+  id: string;
+  firstName: string;
+  lastName: string;
+  nationality: string | null;
+}

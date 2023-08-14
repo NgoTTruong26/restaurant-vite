@@ -5,9 +5,12 @@ import Years from "components/Date/Years";
 import FieldOutline from "components/field/FieldOutline";
 import { gender } from "../../../constant";
 import { useFormUpdateProfile } from "../hooks/useFormUpdateProfile";
-import { IUpdateProfileDTO } from "modules/user/dto/update-profile.dto";
-import { GetUserProfileDTO } from "../dto/get-user.dto";
+import { GetPreviewProfileDTO, GetUserProfileDTO } from "../dto/get-user.dto";
 import useUpdateProfile from "../hooks/useUpdateProfile";
+import { useDispatch } from "react-redux";
+import { setUser } from "redux/features/sign-in/setUserSlice";
+import { queryClient } from "main";
+import { IUser } from "modules/user/interfaces/user.interface";
 
 interface Props {
   data: GetUserProfileDTO;
@@ -22,9 +25,10 @@ export interface IInputProfileDTO {
   gender: string;
   nationality: string;
 }
-
-export default function Profile({ data }: Props) {
+const Profile: React.FC<Props> = ({ data }) => {
   const { formState, methods } = useFormUpdateProfile();
+
+  const dispatch = useDispatch();
 
   const { mutate } = useUpdateProfile();
 
@@ -32,15 +36,23 @@ export default function Profile({ data }: Props) {
     mutate(
       { ...input, id: data.id },
       {
-        onSuccess: (data) => {
-          console.log(data.data);
+        onSuccess: async (dataRes) => {
+          console.log(dataRes, 123);
+
+          queryClient.setQueryData(
+            [`get_profile_user_${data.id}`],
+            dataRes.data
+          );
+          dispatch(
+            setUser(dataRes.data || (null as GetPreviewProfileDTO | null))
+          );
         },
       }
     );
   };
 
   return (
-    <div className="flex-1 pr-6 pl-4">
+    <div className="w-[50%] pr-6 pl-4 max-md:w-full">
       <div
         className={clsx(
           "text-lg pb-8",
@@ -202,4 +214,6 @@ export default function Profile({ data }: Props) {
       </form>
     </div>
   );
-}
+};
+
+export default Profile;

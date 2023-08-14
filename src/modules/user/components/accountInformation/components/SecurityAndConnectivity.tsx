@@ -18,7 +18,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
   };
 
   return (
-    <div className="pr-4 pl-6 flex-1">
+    <div className="w-[50%] pr-4 pl-6 max-md:w-full">
       <div>
         <div className="text-lg pb-5">Số điện thoại và Email</div>
         <div className="[&>div]:py-4">
@@ -82,6 +82,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
         {showChangePassword && (
           <ChangePassword
             handleCloseShowChangePassword={handleCloseShowChangePassword}
+            data={data}
           />
         )}
       </div>

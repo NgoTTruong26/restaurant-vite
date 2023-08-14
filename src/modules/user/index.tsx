@@ -3,26 +3,32 @@ import { Link, Navigate } from "react-router-dom";
 import { RootState } from "redux/app/store";
 import SideBar from "./components/SideBar";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ESideBar } from "./constant";
+import SVGLoading from "components/SVGLoading";
 import AccountInformation from "./components/accountInformation";
+import OrderManagement from "./components/OrderManagement";
 
 interface Components {
   id: keyof typeof ESideBar;
   component: React.ReactNode;
 }
 
+const components: Components[] = [
+  {
+    id: "PROFILE",
+    component: <AccountInformation />,
+  },
+  {
+    id: "ORDER_MANAGEMENT",
+    component: <OrderManagement />,
+  },
+];
+
 export default function UserProfile() {
   const user = useSelector((state: RootState) => state.setUser.value);
 
   const [utilities, setUtilities] = useState<keyof typeof ESideBar>("PROFILE");
-
-  const components: Components[] = [
-    {
-      id: "PROFILE",
-      component: <AccountInformation />,
-    },
-  ];
 
   const handleSetUtilities = (value: keyof typeof ESideBar) => {
     setUtilities(value);
@@ -31,8 +37,8 @@ export default function UserProfile() {
   return !user ? (
     <Navigate to={"/auth/sign-in"} />
   ) : (
-    <div className="flex justify-center min-h-screen pt-28 pb-72 bg-[#f5f5fa] px-5">
-      <div className="max-w-[1200px] w-full">
+    <div className="flex justify-center min-h-screen pt-28 pb-48 bg-[#f5f5fa] px-5">
+      <div className="flex flex-col max-w-[1200px] w-full">
         <div className="leading-[4]">
           <Link
             to={"/"}
@@ -42,33 +48,40 @@ export default function UserProfile() {
           </Link>
           <span>{" > Thông tin tài khoản"}</span>
         </div>
-        <div className="flex gap-5">
-          <div className={clsx("flex w-[20%]", "max-md:hidden")}>
-            <div className="sticky top-24 w-full h-fit">
-              <div className="flex items-center gap-3 mb-3">
-                <img
-                  className="w-12 h-12 rounded-full"
-                  src="https://lh5.googleusercontent.com/-mydS1cjmPIo/AAAAAAAAAAI/AAAAAAAAAco/ZYCSiYX747o/photo.jpg"
-                  alt="avatar"
-                />
-                <div className="flex flex-col">
-                  <span>Tài Khoản của</span>
-                  <span className="font-medium">{`${user?.firstName} ${user?.lastName}`}</span>
+        {user ? (
+          !user?.id ? (
+            <div className="flex-1 flex justify-center items-center bg-[#ffffff] shadow-xl rounded-2xl">
+              <SVGLoading className="[&>rect]:fill-[#f7462f]" />
+            </div>
+          ) : (
+            <div className="flex gap-5 w-full justify-between">
+              <div className={clsx("flex w-[20%]", "max-md:hidden")}>
+                <div className="sticky top-24 w-full h-fit">
+                  {user?.id && (
+                    <SideBar
+                      utilities={utilities}
+                      handleSetUtilities={handleSetUtilities}
+                      user={user}
+                    />
+                  )}
                 </div>
               </div>
-              <SideBar
-                utilities={utilities}
-                handleSetUtilities={handleSetUtilities}
-              />
-            </div>
-          </div>
 
-          {components.map((val, idx) => (
-            <div key={idx} className="flex-1 h-full">
-              {utilities === val.id && val.component}
+              <div className="w-[80%] max-md:w-full">
+                {components.map(
+                  (val, idx) =>
+                    utilities === val.id && (
+                      <div key={idx} className="w-full h-full">
+                        {val.component}
+                      </div>
+                    )
+                )}
+              </div>
             </div>
-          ))}
-        </div>
+          )
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

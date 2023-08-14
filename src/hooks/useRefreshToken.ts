@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { IAxiosResponse, api } from "configs/api";
 
 export default function useRefreshToken() {

@@ -6,11 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { setUser } from "redux/features/sign-in/setUserSlice";
 import { GetUserProfileDTO } from "../dto/get-user.dto";
 
-interface Props {
-  userId: string;
-}
-
-export default function useGetUserProfile({ userId }: Props) {
+export default function useGetUserProfile() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -22,7 +18,7 @@ export default function useGetUserProfile({ userId }: Props) {
   );
 
   const getProfile = useQuery({
-    queryKey: [`get_profile_user_${userId}`],
+    queryKey: [`get_profile_user_${token}`],
     queryFn: async () => {
       try {
         const response = await apiInterceptor.get<
@@ -45,6 +41,7 @@ export default function useGetUserProfile({ userId }: Props) {
     retry: 1,
     refetchOnWindowFocus: false,
     staleTime: 5000,
+    refetchOnMount: "always",
   });
 
   return getProfile;

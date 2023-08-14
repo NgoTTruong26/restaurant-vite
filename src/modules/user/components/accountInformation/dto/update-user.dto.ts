@@ -5,3 +5,10 @@ export interface DataUpdateDTO
   id: string;
   dateBirth?: Date;
 }
+
+export interface ChangePasswordDTO {
+  id: string;
+  password: string;
+  newPassword: string;
+  repeatNewPassword: string;
+}
