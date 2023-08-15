@@ -1,6 +1,6 @@
 import { GetBuffetMenuDTO } from "modules/menu/dto/get-dish.dto";
 import { GetChildrenCategoryDTO } from "./get-children-category.dto";
-import { GetBookingStatusDTO } from "./get-booking-status.dto";
+import { GetBookingStatusDTO } from "modules/user/components/OrderManagement/dto/booking-status.dto";
 
 interface CreateBookingsForChildren {
   childrenCategoryId: string;
