@@ -1,13 +1,38 @@
 import clsx from "clsx";
 import useGetBookingsTable from "../hooks/useGetBookings";
+import { useEffect, useState } from "react";
+import OrderDetails from "modules/bookingLookup/components/OrderDetails";
+import ReOrder from "./ReOrder";
 
 export default function ListBookingsTable() {
+  const [showOrder, setShowOrder] = useState<boolean>(false);
+
+  const [showReOrder, setShowReOrder] = useState<boolean>(false);
+
+  const [getBooking, setGetBooking] = useState<string>();
+
+  useEffect(() => {
+    if (showOrder) {
+      document.body.classList.add("overflow-hidden", "touch-pan-y");
+      return;
+    }
+    document.body.classList.remove("overflow-hidden");
+  }, [showOrder]);
+
   const { data } = useGetBookingsTable();
 
   console.log(data);
 
   // thêm status cancellation to db
   // tạo 1 route chỉ gọi những status khác cancellation
+
+  const handleCloseOrder = () => {
+    setShowOrder(false);
+  };
+
+  const handleCloseReOrder = () => {
+    setShowReOrder(false);
+  };
 
   return data ? (
     <div className="pt-5 [&>div+div]:mt-8">
@@ -66,9 +91,9 @@ export default function ListBookingsTable() {
           <div className="flex justify-end">
             <div className="flex flex-col gap-3">
               <div className="flex justify-center">
-                <div className="text-xl">
+                <div className="text-lg">
                   <span>Tổng tiền: </span>
-                  <span>
+                  <span className="text-[#ee4d2d] text-2xl">
                     {new Intl.NumberFormat().format(
                       booking.invoicePrice.price *
                         (booking.invoicePrice.VAT.tax / 100 + 1)
@@ -79,13 +104,19 @@ export default function ListBookingsTable() {
               </div>
               <div className={clsx("flex gap-5 pb-5 px-5", "max-xs:flex-col")}>
                 <button
-                  onClick={() => {}}
+                  onClick={() => {
+                    setGetBooking(booking.id);
+                    setShowReOrder(true);
+                  }}
                   className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]"
                 >
                   Đặt bàn lại
                 </button>
                 <button
-                  onClick={() => {}}
+                  onClick={() => {
+                    setGetBooking(booking.id);
+                    setShowOrder(true);
+                  }}
                   className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]"
                 >
                   Xem chi tiết
@@ -95,6 +126,23 @@ export default function ListBookingsTable() {
           </div>
         </div>
       ))}
+      {showOrder && getBooking && (
+        <div className="fixed top-0 left-0 right-0 z-30">
+          <OrderDetails
+            handleCloseOrder={handleCloseOrder}
+            getBooking={getBooking}
+          />
+        </div>
+      )}
+
+      {showReOrder && getBooking && (
+        <div className="fixed top-0 left-0 right-0 z-30">
+          <ReOrder
+            handleCloseOrder={handleCloseReOrder}
+            getBooking={getBooking}
+          />
+        </div>
+      )}
     </div>
   ) : (
     <></>

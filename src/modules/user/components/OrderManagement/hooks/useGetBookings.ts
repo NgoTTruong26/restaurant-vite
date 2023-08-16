@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { IAxiosResponse, api } from "configs/api";
+import { IAxiosResponse } from "configs/api";
 import { GetBookingDTO } from "../dto/get-booking.dto";
 import AxiosInterceptorResponse from "configs/axiosInterceptor";
 

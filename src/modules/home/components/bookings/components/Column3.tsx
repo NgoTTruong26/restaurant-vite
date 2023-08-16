@@ -6,7 +6,6 @@ import clsx from "clsx";
 import { BsPlusCircleDotted } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import SelectChildrenCategory from "./SelectChildrenCategory";
-import { GetChildrenCategoryDTO } from "../dto/get-children-category.dto";
 import { GrFormClose } from "react-icons/gr";
 import { CreateBookingDTO } from "../dto/booking.dto";
 
@@ -16,14 +15,16 @@ interface Props {
     CreateBookingDTO,
     "bookingsForChildren"
   >;
+  initChildrenCategoryId?: string[];
+  enoughtChildrenCategory?: boolean;
 }
 
-export interface ListChildrenCategory {
-  selectChildrenCategory: GetChildrenCategoryDTO[];
-  enough: boolean;
-}
-
-export default function Column3({ methods, bookingsForChildren }: Props) {
+export default function Column3({
+  methods,
+  bookingsForChildren,
+  initChildrenCategoryId,
+  enoughtChildrenCategory,
+}: Props) {
   const [visible, setVisible] = useState<boolean>(false);
 
   const [hiddenBtnAddChildren, setHiddenBtnAddChildren] =
@@ -47,10 +48,15 @@ export default function Column3({ methods, bookingsForChildren }: Props) {
 
   const selectChildrenCategoryById = bookingsForChildren.fields.reduce(
     (prevs: string[], curr) => {
-      return [...prevs, curr.childrenCategoryId];
+      if (!prevs.includes(curr.childrenCategoryId)) {
+        return [...prevs, curr.childrenCategoryId];
+      }
+      return prevs;
     },
-    []
+    initChildrenCategoryId || []
   );
+
+  console.log(enoughtChildrenCategory);
 
   return (
     <div
@@ -90,7 +96,7 @@ export default function Column3({ methods, bookingsForChildren }: Props) {
             </div>
           ))}
 
-          {!hiddenBtnAddChildren && (
+          {!enoughtChildrenCategory && !hiddenBtnAddChildren && (
             <div className={clsx("flex items-center", "[&>div+div]:ml-2")}>
               <div
                 onClick={() => handleVisible()}

@@ -99,7 +99,7 @@ const SelectChildrenCategory: React.FC<Props> = ({
       }}
       onTransitionEnd={() => handleVisible()}
       className={clsx(
-        "flex justify-center items-center fixed top-0 left-0 z-20 w-full h-full bg-[#0009] overflow-hidden "
+        "z-30 flex justify-center items-center fixed top-0 left-0 w-full h-full bg-[#0009] overflow-hidden "
       )}
     >
       <div
