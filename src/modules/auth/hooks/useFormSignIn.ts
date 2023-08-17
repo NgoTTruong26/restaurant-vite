@@ -36,8 +36,6 @@ export function useFormSignIn() {
           data!.accessToken
         );
 
-        console.log(user, 123);
-
         dispatch(setUser(user));
         navigate("/", { replace: true });
       },

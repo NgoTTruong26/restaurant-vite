@@ -9,7 +9,6 @@ export default function useCheckAuth() {
   const dispatch = useDispatch();
 
   const apiInterceptor = AxiosInterceptorResponse(() => {});
-  console.log(123);
 
   const token: string | null =
     localStorage.getItem(import.meta.env.VITE_ACCESS_TOKEN) || null;

@@ -21,8 +21,6 @@ export default function ListBookingsTable() {
 
   const { data } = useGetBookingsTable();
 
-  console.log(data);
-
   // thêm status cancellation to db
   // tạo 1 route chỉ gọi những status khác cancellation
 
@@ -79,7 +77,6 @@ export default function ListBookingsTable() {
               <p className="whitespace-nowrap">
                 SL:{" "}
                 {booking.bookingsForChildren.reduce((prevs: number, curr) => {
-                  console.log(prevs, curr);
                   return prevs + curr.quantity;
                 }, booking.numberPeople)}
               </p>

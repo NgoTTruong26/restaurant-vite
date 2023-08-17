@@ -56,8 +56,6 @@ export default function Column3({
     initChildrenCategoryId || []
   );
 
-  console.log(enoughtChildrenCategory);
-
   return (
     <div
       className={clsx(

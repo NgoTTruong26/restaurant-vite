@@ -14,8 +14,6 @@ export default function Sidebar({ idPost }: Props) {
     idPost,
   });
 
-  console.log(status, isLoading);
-
   return (
     <div className="p-3 bg-[#eee] rounded-lg sticky top-24 font-semibold">
       {status === "loading" ? (

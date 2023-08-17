@@ -73,6 +73,7 @@ export default function Column2({ methods }: Props) {
       <div>
         <select
           className="select select-bordered w-full"
+          value={methods.watch("buffetMenu")}
           {...methods.register("buffetMenu")}
         >
           <option value="default" disabled>

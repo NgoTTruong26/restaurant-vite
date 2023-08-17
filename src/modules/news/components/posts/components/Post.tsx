@@ -9,8 +9,6 @@ export default function Post() {
 
   const { data, status } = useGetPost(id);
 
-  console.log(data);
-
   return (
     <div className="flex-1 flex justify-center bg-[#eee] pt-36 pb-16 px-5">
       <div

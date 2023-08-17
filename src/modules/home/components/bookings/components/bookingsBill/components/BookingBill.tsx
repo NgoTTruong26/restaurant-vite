@@ -67,14 +67,15 @@ const BookingBill: React.FC<Props> = ({ dataBooking, handleCloseBill }) => {
               "max-sm:p-5 "
             )}
           >
-            <span
-              onClick={(e) => {
-                e.stopPropagation();
-                ref.current?.classList.add("!opacity-0");
-              }}
-              className="sticky flex justify-end right-4 top-0 hover:cursor-pointer"
-            >
-              <GrFormClose size={25} />
+            <span className="sticky flex justify-end right-4 top-0 ">
+              <GrFormClose
+                className="hover:cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  ref.current?.classList.add("!opacity-0");
+                }}
+                size={25}
+              />
             </span>
             <div className="text-[38px] font-medium text-center max-sm:text-[28px]">
               My Order

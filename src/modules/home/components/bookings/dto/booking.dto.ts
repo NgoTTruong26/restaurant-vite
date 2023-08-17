@@ -2,29 +2,21 @@ import { GetBuffetMenuDTO } from "modules/menu/dto/get-dish.dto";
 import { GetChildrenCategoryDTO } from "./get-children-category.dto";
 import { GetBookingStatusDTO } from "modules/user/components/OrderManagement/dto/booking-status.dto";
 
-interface CreateBookingsForChildren {
-  childrenCategoryId: string;
-  childrenCategory: string;
-  deals: number;
-  quantity: number;
+export interface GetVATDTO {
+  id: string;
+  tax: number;
 }
 
-interface GetBookingsForChildren {
-  id: "clkpj9kej0003vv8s0jjekl3d";
-  quantity: 3;
+export interface GetInvoicePriceDTO {
+  id: string;
+  price: number;
+  VAT: GetVATDTO;
+}
+
+export interface GetBookingsForChildren {
+  id: string;
   childrenCategory: GetChildrenCategoryDTO;
-}
-
-export interface CreateBookingDTO {
-  buffetMenu: string;
-  phoneNumber: string;
-  userId?: string;
-  author: string;
-  bookingTime: string;
-  bookingDate: string;
-  numberPeople: number;
-  note?: string;
-  bookingsForChildren: CreateBookingsForChildren[];
+  quantity: number;
 }
 
 export interface GetBookingDTO {
@@ -38,4 +30,25 @@ export interface GetBookingDTO {
   note?: string;
   bookingsForChildren: GetBookingsForChildren[];
   bookingStatus: GetBookingStatusDTO;
+  invoicePrice: GetInvoicePriceDTO;
+  cancellation: boolean;
+}
+
+export interface CreateBookingsForChildren {
+  childrenCategoryId: string;
+  childrenCategory: string;
+  deals: number;
+  quantity: number;
+}
+
+export interface CreateBookingDTO {
+  buffetMenu: string;
+  phoneNumber: string;
+  userId?: string;
+  author: string;
+  bookingTime: string;
+  bookingDate: string;
+  numberPeople: number;
+  note?: string;
+  bookingsForChildren: CreateBookingsForChildren[];
 }

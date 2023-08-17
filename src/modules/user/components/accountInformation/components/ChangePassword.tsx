@@ -34,8 +34,7 @@ const ChangePassword: React.FC<Props> = ({
         repeatNewPassword: dataInput.repeat_new_password,
       },
       {
-        onSettled: (res) => {
-          console.log(res);
+        onSettled: () => {
           handleCloseShowChangePassword();
         },
       }
@@ -57,14 +56,15 @@ const ChangePassword: React.FC<Props> = ({
       >
         <div className="bg-[#ffffff] rounded-lg p-8 pb-3">
           <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <span
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCloseShowChangePassword();
-              }}
-              className="sticky flex justify-end right-4 top-0 hover:cursor-pointer"
-            >
-              <GrFormClose size={25} />
+            <span className="sticky flex justify-end right-4 top-0 ">
+              <GrFormClose
+                className="hover:cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCloseShowChangePassword();
+                }}
+                size={25}
+              />
             </span>
             <div className="mb-4 text-center text-2xl">Đổi mật khẩu</div>
             <div className="flex-1 flex flex-col items-center [&>div]:w-full [&>div]:mb-4 [&>div]:max-w-[350px]">

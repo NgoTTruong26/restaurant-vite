@@ -39,8 +39,6 @@ export default function Bookings() {
     setShowBill(true);
   };
 
-  console.log(methods.watch());
-
   const handleCloseBill = () => {
     setShowBill(false);
   };

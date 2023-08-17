@@ -15,7 +15,6 @@ export default function useGetSetDishPreview({ buffet, setDish }: Props) {
         `/buffet/dishes-preview?buffet_menu_id=${buffet}`
       );
 
-      console.log(data.data);
       return data.data;
     },
     retry: 1,

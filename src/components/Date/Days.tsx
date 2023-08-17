@@ -10,8 +10,6 @@ interface Props extends PropsFieldSelect {
 function GetDaysInMonth(year: string, month: string) {
   const daysInMonth = new Date(parseInt(year), parseInt(month), 0).getDate();
 
-  console.log(new Date(parseInt(year), parseInt(month)));
-
   return Array(daysInMonth)
     .fill("")
     .map((val, idx) => idx + 1);

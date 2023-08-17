@@ -31,7 +31,6 @@ export default function AxiosInterceptorResponse(onUnauthenticated: Function) {
     signout: Function
   ) => {
     const refreshToken = Cookies.get(ECookies.REFRESH_Token);
-    console.log(refreshToken);
 
     if (!refreshToken) {
       signout();
@@ -65,7 +64,6 @@ export default function AxiosInterceptorResponse(onUnauthenticated: Function) {
     signout: Function
   ) => {
     const refreshToken = Cookies.get(ECookies.REFRESH_Token);
-    console.log(refreshToken);
 
     if (!refreshToken) {
       signout();

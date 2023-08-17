@@ -37,8 +37,6 @@ const Profile: React.FC<Props> = ({ data }) => {
       { ...input, id: data.id },
       {
         onSuccess: async (dataRes) => {
-          console.log(dataRes, 123);
-
           queryClient.setQueryData(
             [`get_profile_user_${data.id}`],
             dataRes.data
