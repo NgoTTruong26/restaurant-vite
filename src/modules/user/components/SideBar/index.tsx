@@ -1,15 +1,16 @@
-import { ESideBar, sideBar } from "../../constant";
+import { sideBar } from "../../constant";
 import clsx from "clsx";
 import React from "react";
 import { GetPreviewProfileDTO } from "../accountInformation/dto/get-user.dto";
+import { Link, useLocation } from "react-router-dom";
 
 interface Props {
-  handleSetUtilities: (val: keyof typeof ESideBar) => void;
-  utilities: keyof typeof ESideBar;
   user: GetPreviewProfileDTO;
 }
 
-const SideBar: React.FC<Props> = ({ handleSetUtilities, utilities, user }) => {
+const SideBar: React.FC<Props> = ({ user }) => {
+  const location = useLocation();
+
   return (
     <>
       <div className="flex items-center gap-3 mb-3">
@@ -24,21 +25,36 @@ const SideBar: React.FC<Props> = ({ handleSetUtilities, utilities, user }) => {
         </div>
       </div>
 
-      <ul className="[&>li]:px-3 [&>li]:py-2">
+      <ul>
         {sideBar.map((val, idx) => (
-          <li
-            onClick={() => handleSetUtilities(val.id)}
-            key={idx}
-            className={clsx("hover:cursor-pointer", {
-              "text-red border border-red rounded-2xl bg-[#fee]":
-                utilities === val.id,
-            })}
-          >
-            <div className="flex gap-6">
-              <span>{val.icons}</span>
-              <span>{val.title}</span>
-            </div>
-          </li>
+          <div>
+            <li
+              key={idx}
+              className={clsx("hover:cursor-pointer [&>a]:px-3 [&>a]:py-2", {
+                "text-red border border-red rounded-2xl bg-[#fee]":
+                  `/user/${val.href}` === location.pathname,
+              })}
+            >
+              <Link to={val.href} className="flex gap-6">
+                <span>{val.icons}</span>
+                <span>{val.title}</span>
+              </Link>
+            </li>
+            {val.href === "profile" && (
+              <div
+                className={clsx("transition-all max-h-0 opacity-0 invisible", {
+                  "max-h-96 opacity-100 !visible":
+                    `/user/profile` === location.pathname,
+                })}
+              >
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+                <div>a</div>
+              </div>
+            )}
+          </div>
         ))}
       </ul>
     </>

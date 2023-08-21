@@ -1,38 +1,12 @@
 import { useSelector } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import { RootState } from "redux/app/store";
 import SideBar from "./components/SideBar";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
-import { ESideBar } from "./constant";
 import SVGLoading from "components/SVGLoading";
-import AccountInformation from "./components/accountInformation";
-import OrderManagement from "./components/OrderManagement";
-
-interface Components {
-  id: keyof typeof ESideBar;
-  component: React.ReactNode;
-}
-
-const components: Components[] = [
-  {
-    id: "PROFILE",
-    component: <AccountInformation />,
-  },
-  {
-    id: "ORDER_MANAGEMENT",
-    component: <OrderManagement />,
-  },
-];
 
 export default function UserProfile() {
   const user = useSelector((state: RootState) => state.setUser.value);
-
-  const [utilities, setUtilities] = useState<keyof typeof ESideBar>("PROFILE");
-
-  const handleSetUtilities = (value: keyof typeof ESideBar) => {
-    setUtilities(value);
-  };
 
   return !user ? (
     <Navigate to={"/auth/sign-in"} />
@@ -57,25 +31,12 @@ export default function UserProfile() {
             <div className="flex gap-5 w-full justify-between">
               <div className={clsx("flex w-[20%]", "max-md:hidden")}>
                 <div className="sticky top-24 w-full h-fit">
-                  {user?.id && (
-                    <SideBar
-                      utilities={utilities}
-                      handleSetUtilities={handleSetUtilities}
-                      user={user}
-                    />
-                  )}
+                  {user?.id && <SideBar user={user} />}
                 </div>
               </div>
 
               <div className="w-[80%] max-md:w-full">
-                {components.map(
-                  (val, idx) =>
-                    utilities === val.id && (
-                      <div key={idx} className="w-full h-full">
-                        {val.component}
-                      </div>
-                    )
-                )}
+                <Outlet />
               </div>
             </div>
           )

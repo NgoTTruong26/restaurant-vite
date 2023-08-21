@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { BiLockAlt, BiSolidUser } from "react-icons/bi";
+import { BiSolidUser } from "react-icons/bi";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { IoMdNotifications } from "react-icons/io";
@@ -11,8 +11,8 @@ export const enum ESideBar {
   ORDER_MANAGEMENT = "Quản lý đơn hàng",
 }
 
-const enum ELinkSideBar {
-  PROFILE = "",
+export const enum ELinkSideBar {
+  PROFILE = "profile",
   NOTIFICATION = "notification",
   ORDER_MANAGEMENT = "order-management",
 }
@@ -31,7 +31,6 @@ export const enum EGender {
 interface SideBar {
   icons: ReactNode;
   title: ESideBar;
-  id: keyof typeof ESideBar;
   href: ELinkSideBar;
 }
 
@@ -49,19 +48,16 @@ export const sideBar: SideBar[] = [
   {
     icons: <BiSolidUser size={25} />,
     title: ESideBar.PROFILE,
-    id: "PROFILE",
     href: ELinkSideBar.PROFILE,
   },
   {
     icons: <IoMdNotifications size={25} />,
     title: ESideBar.NOTIFICATION,
-    id: "NOTIFICATION",
     href: ELinkSideBar.NOTIFICATION,
   },
   {
     icons: <RiBookReadFill size={25} />,
     title: ESideBar.ORDER_MANAGEMENT,
-    id: "ORDER_MANAGEMENT",
     href: ELinkSideBar.ORDER_MANAGEMENT,
   },
 ];

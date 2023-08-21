@@ -28,13 +28,12 @@ const GuestHeader: React.FC<Props> = (props: Props) => {
         className="bg-[#eee] top-10 right-0 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 "
       >
         {loginDropdown.map((item, idx) => (
-          <li key={idx}>
+          <li key={idx} className="[&>a+a]:mt-1">
             <Link
               to={item.href}
               className={clsx(
                 "flex capitalize focus:bg-[#c7c8ca] hover:text-red",
                 {
-                  "mt-1": idx > 0,
                   "bg-[#c7c8ca]": item.href === props.router.pathname,
                 }
               )}
