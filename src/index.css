@@ -189,3 +189,13 @@ h1 {
     background-color: #dfdfdf;
   }
 }
+
+.admin-dashboard .title-admin-dashboard {
+  transform: translate3d(-25px, 0, 0);
+  opacity: 0;
+}
+
+.admin-dashboard:hover .title-admin-dashboard {
+  transform: translate3d(0px, 0, 0);
+  opacity: 1;
+}

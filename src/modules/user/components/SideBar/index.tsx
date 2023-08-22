@@ -40,20 +40,6 @@ const SideBar: React.FC<Props> = ({ user }) => {
                 <span>{val.title}</span>
               </Link>
             </li>
-            {val.href === "profile" && (
-              <div
-                className={clsx("transition-all max-h-0 opacity-0 invisible", {
-                  "max-h-96 opacity-100 !visible":
-                    `/user/profile` === location.pathname,
-                })}
-              >
-                <div>a</div>
-                <div>a</div>
-                <div>a</div>
-                <div>a</div>
-                <div>a</div>
-              </div>
-            )}
           </div>
         ))}
       </ul>

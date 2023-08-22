@@ -4,7 +4,11 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { RootState } from "redux/app/store";
 
-export default function AdminInfor() {
+interface Props {
+  handleSetSidebarMini: () => void;
+}
+
+const AdminInfor: React.FC<Props> = ({ handleSetSidebarMini }) => {
   const user = useSelector((state: RootState) => state.setUser.value);
 
   const location = useLocation();
@@ -34,10 +38,10 @@ export default function AdminInfor() {
             </div>
             <div
               className={clsx(
-                "title flex flex-col transition-all duration-300"
+                "title-admin-dashboard flex flex-col transition-all duration-300"
               )}
             >
-              <span className="font-medium text-base">{`${user?.firstName} ${user?.lastName}`}</span>
+              <span className=" font-medium text-base">{`${user?.firstName} ${user?.lastName}`}</span>
             </div>
           </div>
         </div>
@@ -63,7 +67,7 @@ export default function AdminInfor() {
                 className="flex items-center gap-3 py-3 px-2"
               >
                 <span className="flex justify-center w-12">{item.icons}</span>
-                <span className="title transition-all duration-300">
+                <span className="title-admin-dashboard transition-all duration-300">
                   {item.title}
                 </span>
               </Link>
@@ -71,13 +75,14 @@ export default function AdminInfor() {
           ))}
           <li className="flex items-center gap-3">
             <input
+              onChange={() => handleSetSidebarMini()}
               id="toggle-sidebar-mini"
               type="checkbox"
               className="toggle toggle-lg toggle-success"
             />
             <label
               htmlFor="toggle-sidebar-mini"
-              className="title transition-all duration-300 hover:cursor-pointer"
+              className="title-admin-dashboard transition-all duration-300 hover:cursor-pointer"
             >
               Sidebar Mini
             </label>
@@ -86,4 +91,6 @@ export default function AdminInfor() {
       </div>
     </div>
   );
-}
+};
+
+export default AdminInfor;

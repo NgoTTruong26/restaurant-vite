@@ -31,7 +31,7 @@ export default function Navbar() {
                 <span className="flex justify-center w-12 ">{item.icons}</span>
                 <span
                   className={clsx(
-                    "title translate-x-0 opacity-100 transition-all duration-300"
+                    "title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300"
                   )}
                 >
                   {item.title}
@@ -66,7 +66,7 @@ export default function Navbar() {
                   </span>
                   <span
                     className={clsx(
-                      "title translate-x-0 opacity-100 transition-all duration-300"
+                      "title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300"
                     )}
                   >
                     {item.title}
@@ -102,7 +102,7 @@ export default function Navbar() {
                           .map((val) => val[0])
                           .join("")}
                       </span>
-                      <span className="title transition-all duration-300">
+                      <span className="title-admin-dashboard transition-all duration-300">
                         {val.title}
                       </span>
                     </Link>
