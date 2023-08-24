@@ -64,7 +64,7 @@ export default function useGetDishes({
       },
       retry: 1,
       refetchOnWindowFocus: false,
-      staleTime: 5000 * 60 * 60,
+      staleTime: 5000,
     }
   );
 
