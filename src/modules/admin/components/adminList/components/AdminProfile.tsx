@@ -1,21 +1,18 @@
+import { GetAdminDTO } from "../dto/get-admins.dto";
+import { queryClient } from "main";
 import clsx from "clsx";
+import FieldOutline from "components/field/FieldOutline";
 import Days from "components/Date/Days";
 import Months from "components/Date/Months";
 import Years from "components/Date/Years";
-import FieldOutline from "components/field/FieldOutline";
-import { gender } from "../../../constant";
-import { useFormUpdateProfile } from "../hooks/useFormUpdateProfile";
-import { GetPreviewProfileDTO, GetUserProfileDTO } from "../dto/get-user.dto";
-import useUpdateProfile from "../hooks/useUpdateProfile";
-import { useDispatch } from "react-redux";
-import { setUser } from "redux/features/sign-in/setUserSlice";
-import { queryClient } from "main";
+import useUpdateAdminProfile from "../hooks/useUpdateAdminProfile";
+import { useFormUpdateAdminProfile } from "../hooks/useFormUpdateAdminProfile";
 
 interface Props {
-  data: GetUserProfileDTO;
+  data: GetAdminDTO;
 }
 
-export interface IInputProfileDTO {
+export interface IInputAdminProfileDTO {
   lastname: string;
   firstname: string;
   day: string;
@@ -24,26 +21,21 @@ export interface IInputProfileDTO {
   gender: string;
   nationality: string;
 }
-const Profile: React.FC<Props> = ({ data }) => {
-  const { formState, methods } = useFormUpdateProfile();
+const AdminProfile: React.FC<Props> = ({ data }) => {
+  const { formState, methods } = useFormUpdateAdminProfile();
 
-  const dispatch = useDispatch();
+  const { mutate } = useUpdateAdminProfile();
 
-  const { mutate } = useUpdateProfile();
-
-  const onSubmit = (input: IInputProfileDTO) => {
+  const onSubmit = (input: IInputAdminProfileDTO) => {
     mutate(
       { ...input, id: data.id },
       {
-        onSuccess: async (dataRes) => {
+        /* onSuccess: async (dataRes) => {
           queryClient.setQueryData(
             [`get_profile_user_${data.id}`],
             dataRes.data
           );
-          dispatch(
-            setUser(dataRes.data || (null as GetPreviewProfileDTO | null))
-          );
-        },
+        }, */
       }
     );
   };
@@ -56,7 +48,7 @@ const Profile: React.FC<Props> = ({ data }) => {
           "max-sm:text-center max-sm:pt-3 max-sm:bg-[#31b6e7] max-sm:text-[#ffffff] max-sm:rounded-t-3xl"
         )}
       >
-        Thông tin cá nhân
+        Thông tin Admin
       </div>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div>
@@ -110,7 +102,7 @@ const Profile: React.FC<Props> = ({ data }) => {
           <div className="[&>div]:mb-8">
             <div className="flex items-center gap-8 max-sm:flex-col max-xs:gap-3">
               <div className="max-sm:w-full ">Ngày sinh</div>
-              <div
+              {/* <div
                 className={clsx(
                   "flex w-full flex-1 gap-3 [&>div]:max-w-[150px] [&>div]:flex-1 "
                 )}
@@ -154,7 +146,7 @@ const Profile: React.FC<Props> = ({ data }) => {
                   error={formState.errors.year}
                   {...methods.register("year")}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="flex items-center gap-8 max-xs:flex-col max-xs:gap-3 max-xs:items-start">
               <div className="max-sm:w-full">Giới tính</div>
@@ -164,7 +156,7 @@ const Profile: React.FC<Props> = ({ data }) => {
                   "max-xs:flex-col max-xs:items-start"
                 )}
               >
-                {gender.map((val, idx) => (
+                {/* {gender.map((val, idx) => (
                   <div key={idx} className="form-control">
                     <label className="flex gap-3 label cursor-pointer">
                       <input
@@ -178,13 +170,13 @@ const Profile: React.FC<Props> = ({ data }) => {
                       <span className="label-text">{val.title}</span>
                     </label>
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
             <div className="flex items-center gap-8">
               <div>Quốc tịch</div>
               <div className={clsx("flex-1")}>
-                <select
+                {/*  <select
                   defaultValue={data.nationality || "default"}
                   className="select select-bordered w-full max-w-md"
                   {...methods.register("nationality")}
@@ -194,7 +186,7 @@ const Profile: React.FC<Props> = ({ data }) => {
                   </option>
                   <option value={"vietnam"}>Việt Nam</option>
                   <option value={"korea"}>Hàn Quốc</option>
-                </select>
+                </select> */}
               </div>
             </div>
           </div>
@@ -213,4 +205,4 @@ const Profile: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default Profile;
+export default AdminProfile;

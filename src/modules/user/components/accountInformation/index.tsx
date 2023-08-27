@@ -1,15 +1,11 @@
 import clsx from "clsx";
 import Profile from "./components/Profile";
 import SecurityAndConnectivity from "./components/SecurityAndConnectivity";
-import { useSelector } from "react-redux";
-import { RootState } from "redux/app/store";
 import useGetUserProfile from "./hooks/useGetUserProfile";
 import LoadingProfile from "./components/LoadingProfile";
 import LoadingSecurity from "./components/LoadingSecurity";
 
 export default function AccountInformation() {
-  const user = useSelector((state: RootState) => state.setUser.value);
-
   const { data, status } = useGetUserProfile();
 
   return (
@@ -22,20 +18,29 @@ export default function AccountInformation() {
         )}
       >
         {status === "loading" ? (
-          <LoadingProfile />
+          <>
+            <LoadingProfile />
+            <div
+              className={clsx(
+                "my-4 border-l-2 border-[#ebebf0]",
+                "max-md:border-l-0 max-md:border-t-2"
+              )}
+            ></div>
+            <LoadingSecurity />
+          </>
         ) : (
-          data && <Profile data={data} />
-        )}
-        <div
-          className={clsx(
-            "my-4 border-l-2 border-[#ebebf0]",
-            "max-md:border-l-0 max-md:border-t-2"
-          )}
-        ></div>
-        {status === "loading" ? (
-          <LoadingSecurity />
-        ) : (
-          data && <SecurityAndConnectivity data={data} />
+          data && (
+            <>
+              <Profile data={data} />
+              <div
+                className={clsx(
+                  "my-4 border-l-2 border-[#ebebf0]",
+                  "max-md:border-l-0 max-md:border-t-2"
+                )}
+              ></div>
+              <SecurityAndConnectivity data={data} />
+            </>
+          )
         )}
       </div>
     </>

@@ -17,7 +17,7 @@ import {
   ELinkSideBarAdminInfor,
   ELinkUserManagement,
 } from "Layout/admin/constant";
-import AdminList from "modules/admin/components/adminList";
+import AdminManagement from "modules/admin/components/adminList";
 
 //Layout
 const HomeLayout = lazy(() => import("Layout/customer"));
@@ -109,7 +109,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: ELinkAdminManagement.ADMIN_LIST,
-            element: <AdminList />,
+            element: <AdminManagement />,
           },
           {
             path: ELinkAdminManagement.ROLES_LIST,

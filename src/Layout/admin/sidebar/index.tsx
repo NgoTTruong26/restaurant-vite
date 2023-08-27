@@ -14,7 +14,7 @@ export default function Sidebar() {
   return (
     <div
       className={clsx(
-        "z-30 h-full bg-[url('https://demos.creative-tim.com//light-bootstrap-dashboard-pro-react/static/media/full-screen-image-3.21a228cd.jpg')] bg-cover bg-center bg-no-repeat",
+        "z-50 h-full bg-[url('https://demos.creative-tim.com//light-bootstrap-dashboard-pro-react/static/media/full-screen-image-3.21a228cd.jpg')] bg-cover bg-center bg-no-repeat",
         "fixed overflow-y-auto overflow-x-hidden",
         { "[&~div]:!w-[calc(100%-80px)]": isSidebarMini }
       )}
@@ -24,7 +24,7 @@ export default function Sidebar() {
           "relative w-[260px] text-[#ffffff] transition-all min-h-full ",
           "before:absolute before:top-0 before:left-0 before:bottom-0 before:bg-[#000] before:w-full before:opacity-30",
           {
-            "w-20": isSidebarMini,
+            "!w-20": isSidebarMini,
             "[&>div>div>div>div]:before:opacity-0": isSidebarMini,
             "hover:!w-[260px] [&:hover>div>div>div>div]:before:opacity-100":
               isSidebarMini,

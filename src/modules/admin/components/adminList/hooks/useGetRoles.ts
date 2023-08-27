@@ -3,11 +3,22 @@ import { IAxiosResponse, api } from "configs/api";
 import { GetRoleListDTO } from "../dto/get-roles.dto";
 
 export default function useGetRoles() {
+  const token: string | null = localStorage.getItem(
+    import.meta.env.VITE_ACCESS_TOKEN_ADMIN
+  );
+
+  console.log(token);
+
   const { status, data, error, isFetching, isLoading } = useQuery({
     queryKey: ["get_admin_roles"],
     queryFn: async () => {
       const { data } = await api.get<IAxiosResponse<GetRoleListDTO>>(
-        "admin/get-roles"
+        "admin/get-roles",
+        {
+          headers: {
+            admin_authorization: token ? `Bearer ${token}` : undefined,
+          },
+        }
       );
 
       return data.data;

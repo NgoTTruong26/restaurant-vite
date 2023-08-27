@@ -9,7 +9,6 @@ export interface GetUserProfileDTO {
     gender: string;
   } | null;
   email: string | null;
-  password: string;
   phone: string | null;
   nationality: string | null;
 }

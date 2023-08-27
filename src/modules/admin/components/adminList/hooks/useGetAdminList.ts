@@ -9,7 +9,7 @@ export default function useGetAdminList(page: number = 1, filterRole?: string) {
       : ["get_admin_list_page", page],
     queryFn: async () => {
       const { data } = await api.get<IAxiosResponse<GetAdminListDTO>>(
-        "/admin?page=" + page
+        `/admin?${!filterRole || `role=${filterRole}&`}page=${page}`
       );
 
       return data.data;
