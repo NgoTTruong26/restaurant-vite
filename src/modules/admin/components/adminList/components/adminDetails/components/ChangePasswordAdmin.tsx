@@ -2,12 +2,12 @@ import clsx from "clsx";
 import FieldOutline from "components/field/FieldOutline";
 import React, { useRef } from "react";
 import { GrFormClose } from "react-icons/gr";
-import { GetAdminDTO } from "../dto/get-admins.dto";
 import {
   InputChangePasswordAdmin,
   useFormChangePasswordAdmin,
-} from "../hooks/useFormChangePasswordAdmin";
-import useChangePasswordAdmin from "../hooks/useChangePasswordAdmin";
+} from "../../hooks/useFormChangePasswordAdmin";
+import useChangePasswordAdmin from "../../hooks/useChangePasswordAdmin";
+import { GetAdminDTO } from "../../../dto/get-admins.dto";
 
 interface Props {
   handleCloseShowChangePassword: () => void;

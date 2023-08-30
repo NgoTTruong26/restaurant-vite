@@ -1,18 +1,22 @@
 import clsx from "clsx";
 import LoadingProfile from "modules/user/components/accountInformation/components/LoadingProfile";
-import useGetAdminProfile from "../hooks/useGetAdminProfile";
 import LoadingSecurity from "modules/user/components/accountInformation/components/LoadingSecurity";
 import AdminProfile from "./AdminProfile";
 import AdminSecurityAndConnectivity from "./AdminSecurityAndConnectivity";
 import { GrFormClose } from "react-icons/gr";
+import useGetAdminProfile from "../../hooks/useGetAdminProfile";
 
 interface Props {
   adminId: string;
+  currPage: number;
+  filterRole?: string;
   handleCloseShowAdminProfile: () => void;
 }
 
 const AdminDetails: React.FC<Props> = ({
   adminId,
+  currPage,
+  filterRole,
   handleCloseShowAdminProfile,
 }) => {
   const { data, status } = useGetAdminProfile(adminId);
@@ -44,32 +48,34 @@ const AdminDetails: React.FC<Props> = ({
             </div>
           </>
         ) : (
-          data && (
-            <>
-              <span className="sticky top-0 flex justify-end float-right">
-                <GrFormClose
-                  className="hover:cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCloseShowAdminProfile();
-                  }}
-                  size={25}
-                />
-              </span>
+          <>
+            <span className="sticky top-0 flex justify-end float-right">
+              <GrFormClose
+                className="hover:cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCloseShowAdminProfile();
+                }}
+                size={25}
+              />
+            </span>
+            <div
+              className={clsx("w-full flex [&>div]:py-4", "max-md:flex-col")}
+            >
+              <AdminProfile data={data} />
               <div
-                className={clsx("w-full flex [&>div]:py-4", "max-md:flex-col")}
-              >
-                <AdminProfile data={data} />
-                <div
-                  className={clsx(
-                    "my-4 border-l-2 border-[#ebebf0]",
-                    "max-md:border-l-0 max-md:border-t-2"
-                  )}
-                ></div>
-                <AdminSecurityAndConnectivity data={data} />
-              </div>
-            </>
-          )
+                className={clsx(
+                  "my-4 border-l-2 border-[#ebebf0]",
+                  "max-md:border-l-0 max-md:border-t-2"
+                )}
+              ></div>
+              <AdminSecurityAndConnectivity
+                data={data}
+                currPage={currPage}
+                filterRole={filterRole}
+              />
+            </div>
+          </>
         )}
       </div>
     </div>

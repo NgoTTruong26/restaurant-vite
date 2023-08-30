@@ -3,8 +3,8 @@ import { IAxiosResponse } from "configs/api";
 import AxiosInterceptorResponse from "configs/axiosInterceptor";
 
 import { toast } from "react-hot-toast";
-import { ChangePasswordDTO } from "../dto/update-admin-profile.dto";
-import { GetAdminDTO } from "../dto/get-admins.dto";
+import { ChangePasswordDTO } from "../../dto/update-admin-profile.dto";
+import { GetAdminDTO } from "../../dto/get-admins.dto";
 
 export default function useChangePasswordAdmin() {
   return useMutation(async (inputChangePassword: ChangePasswordDTO) => {

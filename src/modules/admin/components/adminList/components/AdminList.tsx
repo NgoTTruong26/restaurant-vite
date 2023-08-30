@@ -2,7 +2,7 @@ import clsx from "clsx";
 import useGetAdminList from "../hooks/useGetAdminList";
 import LoadingAdminList from "./LoadingAdminList";
 import Button from "components/Button";
-import { useState } from "react";
+
 interface Props {
   currPage: number;
   filterRole?: string;
@@ -75,13 +75,15 @@ const AdminList: React.FC<Props> = ({
             <td>Male</td>
             <td>26/12/2001</td>
             <td>
-              {admin.roles.map((role, idx) => (
-                <span key={idx} className="badge badge-ghost badge-md">
-                  {role.role.position}
-                </span>
-              ))}
+              <div className="flex flex-wrap gap-2 max-h-12 max-w-[200px] overflow-x-auto">
+                {admin.roles.map((role, idx) => (
+                  <span key={idx} className="badge badge-ghost badge-md">
+                    {role.position}
+                  </span>
+                ))}
+              </div>
             </td>
-            <td>{admin.email}</td>
+            <td>{admin.email}@gamil.com</td>
             <td>{admin.phone}</td>
             <th>
               <Button

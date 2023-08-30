@@ -4,7 +4,7 @@ import AxiosInterceptorResponse from "configs/axiosInterceptor";
 import { IUpdateProfileDTO } from "modules/user/dto/update-profile.dto";
 import { toast } from "react-hot-toast";
 import { DataUpdateDTO } from "modules/user/components/accountInformation/dto/update-user.dto";
-import { GetAdminDTO } from "../dto/get-admins.dto";
+import { GetAdminDTO } from "../../dto/get-admins.dto";
 
 export default function useUpdateAdminProfile() {
   return useMutation(async (inputUpdateProfile: IUpdateProfileDTO) => {

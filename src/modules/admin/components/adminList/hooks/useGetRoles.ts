@@ -7,8 +7,6 @@ export default function useGetRoles() {
     import.meta.env.VITE_ACCESS_TOKEN_ADMIN
   );
 
-  console.log(token);
-
   const { status, data, error, isFetching, isLoading } = useQuery({
     queryKey: ["get_admin_roles"],
     queryFn: async () => {

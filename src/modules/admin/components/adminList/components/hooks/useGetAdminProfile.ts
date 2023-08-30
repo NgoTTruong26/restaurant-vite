@@ -4,7 +4,7 @@ import AxiosInterceptorResponse from "configs/axiosInterceptor";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "redux/features/sign-in/setUserSlice";
-import { GetAdminDTO } from "../dto/get-admins.dto";
+import { GetAdminDTO } from "../../dto/get-admins.dto";
 
 export default function useGetAdminProfile(adminId: string) {
   const dispatch = useDispatch();
@@ -16,8 +16,6 @@ export default function useGetAdminProfile(adminId: string) {
   const token: string | null = localStorage.getItem(
     import.meta.env.VITE_ACCESS_TOKEN_ADMIN
   );
-
-  console.log(token, 123);
 
   const getProfile = useQuery({
     queryKey: [`get_profile_admin_${adminId}`],

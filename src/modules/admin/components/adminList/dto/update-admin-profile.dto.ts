@@ -1,4 +1,4 @@
-import { IInputAdminProfileDTO } from "../components/AdminProfile";
+import { IInputAdminProfileDTO } from "../components/adminDetails/AdminProfile";
 
 export interface IUpdateAdminProfileDTO {
   id: string;

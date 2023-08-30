@@ -1,3 +1,4 @@
+import { GetGenderDTO } from "modules/user/components/accountInformation/dto/get-gender.dto";
 import { GetRoleDTO } from "./get-roles.dto";
 
 export interface GetAdminsByRoleDTO {
@@ -9,11 +10,12 @@ export interface GetAdminDTO {
   username: string;
   firstName: string;
   lastName: string;
+  dateBirth: Date | null;
+  gender: GetGenderDTO | null;
   email: string | null;
   phone: string | null;
-  roles: {
-    role: GetRoleDTO;
-  }[];
+  nationality: string | null;
+  roles: GetRoleDTO[];
 }
 
 export interface GetAdminListDTO {

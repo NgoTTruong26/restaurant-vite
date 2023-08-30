@@ -1,21 +1,18 @@
 import clsx from "clsx";
+import FieldOutline from "components/field/FieldOutline";
 import Days from "components/Date/Days";
 import Months from "components/Date/Months";
 import Years from "components/Date/Years";
-import FieldOutline from "components/field/FieldOutline";
-import { useFormUpdateProfile } from "../hooks/useFormUpdateProfile";
-import { GetPreviewProfileDTO, GetUserProfileDTO } from "../dto/get-user.dto";
-import useUpdateProfile from "../hooks/useUpdateProfile";
-import { useDispatch } from "react-redux";
-import { setUser } from "redux/features/sign-in/setUserSlice";
-import { queryClient } from "main";
-import useGetGenders from "../hooks/useGetGenders";
+import useUpdateAdminProfile from "../../hooks/useUpdateAdminProfile";
+import { useFormUpdateAdminProfile } from "../../hooks/useFormUpdateAdminProfile";
+import useGetGenders from "modules/user/components/accountInformation/hooks/useGetGenders";
+import { GetAdminDTO } from "../../../dto/get-admins.dto";
 
 interface Props {
-  data: GetUserProfileDTO;
+  data?: GetAdminDTO | null;
 }
 
-export interface IInputProfileDTO {
+export interface IInputAdminProfileDTO {
   lastname: string;
   firstname: string;
   day: string;
@@ -24,30 +21,27 @@ export interface IInputProfileDTO {
   gender: string;
   nationality: string;
 }
-const Profile: React.FC<Props> = ({ data }) => {
+const AdminProfile: React.FC<Props> = ({ data }) => {
   const genders = useGetGenders();
 
-  const { formState, methods } = useFormUpdateProfile();
+  const { formState, methods } = useFormUpdateAdminProfile();
 
-  const dispatch = useDispatch();
+  const { mutate } = useUpdateAdminProfile();
 
-  const { mutate } = useUpdateProfile();
-
-  const onSubmit = (input: IInputProfileDTO) => {
-    mutate(
-      { ...input, id: data.id },
-      {
-        onSuccess: (dataRes) => {
-          queryClient.setQueryData(
-            [`get_profile_user_${data.id}`],
-            dataRes.data
-          );
-          dispatch(
-            setUser(dataRes.data || (null as GetPreviewProfileDTO | null))
-          );
-        },
-      }
-    );
+  const onSubmit = (input: IInputAdminProfileDTO) => {
+    if (data) {
+      mutate(
+        { ...input, id: data.id },
+        {
+          /* onSuccess: async (dataRes) => {
+            queryClient.setQueryData(
+              [`get_profile_user_${data.id}`],
+              dataRes.data
+            );
+          }, */
+        }
+      );
+    }
   };
 
   return (
@@ -58,9 +52,9 @@ const Profile: React.FC<Props> = ({ data }) => {
           "max-sm:text-center max-sm:pt-3 max-sm:bg-[#31b6e7] max-sm:text-[#ffffff] max-sm:rounded-t-3xl"
         )}
       >
-        Thông tin cá nhân
+        Thông tin Admin
       </div>
-      {genders.data && (
+      {genders.data && data && (
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div>
             <div className={clsx("flex gap-7", "max-sm:flex-col")}>
@@ -90,9 +84,9 @@ const Profile: React.FC<Props> = ({ data }) => {
                     label
                     innerText="Họ"
                     inputClassName="focus:border-[#e11b1e] max-w-[350px]"
-                    watch={methods.watch("lastname")}
+                    /*  watch={methods.watch("lastname")}
                     error={formState.errors.lastname}
-                    {...methods.register("lastname")}
+                    {...methods.register("lastname")} */
                   />
                 </div>
                 <div>
@@ -103,9 +97,9 @@ const Profile: React.FC<Props> = ({ data }) => {
                     label
                     innerText="Tên"
                     inputClassName="focus:border-[#e11b1e] max-w-[350px]"
-                    watch={methods.watch("firstname")}
+                    /* watch={methods.watch("firstname")}
                     error={formState.errors.firstname}
-                    {...methods.register("firstname")}
+                    {...methods.register("firstname")} */
                   />
                 </div>
               </div>
@@ -138,8 +132,8 @@ const Profile: React.FC<Props> = ({ data }) => {
                         ? new Date(data.dateBirth).getUTCFullYear().toString()
                         : undefined)
                     }
-                    error={formState.errors.day}
-                    {...methods.register("day")}
+                    /* error={formState.errors.day}
+                    {...methods.register("day")} */
                   />
                   <Months
                     defaultValue={
@@ -147,8 +141,8 @@ const Profile: React.FC<Props> = ({ data }) => {
                         ? new Date(data.dateBirth).getUTCMonth() + 1
                         : methods.watch("month")) || "default"
                     }
-                    error={formState.errors.month}
-                    {...methods.register("month")}
+                    /* error={formState.errors.month}
+                    {...methods.register("month")} */
                   />
                   <Years
                     defaultValue={
@@ -156,8 +150,8 @@ const Profile: React.FC<Props> = ({ data }) => {
                         ? new Date(data.dateBirth).getUTCFullYear()
                         : methods.watch("year")) || "default"
                     }
-                    error={formState.errors.year}
-                    {...methods.register("year")}
+                    /* error={formState.errors.year}
+                    {...methods.register("year")} */
                   />
                 </div>
               </div>
@@ -221,4 +215,4 @@ const Profile: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default Profile;
+export default AdminProfile;

@@ -55,9 +55,7 @@ const HeaderAdminList: React.FC<Props> = ({
             "[&>option]:capitalize"
           )}
         >
-          <option value="default" disabled>
-            Filter By Roles
-          </option>
+          <option value="default">All</option>
           {data.roles.map((role, idx) => (
             <option key={idx} value={role.position}>
               {role.position}

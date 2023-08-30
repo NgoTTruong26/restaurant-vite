@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AdminList from "./components/AdminList";
 import HeaderAdminList from "./components/HeaderAdminList";
-import AdminDetails from "./components/AdminDetails";
+import AdminDetails from "./components/adminDetails/components/AdminDetails";
 
 export default function AdminManagement() {
   // logic checked all dùng hàm every check theo idx của hàm every
@@ -39,7 +39,7 @@ export default function AdminManagement() {
   const handleFilterByRole = (role: string) => {
     setFilterByRole(role);
     setCurrPage(1);
-    navigate("?role=" + role);
+    navigate(role !== "default" ? "?role=" + role : "");
   };
 
   const handleQueryForNavigate = (page: number) => {
@@ -137,6 +137,8 @@ export default function AdminManagement() {
         <AdminDetails
           handleCloseShowAdminProfile={handleCloseShowAdminProfile}
           adminId={getAdminId}
+          currPage={currPage}
+          filterRole={filterRole}
         />
       )}
     </div>
