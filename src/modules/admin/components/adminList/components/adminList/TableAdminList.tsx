@@ -1,50 +1,32 @@
-import clsx from "clsx";
-import useGetAdminList from "../hooks/useGetAdminList";
-import LoadingAdminList from "./LoadingAdminList";
-import Button from "components/Button";
-import HeaderAdminList from "./HeaderAdminList";
-import FooterAdminList from "./FooterAdminList";
-import { useDeleteCheckedAdmin } from "./hooks/useDeleteCheckedAdmin";
-import { useEffect, useRef, useState } from "react";
-import debounce from "lodash.debounce";
+import clsx from 'clsx';
+import Button from 'components/Button';
+import { GetAdminListDTO } from '../../dto/get-admins.dto';
+import { UseFieldArrayReturn } from 'react-hook-form';
+import {
+  IAdmin,
+  IInputDeleteCheckedAdmin,
+} from '../../dto/delete-admin-list.dto';
 
 interface Props {
-  currPage: number;
-  filterRole?: string;
-  handleFilterByRole: (role: string) => void;
-  handlePreviousPage: (previousPage: number | null) => void;
-  handleNextPage: (nextPage: number | null) => void;
-  handleSetPage: (page: number) => void;
+  data: GetAdminListDTO;
+  deleteCheckedAdmins: UseFieldArrayReturn<
+    IInputDeleteCheckedAdmin,
+    'admins',
+    'id'
+  >;
   handleGetAdminId: (adminId: string) => void;
 }
 
-const AdminList: React.FC<Props> = ({
-  currPage,
-  filterRole,
-  handleFilterByRole,
-  handlePreviousPage,
-  handleNextPage,
-  handleSetPage,
+const TableAdminList: React.FC<Props> = ({
+  data,
+  deleteCheckedAdmins,
   handleGetAdminId,
 }) => {
-  const [characters, setCharacters] = useState<string>();
+  console.log(deleteCheckedAdmins.fields);
 
-  const { data, status } = useGetAdminList(currPage, filterRole, characters);
-
-  const debouncedSearch = useRef(
-    debounce((value: string) => {
-      setCharacters(value);
-      if (currPage) handleSetPage(1);
-    }, 300)
-  ).current;
-
-  useEffect(() => {
-    debouncedSearch.cancel();
-  }, [debouncedSearch]);
-
-  console.log(characters, currPage);
-
-  const { deleteCheckedAdmins } = useDeleteCheckedAdmin();
+  const arrayAdmin: string[] = deleteCheckedAdmins.fields.map(
+    (admin) => admin.adminId,
+  );
 
   const handleChecked = (adminId: string) => {
     let index: number = 0;
@@ -67,13 +49,7 @@ const AdminList: React.FC<Props> = ({
 
   const isCheckedAll: () => boolean = () => {
     if (data) {
-      const arrayAdminRoles: string[] = deleteCheckedAdmins.fields.map(
-        (admin) => admin.adminId
-      );
-
-      return data.adminList.every((admin) =>
-        arrayAdminRoles.includes(admin.id)
-      );
+      return data.adminList.every((admin) => arrayAdmin.includes(admin.id));
     }
 
     return false;
@@ -82,14 +58,27 @@ const AdminList: React.FC<Props> = ({
   const handleCheckedAll = () => {
     if (data) {
       if (!isCheckedAll()) {
-        return deleteCheckedAdmins.replace(
-          data.adminList.map((admin) => ({
-            adminId: admin.id,
-          }))
+        return deleteCheckedAdmins.append(
+          data.adminList.reduce<IAdmin[]>((prevs, curr) => {
+            if (!arrayAdmin.includes(curr.id))
+              return [
+                ...prevs,
+                {
+                  adminId: curr.id,
+                },
+              ];
+            return prevs;
+          }, []),
         );
       }
 
-      return deleteCheckedAdmins.replace([]);
+      const arrayCurrentAdminData = data.adminList.map((admin) => admin.id);
+
+      return deleteCheckedAdmins.replace(
+        deleteCheckedAdmins.fields.filter(
+          (admin) => !arrayCurrentAdminData.includes(admin.adminId),
+        ),
+      );
     }
   };
 
@@ -97,23 +86,15 @@ const AdminList: React.FC<Props> = ({
     console.log(deleteCheckedAdmins.fields);
   };
 
-  return status === "loading" ? (
-    <LoadingAdminList />
-  ) : data ? (
+  return (
     <>
-      <HeaderAdminList
-        totalAdmin={data.totalAdmin}
-        filterRole={filterRole}
-        handleFilterByRole={handleFilterByRole}
-        handleSearch={debouncedSearch}
-      />
-      <div className="flex-1 overflow-x-auto overflow-y-hidden">
+      <div className="flex-1 overflow-x-auto overflow-y-auto">
         <table className="table w-full">
           {/* head */}
           <thead>
             <tr
               className={clsx(
-                "[&>th]:bg-[#ffffff] [&>th]:border-y-2 [&>th]:border-y-[#f2f2f2] [&>th]:uppercase"
+                '[&>th]:bg-[#ffffff] [&>th]:border-y-2 [&>th]:border-y-[#f2f2f2] [&>th]:uppercase',
               )}
             >
               <th>
@@ -184,7 +165,7 @@ const AdminList: React.FC<Props> = ({
                       </div>
                     </div>
                     <div>
-                      <div className="font-bold">{`${admin.firstName} ${admin.lastName}`}</div>
+                      <div className="font-bold">{`${admin.fullName}`}</div>
                       <div className="text-sm opacity-50">United States</div>
                     </div>
                   </div>
@@ -192,7 +173,7 @@ const AdminList: React.FC<Props> = ({
                 <td>Male</td>
                 <td>26/12/2001</td>
                 <td>
-                  <div className="flex flex-wrap gap-2 max-h-12 max-w-[200px] overflow-x-auto">
+                  <div className="flex flex-wrap gap-2 max-h-12 max-w-[200px] min-w-[90px] overflow-x-hidden">
                     {admin.roles.map((role, idx) => (
                       <span key={idx} className="badge badge-ghost badge-md">
                         {role.position}
@@ -216,17 +197,8 @@ const AdminList: React.FC<Props> = ({
           {/* foot */}
         </table>
       </div>
-      <FooterAdminList
-        data={data}
-        currPage={currPage}
-        handleNextPage={handleNextPage}
-        handlePreviousPage={handlePreviousPage}
-        handleSetPage={handleSetPage}
-      />
     </>
-  ) : (
-    <></>
   );
 };
 
-export default AdminList;
+export default TableAdminList;

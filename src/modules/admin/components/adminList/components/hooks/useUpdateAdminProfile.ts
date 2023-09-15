@@ -1,16 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
 import { IAxiosResponse } from "configs/api";
 import AxiosInterceptorResponse from "configs/axiosInterceptor";
-import { IUpdateProfileDTO } from "modules/user/dto/update-profile.dto";
 import { toast } from "react-hot-toast";
-import { DataUpdateDTO } from "modules/user/components/accountInformation/dto/update-user.dto";
 import { GetAdminDTO } from "../../dto/get-admins.dto";
+import {
+  DataUpdateAdminDTO,
+  IUpdateAdminProfileDTO,
+} from "../../dto/update-admin-profile.dto";
 
 export default function useUpdateAdminProfile() {
-  return useMutation(async (inputUpdateProfile: IUpdateProfileDTO) => {
+  return useMutation(async (inputUpdateProfile: IUpdateAdminProfileDTO) => {
     const { day, month, year, ...other } = inputUpdateProfile;
 
-    const dataUpdateProfile: DataUpdateDTO = {
+    const dataUpdateProfile: DataUpdateAdminDTO = {
       ...other,
     };
 
@@ -23,7 +25,7 @@ export default function useUpdateAdminProfile() {
     }
     const data = await toast.promise(
       AxiosInterceptorResponse(() => {}).put<IAxiosResponse<GetAdminDTO>>(
-        "users/update-profile",
+        "admin/update-profile",
         dataUpdateProfile
       ),
       {

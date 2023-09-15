@@ -21,3 +21,16 @@ export const formSchemaChangePassword = yup.object({
     .required(validateRequireMessage)
     .oneOf([yup.ref("new_password")], validateNotMatchMessage),
 });
+
+export const formSchemaChangePasswordAdmin = yup.object({
+  new_password: yup
+    .string()
+    .label("Mật khẩu mới")
+    .required(validateRequireMessage)
+    .min(6, ({ label, min }) => `${label} chứa ít nhất ${min} kí tự `),
+  repeat_new_password: yup
+    .string()
+    .label("Mật khẩu mới nhập lại")
+    .required(validateRequireMessage)
+    .oneOf([yup.ref("new_password")], validateNotMatchMessage),
+});

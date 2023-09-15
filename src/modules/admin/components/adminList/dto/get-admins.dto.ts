@@ -1,5 +1,5 @@
-import { GetGenderDTO } from "modules/user/components/accountInformation/dto/get-gender.dto";
-import { GetRoleDTO } from "./get-roles.dto";
+import { GetGenderDTO } from 'modules/user/components/accountInformation/dto/get-gender.dto';
+import { GetRoleDTO } from './get-roles.dto';
 
 export interface GetAdminsByRoleDTO {
   position: string;
@@ -8,8 +8,7 @@ export interface GetAdminsByRoleDTO {
 export interface GetAdminDTO {
   id: string;
   username: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   dateBirth: Date | null;
   gender: GetGenderDTO | null;
   email: string | null;
@@ -24,5 +23,4 @@ export interface GetAdminListDTO {
   previousPage: number | null;
   nextPage: number | null;
   totalPages: number;
-  total: number;
 }

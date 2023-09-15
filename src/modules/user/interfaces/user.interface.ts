@@ -1,10 +1,9 @@
-import { EGender } from "../constant";
+import { EGender } from '../constant';
 
 export interface IUser {
   id: string;
   username: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   dateBirth: string | null;
   gender: EGender | null;
   age: number | null;

@@ -1,8 +1,8 @@
-import { sideBarAdminInfor } from "Layout/admin/constant";
-import clsx from "clsx";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import { RootState } from "redux/app/store";
+import { sideBarAdminInfor } from 'Layout/admin/constant';
+import clsx from 'clsx';
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { RootState } from 'redux/app/store';
 
 interface Props {
   handleSetSidebarMini: () => void;
@@ -23,12 +23,12 @@ const AdminInfor: React.FC<Props> = ({ handleSetSidebarMini }) => {
         />
         <div
           className={clsx(
-            " flex justify-between collapse-title text-xl font-medium p-0",
-            "before:absolute before:border-4 before:border-b-0 before:border-l-transparent before:border-b-transparent before:border-r-transparent before:border-[#ffffff]",
-            "before:top-[48%] before:right-2 before:transition-all before:duration-300"
+            ' flex justify-between collapse-title text-xl font-medium p-0',
+            'before:absolute before:border-4 before:border-b-0 before:border-l-transparent before:border-b-transparent before:border-r-transparent before:border-[#ffffff]',
+            'before:top-[48%] before:right-2 before:transition-all before:duration-300',
           )}
         >
-          <div className={clsx("relative flex items-center gap-3 pl-2")}>
+          <div className={clsx('relative flex items-center gap-3 pl-2')}>
             <div className="w-12">
               <img
                 className="w-full rounded-full"
@@ -38,28 +38,28 @@ const AdminInfor: React.FC<Props> = ({ handleSetSidebarMini }) => {
             </div>
             <div
               className={clsx(
-                "title-admin-dashboard flex flex-col transition-all duration-300"
+                'title-admin-dashboard flex flex-col transition-all duration-300',
               )}
             >
-              <span className=" font-medium text-base">{`${user?.firstName} ${user?.lastName}`}</span>
+              <span className=" font-medium text-base">{`${user?.fullName}`}</span>
             </div>
           </div>
         </div>
         <ul
           className={clsx(
-            "collapse-custom transition-all duration-300 max-h-0",
-            "[&>li]:mt-1"
+            'collapse-custom transition-all duration-300 max-h-0',
+            '[&>li]:mt-1',
           )}
         >
           {sideBarAdminInfor.map((item, idx) => (
             <li
               key={idx}
               className={clsx(
-                "flex hover:bg-[#ffffff21] transition-all bg-base-200 rounded-md overflow-hidden min-h-[3.75rem]",
+                'flex hover:bg-[#ffffff21] transition-all bg-base-200 rounded-md overflow-hidden min-h-[3.75rem]',
                 {
-                  "!bg-[#ffffff3b]":
+                  '!bg-[#ffffff3b]':
                     `/admin/${item.href}` === location.pathname,
-                }
+                },
               )}
             >
               <Link

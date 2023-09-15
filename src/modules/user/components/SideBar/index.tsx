@@ -1,8 +1,8 @@
-import { sideBar } from "../../constant";
-import clsx from "clsx";
-import React from "react";
-import { GetPreviewProfileDTO } from "../accountInformation/dto/get-user.dto";
-import { Link, useLocation } from "react-router-dom";
+import { sideBar } from '../../constant';
+import clsx from 'clsx';
+import React from 'react';
+import { GetPreviewProfileDTO } from '../accountInformation/dto/get-user.dto';
+import { Link, useLocation } from 'react-router-dom';
 
 interface Props {
   user: GetPreviewProfileDTO;
@@ -21,17 +21,17 @@ const SideBar: React.FC<Props> = ({ user }) => {
         />
         <div className="flex flex-col">
           <span>Tài Khoản của</span>
-          <span className="font-medium">{`${user?.firstName} ${user?.lastName}`}</span>
+          <span className="font-medium">{`${user?.fullName}`}</span>
         </div>
       </div>
 
       <ul>
         {sideBar.map((val, idx) => (
-          <div>
+          <div key={idx}>
             <li
               key={idx}
-              className={clsx("hover:cursor-pointer [&>a]:px-3 [&>a]:py-2", {
-                "text-red border border-red rounded-2xl bg-[#fee]":
+              className={clsx('hover:cursor-pointer [&>a]:px-3 [&>a]:py-2', {
+                'text-red border border-red rounded-2xl bg-[#fee]':
                   `/user/${val.href}` === location.pathname,
               })}
             >

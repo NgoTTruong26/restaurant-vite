@@ -92,6 +92,23 @@ export default function AxiosInterceptorResponse(onUnauthenticated: Function) {
     }
   };
 
+  newInstance.interceptors.request.use(
+    (config) => {
+      const token: string | null = localStorage.getItem(
+        import.meta.env.VITE_ACCESS_TOKEN
+      );
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+
+      return config;
+    },
+    (err) => {
+      return Promise.reject(err);
+    }
+  );
+
   newInstance.interceptors.response.use(onResponseSuccess, onResponseError);
   return newInstance;
 }

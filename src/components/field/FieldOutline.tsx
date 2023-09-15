@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import { Field } from "interfaces/field";
-import * as React from "react";
+import clsx from 'clsx';
+import { Field } from 'interfaces/field';
+import * as React from 'react';
 
 const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
   (
@@ -17,7 +17,7 @@ const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
       watch,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <>
@@ -33,12 +33,12 @@ const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
             <label
               className={clsx(
                 `absolute text-[.875rem] font-medium px-1 mb-2 pointer-events-none bg-white top-[12px] left-3 text-[#777] transition-all ${
-                  labelClassName ?? ""
+                  labelClassName ?? ''
                 }`,
                 {
-                  "bg-[#fff] !top-[-11px] text-[11px]":
+                  'bg-[#fff] !top-[-11px] text-[11px]':
                     watch || props.defaultValue,
-                }
+                },
               )}
               htmlFor={id}
             >
@@ -46,10 +46,14 @@ const FieldOutline = React.forwardRef<HTMLInputElement, Field>(
             </label>
           )}
         </div>
-        {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
+        {error && (
+          <p className={clsx('text-red pl-2 pt-1', errorClassName)}>
+            {error.message}
+          </p>
+        )}
       </>
     );
-  }
+  },
 );
 
 export default FieldOutline;

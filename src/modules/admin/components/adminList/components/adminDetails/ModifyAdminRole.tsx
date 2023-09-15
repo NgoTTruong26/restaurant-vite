@@ -1,17 +1,19 @@
-import clsx from "clsx";
-import LoadingChildrenCategory from "modules/home/components/bookings/components/LoadingChildrenCategory";
-import useGetRoles from "../../../hooks/useGetRoles";
-import { GrFormClose } from "react-icons/gr";
-import { useFormModifyAdminRole } from "../../hooks/useFormModifyAdminRole";
-import { IModifyAdminRoleDTO } from "../../../dto/modify-role-admin.dto";
-import useUpdateAdminRoles from "../../hooks/useUpdateAdminRoles";
-import { useLocation } from "react-router-dom";
+import clsx from 'clsx';
+import LoadingChildrenCategory from 'modules/home/components/bookings/components/LoadingChildrenCategory';
+
+import { GrFormClose } from 'react-icons/gr';
+
+import { useEffect } from 'react';
+import { useFormModifyAdminRole } from '../hooks/useFormModifyAdminRole';
+import useGetRoles from '../../hooks/useGetRoles';
+import useUpdateAdminRoles from '../hooks/useUpdateAdminRoles';
 
 interface Props {
   roles: string[];
   adminId: string;
   currPage: number;
   filterRole?: string;
+  searchCharacters?: string;
   handleCloseVisible: () => void;
 }
 
@@ -21,31 +23,102 @@ const ModifyAdminRole: React.FC<Props> = ({
   adminId,
   currPage,
   filterRole,
+  searchCharacters,
 }) => {
+  const { methods, modifyAdminRole } = useFormModifyAdminRole();
+
   const { status, data } = useGetRoles();
 
-  const { methods } = useFormModifyAdminRole();
+  const { mutate } = useUpdateAdminRoles({
+    currPage,
+    filterRole,
+    searchCharacters,
+  });
 
-  const { mutate } = useUpdateAdminRoles({ currPage, filterRole });
+  useEffect(() => {
+    roles.forEach((role) => {
+      modifyAdminRole.append({
+        roleId: role,
+      });
+    });
+  }, [roles]);
 
-  const location = useLocation();
+  const handleChecked = (roleId: string) => {
+    let index: number = 0;
 
-  const onSubmit = (dataInput: IModifyAdminRoleDTO) => {
+    if (
+      modifyAdminRole.fields.some((role, idx) => {
+        if (role.roleId === roleId) {
+          index = idx;
+          return true;
+        }
+      })
+    ) {
+      return modifyAdminRole.remove(index);
+    }
+
+    return modifyAdminRole.append({
+      roleId: roleId,
+    });
+  };
+
+  const isCheckedAll: () => boolean = () => {
+    if (data) {
+      const arrayAdminRoles: string[] = modifyAdminRole.fields.map(
+        (role) => role.roleId,
+      );
+
+      return data.roles.every((role) => arrayAdminRoles.includes(role.id));
+    }
+
+    return false;
+  };
+
+  const handleCheckedAll = () => {
+    if (data) {
+      if (!isCheckedAll()) {
+        return modifyAdminRole.replace(
+          data.roles.map((role) => ({
+            roleId: role.id,
+          })),
+        );
+      }
+
+      return modifyAdminRole.replace([]);
+    }
+  };
+
+  const onSubmit = () => {
     const removeRoles = roles.filter(
-      (role) => !dataInput.modifyAdminRole.includes(role)
+      (role) =>
+        !modifyAdminRole.fields.map((role) => role.roleId).includes(role),
     );
 
     if (removeRoles.length > 0) {
-      return mutate({ adminId, roles: dataInput.modifyAdminRole, removeRoles });
+      return mutate(
+        { adminId, roles: modifyAdminRole.fields, removeRoles },
+        {
+          onSettled: () => {
+            handleCloseVisible();
+          },
+        },
+      );
     }
 
-    return mutate({ adminId, roles: dataInput.modifyAdminRole });
+    return mutate(
+      { adminId, roles: modifyAdminRole.fields },
+      {
+        onSettled: () => {
+          handleCloseVisible();
+        },
+      },
+    );
   };
 
   return (
     <div
       className={clsx(
-        "z-30 absolute flex justify-center items-center top-0 left-0 w-full h-full bg-[#0000002f] overflow-hidden "
+        'z-30 absolute flex justify-center items-center top-0 left-0 w-full h-full bg-[#0000002f] overflow-hidden ',
       )}
     >
       <div
@@ -65,7 +138,7 @@ const ModifyAdminRole: React.FC<Props> = ({
               >
                 <GrFormClose size={25} />
               </span>
-              {status === "loading" ? (
+              {status === 'loading' ? (
                 <LoadingChildrenCategory />
               ) : (
                 <table className="table w-full">
@@ -75,10 +148,8 @@ const ModifyAdminRole: React.FC<Props> = ({
                       <th className="w-[40%]">
                         <label>
                           <input
-                            /*  onChange={() => handleCheckedAll()}
-                      checked={listChildrenCategory.every((item) =>
-                        listChecked.includes(item.id)
-                      )} */
+                            onChange={() => handleCheckedAll()}
+                            checked={isCheckedAll()}
                             type="checkbox"
                             className="checkbox"
                           />
@@ -96,13 +167,14 @@ const ModifyAdminRole: React.FC<Props> = ({
                         <th>
                           <label>
                             <input
-                              /*  onChange={() => handleChecked(item.id)} */
-                              defaultChecked={roles.includes(role.id)}
+                              onChange={() => handleChecked(role.id)}
+                              checked={modifyAdminRole.fields
+                                .map((role) => role.roleId)
+                                .includes(role.id)}
                               id={role.id}
                               type="checkbox"
                               className="checkbox"
                               value={role.id}
-                              {...methods.register(`modifyAdminRole.${idx}`)}
                             />
                           </label>
                         </th>

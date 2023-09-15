@@ -1,21 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
-import { IAxiosResponse, api } from "configs/api";
-import { GetAdminListDTO } from "../dto/get-admins.dto";
+import { useQuery } from '@tanstack/react-query';
+import { IAxiosResponse, api } from 'configs/api';
+import { GetAdminListDTO } from '../dto/get-admins.dto';
 
-export default function useGetAdminList(page: number = 1, filterRole?: string) {
+export default function useGetAdminList(
+  page: number = 1,
+  filterRole?: string,
+  searchCharacters?: string,
+) {
   const { status, data, error, isFetching, isLoading } = useQuery({
-    queryKey: filterRole
-      ? ["get_admin_list_page", page, filterRole]
-      : ["get_admin_list_page", page],
+    queryKey: ['get_admin_list', page, filterRole, searchCharacters],
+
     queryFn: async () => {
       const { data } = await api.get<IAxiosResponse<GetAdminListDTO | null>>(
         `/admin?${
           filterRole
-            ? filterRole !== "default"
+            ? filterRole !== 'default'
               ? `role=${filterRole}&`
-              : ""
-            : ""
-        }page=${page}`
+              : ''
+            : ''
+        }${searchCharacters ? `search=${searchCharacters}&` : ''}page=${page}`,
       );
 
       return data.data;

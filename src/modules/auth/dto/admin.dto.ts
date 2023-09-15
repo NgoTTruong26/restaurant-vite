@@ -1,8 +1,7 @@
 export interface IAdmin {
   id: string;
   username: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   age: number | null;
   email: string | null;
   phone: string | null;

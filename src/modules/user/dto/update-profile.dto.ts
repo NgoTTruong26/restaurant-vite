@@ -1,7 +1,6 @@
 export interface IUpdateProfileDTO {
   id: string;
-  lastname: string;
-  firstname: string;
+  fullName: string;
   day: string;
   month: string;
   year: string;

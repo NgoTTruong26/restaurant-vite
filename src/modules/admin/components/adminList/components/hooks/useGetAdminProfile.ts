@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { IAxiosResponse } from "configs/api";
-import AxiosInterceptorResponse from "configs/axiosInterceptor";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setUser } from "redux/features/sign-in/setUserSlice";
-import { GetAdminDTO } from "../../dto/get-admins.dto";
+import { useQuery } from '@tanstack/react-query';
+import { IAxiosResponse } from 'configs/api';
+import AxiosInterceptorResponse from 'configs/axiosInterceptor';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setUser } from 'redux/features/sign-in/setUserSlice';
+import { GetAdminDTO } from '../../dto/get-admins.dto';
 
 export default function useGetAdminProfile(adminId: string) {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function useGetAdminProfile(adminId: string) {
   const apiInterceptor = AxiosInterceptorResponse(() => {});
 
   const token: string | null = localStorage.getItem(
-    import.meta.env.VITE_ACCESS_TOKEN_ADMIN
+    import.meta.env.VITE_ACCESS_TOKEN_ADMIN,
   );
 
   const getProfile = useQuery({
@@ -27,7 +27,7 @@ export default function useGetAdminProfile(adminId: string) {
             headers: {
               admin_authorization: token ? `Bearer ${token}` : undefined,
             },
-          }
+          },
         );
 
         return response.data.data;
@@ -42,7 +42,7 @@ export default function useGetAdminProfile(adminId: string) {
     retry: 1,
     refetchOnWindowFocus: false,
     staleTime: 5000,
-    refetchOnMount: "always",
+    refetchOnMount: 'always',
   });
 
   return getProfile;

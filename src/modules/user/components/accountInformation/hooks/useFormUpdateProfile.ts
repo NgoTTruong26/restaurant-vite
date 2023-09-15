@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 export function useFormUpdateProfile() {
   const { formState, ...methods } = useForm<IUpdateProfileDTO>({
+    defaultValues: { gender: "" },
     resolver: yupResolver(formSchemaUpdateProfile),
   });
 

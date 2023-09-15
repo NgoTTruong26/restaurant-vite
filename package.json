@@ -14,12 +14,14 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/react-query": "^4.29.7",
+    "@types/lodash.debounce": "^4.0.7",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "daisyui": "^2.51.5",
     "dotenv": "^16.0.3",
     "env-cmd": "^10.1.0",
     "js-cookie": "^3.0.5",
+    "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
@@ -45,6 +47,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
     "postcss": "^8.4.23",
+    "prettier": "^3.0.3",
     "typescript": "^5.0.2",
     "vite": "^4.3.0"
   }

@@ -1,13 +1,13 @@
-import clsx from "clsx";
-import FieldOutline from "components/field/FieldOutline";
-import React, { useRef } from "react";
-import { GrFormClose } from "react-icons/gr";
+import clsx from 'clsx';
+import FieldOutline from 'components/field/FieldOutline';
+import React, { useRef } from 'react';
+import { GrFormClose } from 'react-icons/gr';
+import { GetAdminDTO } from '../../dto/get-admins.dto';
 import {
   InputChangePasswordAdmin,
   useFormChangePasswordAdmin,
-} from "../../hooks/useFormChangePasswordAdmin";
-import useChangePasswordAdmin from "../../hooks/useChangePasswordAdmin";
-import { GetAdminDTO } from "../../../dto/get-admins.dto";
+} from '../hooks/useFormChangePasswordAdmin';
+import useChangePasswordAdmin from '../hooks/useChangePasswordAdmin';
 
 interface Props {
   handleCloseShowChangePassword: () => void;
@@ -29,7 +29,6 @@ const ChangePasswordAdmin: React.FC<Props> = ({
     mutate(
       {
         id: data.id,
-        password: dataInput.old_password,
         newPassword: dataInput.new_password,
         repeatNewPassword: dataInput.repeat_new_password,
       },
@@ -37,14 +36,14 @@ const ChangePasswordAdmin: React.FC<Props> = ({
         onSettled: () => {
           handleCloseShowChangePassword();
         },
-      }
+      },
     );
   };
 
   return (
     <div
       className={clsx(
-        "absolute flex justify-center items-center top-0 left-0 z-20 w-full h-full bg-[#0000002f] overflow-hidden "
+        'absolute flex justify-center items-center top-0 left-0 z-20 w-full h-full bg-[#0000002f] overflow-hidden ',
       )}
     >
       <div
@@ -70,26 +69,14 @@ const ChangePasswordAdmin: React.FC<Props> = ({
             <div className="flex-1 flex flex-col items-center [&>div]:w-full [&>div]:mb-4 [&>div]:max-w-[350px]">
               <div>
                 <FieldOutline
-                  id="old_password"
-                  label
-                  innerText="Mật khẩu cũ"
-                  inputClassName="focus:border-[#e11b1e]"
-                  watch={methods.watch("old_password")}
-                  type="password"
-                  error={formState.errors.old_password}
-                  {...methods.register("old_password")}
-                />
-              </div>
-              <div>
-                <FieldOutline
                   id="new_password"
                   label
                   innerText="Mật khẩu mới"
                   inputClassName="focus:border-[#e11b1e]"
-                  watch={methods.watch("new_password")}
+                  watch={methods.watch('new_password')}
                   type="password"
                   error={formState.errors.new_password}
-                  {...methods.register("new_password")}
+                  {...methods.register('new_password')}
                 />
               </div>
               <div>
@@ -98,10 +85,10 @@ const ChangePasswordAdmin: React.FC<Props> = ({
                   label
                   innerText="Nhập lại mật khẩu mới"
                   inputClassName="focus:border-[#e11b1e]"
-                  watch={methods.watch("repeat_new_password")}
+                  watch={methods.watch('repeat_new_password')}
                   type="text"
                   error={formState.errors.repeat_new_password}
-                  {...methods.register("repeat_new_password")}
+                  {...methods.register('repeat_new_password')}
                 />
               </div>
             </div>

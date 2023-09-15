@@ -1,9 +1,13 @@
+export interface IRole {
+  roleId: string;
+}
+
 export interface IUpdateRolesAdminDTO {
   adminId: string;
-  roles: (string | false)[];
+  roles: IRole[];
   removeRoles?: string[];
 }
 
-export interface IModifyAdminRoleDTO {
-  modifyAdminRole: any[];
+export interface IInputModifyAdminRole {
+  modifyAdminRole: IRole[];
 }

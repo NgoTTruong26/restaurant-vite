@@ -1,9 +1,8 @@
-import { IInputAdminProfileDTO } from "../components/adminDetails/AdminProfile";
+import { IInputAdminProfileDTO } from '../components/adminDetails/AdminProfile';
 
 export interface IUpdateAdminProfileDTO {
   id: string;
-  lastname: string;
-  firstname: string;
+  fullName: string;
   day: string;
   month: string;
   year: string;
@@ -11,15 +10,14 @@ export interface IUpdateAdminProfileDTO {
   nationality: string;
 }
 
-export interface DataUpdateDTO
-  extends Omit<IInputAdminProfileDTO, "day" | "month" | "year"> {
+export interface DataUpdateAdminDTO
+  extends Omit<IInputAdminProfileDTO, 'day' | 'month' | 'year'> {
   id: string;
   dateBirth?: Date;
 }
 
 export interface ChangePasswordDTO {
   id: string;
-  password: string;
   newPassword: string;
   repeatNewPassword: string;
 }

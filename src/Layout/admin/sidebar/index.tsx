@@ -15,7 +15,7 @@ export default function Sidebar() {
     <div
       className={clsx(
         "z-50 h-full bg-[url('https://demos.creative-tim.com//light-bootstrap-dashboard-pro-react/static/media/full-screen-image-3.21a228cd.jpg')] bg-cover bg-center bg-no-repeat",
-        "fixed overflow-y-auto overflow-x-hidden",
+        "fixed left-0 overflow-y-auto overflow-x-hidden",
         { "[&~div]:!w-[calc(100%-80px)]": isSidebarMini }
       )}
     >

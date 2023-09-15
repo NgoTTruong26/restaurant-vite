@@ -1,10 +1,9 @@
-import { GetGenderDTO } from "./get-gender.dto";
+import { GetGenderDTO } from './get-gender.dto';
 
 export interface GetUserProfileDTO {
   id: string;
   username: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   dateBirth: Date | null;
   gender: GetGenderDTO | null;
   email: string | null;
@@ -14,7 +13,6 @@ export interface GetUserProfileDTO {
 
 export interface GetPreviewProfileDTO {
   id: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   nationality: string | null;
 }

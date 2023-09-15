@@ -1,8 +1,8 @@
-import Button from "components/Button";
-import FieldCheckBox from "components/field/FieldCheckBox";
-import FieldOutline from "components/field/FieldOutline";
-import { useFormSignUp } from "modules/auth/hooks/useFormSignUp";
-import { FcGoogle } from "react-icons/fc";
+import Button from 'components/Button';
+import FieldCheckBox from 'components/field/FieldCheckBox';
+import FieldOutline from 'components/field/FieldOutline';
+import { useFormSignUp } from 'modules/auth/hooks/useFormSignUp';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function FormSignUp() {
   const { methods, formState, onSubmit } = useFormSignUp();
@@ -46,26 +46,14 @@ export default function FormSignUp() {
             <div className="flex justify-between">
               <div className="relative mt-3 w-[48%]">
                 <FieldOutline
-                  id="last_name"
-                  label
-                  innerText="Họ"
-                  inputClassName="focus:border-[#e11b1e]"
-                  watch={methods.watch("last_name")}
-                  type="text"
-                  error={formState.errors.last_name}
-                  {...methods.register("last_name")}
-                />
-              </div>
-              <div className="relative mt-3 w-[48%]">
-                <FieldOutline
-                  id="first_name"
+                  id="fullName"
                   label
                   innerText="Tên"
                   inputClassName="focus:border-[#e11b1e]"
-                  watch={methods.watch("first_name")}
+                  watch={methods.watch('fullName')}
                   type="text"
-                  error={formState.errors.first_name}
-                  {...methods.register("first_name")}
+                  error={formState.errors.fullName}
+                  {...methods.register('fullName')}
                 />
               </div>
             </div>
@@ -75,10 +63,10 @@ export default function FormSignUp() {
                 label
                 innerText="Tên đăng nhập"
                 inputClassName="focus:border-[#e11b1e]"
-                watch={methods.watch("username")}
+                watch={methods.watch('username')}
                 type="text"
                 error={formState.errors.username}
-                {...methods.register("username")}
+                {...methods.register('username')}
               />
             </div>
             <div className="relative mt-3 w-full">
@@ -87,10 +75,10 @@ export default function FormSignUp() {
                 label
                 innerText="Mật khẩu"
                 inputClassName="focus:border-[#e11b1e]"
-                watch={methods.watch("password")}
+                watch={methods.watch('password')}
                 type="password"
                 error={formState.errors.password}
-                {...methods.register("password")}
+                {...methods.register('password')}
               />
             </div>
             <div className="relative my-3 w-full">
@@ -99,10 +87,10 @@ export default function FormSignUp() {
                 label
                 innerText="Nhập lại mật khẩu"
                 inputClassName="focus:border-[#e11b1e]"
-                watch={methods.watch("repeat_password")}
+                watch={methods.watch('repeat_password')}
                 type="text"
                 error={formState.errors.repeat_password}
-                {...methods.register("repeat_password")}
+                {...methods.register('repeat_password')}
               />
             </div>
             <div className="relative">
@@ -111,7 +99,7 @@ export default function FormSignUp() {
                 label
                 innerText="Tôi chấp nhận Điều Khoản & Dịch Vụ của nhà hàng"
                 error={formState.errors.agree_terms_priacvy}
-                {...methods.register("agree_terms_priacvy")}
+                {...methods.register('agree_terms_priacvy')}
               />
             </div>
             <div className="w-full pt-12">
