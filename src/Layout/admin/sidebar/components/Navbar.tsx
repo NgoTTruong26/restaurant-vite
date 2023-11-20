@@ -1,6 +1,6 @@
-import { navbarForAdmin } from "Layout/admin/constant";
-import clsx from "clsx";
-import { Link, useLocation } from "react-router-dom";
+import { navbarForAdmin } from 'Layout/admin/constant';
+import clsx from 'clsx';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const location = useLocation();
@@ -14,24 +14,24 @@ export default function Navbar() {
               to={item.href}
               key={idx}
               className={clsx(
-                "collapse-title relative transition-all p-0 bg-base-200 rounded-md overflow-hidden",
-                "flex items-center",
-                "hover:bg-[#ffffff21] hover:cursor-pointer",
+                'collapse-title relative transition-all p-0 bg-base-200 rounded-md overflow-hidden',
+                'flex items-center',
+                'hover:bg-[#ffffff21] hover:cursor-pointer',
                 {
-                  "!bg-[#ffffff3b]":
-                    location.pathname.split("/")[2] === item.href,
-                  "before:absolute before:border-4 before:border-b-0 before:border-l-transparent before:border-b-transparent before:border-r-transparent before:border-[#ffffff]":
+                  '!bg-[#ffffff3b]':
+                    location.pathname.split('/')[2] === item.href,
+                  'before:absolute before:border-4 before:border-b-0 before:border-l-transparent before:border-b-transparent before:border-r-transparent before:border-[#ffffff]':
                     item.children,
-                  "before:top-[48%] before:right-2 before:transition-all before:duration-300":
+                  'before:top-[48%] before:right-2 before:transition-all before:duration-300':
                     item.children,
-                }
+                },
               )}
             >
-              <div className={clsx("flex gap-3 py-3 px-2")}>
+              <div className={clsx('flex gap-3 py-3 px-2')}>
                 <span className="flex justify-center w-12 ">{item.icons}</span>
                 <span
                   className={clsx(
-                    "title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300"
+                    'title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300',
                   )}
                 >
                   {item.title}
@@ -42,31 +42,41 @@ export default function Navbar() {
             <>
               <input
                 type="checkbox"
-                className="absolute [&:checked~.collapse-custom]:max-h-[500px] [&:checked~div:before]:rotate-180"
+                className={clsx(
+                  'absolute [&:checked~.collapse-custom]:max-h-[500px] [&:checked~div:before]:rotate-180',
+                  {
+                    '[&:not(:checked)~#admin-navbar]:!bg-[#ffffff3b] ':
+                      location.pathname.split('/').slice(1, 3).join('/') ===
+                      `${import.meta.env.VITE_API_ADMIN.slice(
+                        1,
+                      )}/${item.href.slice(1)}`,
+                  },
+                )}
               />
               <div
+                id="admin-navbar"
                 key={idx}
                 className={clsx(
-                  "collapse-title relative transition-all p-0 bg-base-200 rounded-md overflow-hidden",
-                  "flex items-center",
-                  "hover:bg-[#ffffff21] hover:cursor-pointer",
+                  'collapse-title relative transition-all p-0 bg-base-200 rounded-md overflow-hidden',
+                  'flex items-center',
+                  'hover:bg-[#ffffff21] hover:cursor-pointer',
                   {
-                    "!bg-[#ffffff3b]":
-                      location.pathname.split("/")[2] === item.href,
-                    "before:absolute before:border-4 before:border-b-0 before:border-l-transparent before:border-b-transparent before:border-r-transparent before:border-[#ffffff]":
+                    '!bg-[#ffffff3b]':
+                      location.pathname.split('/')[2] === item.href,
+                    'before:absolute before:border-4 before:border-b-0 before:border-l-transparent before:border-b-transparent before:border-r-transparent before:border-[#ffffff]':
                       item.children,
-                    "before:top-[48%] before:right-2 before:transition-all before:duration-300":
+                    'before:top-[48%] before:right-2 before:transition-all before:duration-300':
                       item.children,
-                  }
+                  },
                 )}
               >
-                <div className={clsx("flex gap-3 py-3 px-2")}>
+                <div className={clsx('flex gap-3 py-3 px-2')}>
                   <span className="flex justify-center w-12 ">
                     {item.icons}
                   </span>
                   <span
                     className={clsx(
-                      "title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300"
+                      'title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300',
                     )}
                   >
                     {item.title}
@@ -76,31 +86,42 @@ export default function Navbar() {
 
               <ul
                 className={clsx(
-                  "collapse-custom transition-all duration-300 max-h-0",
-                  "[&>li]:mt-1"
+                  'collapse-custom transition-all duration-300 max-h-0',
+                  '[&>li]:mt-1',
                 )}
               >
                 {item.children.map((val, idx) => (
                   <li
                     key={idx}
                     className={clsx(
-                      "hover:bg-[#ffffff21] transition-all rounded-md",
+                      'hover:bg-[#ffffff21] transition-all rounded-md',
                       {
-                        "!bg-[#ffffff3b]":
-                          `/admin/${item.href}/${val.href}` ===
-                          location.pathname,
-                      }
+                        '!bg-[#ffffff3b]':
+                          `${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
+                            1,
+                          )}/${val.href.slice(1)}` === location.pathname ||
+                          `${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
+                            1,
+                          )}/${val.href.slice(1)}` ===
+                            `${location.pathname}/${
+                              item.children
+                                ? item.children[0].href.slice(1)
+                                : ''
+                            }`,
+                      },
                     )}
                   >
                     <Link
-                      to={`${item.href}/${val.href}`}
+                      to={`${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
+                        1,
+                      )}/${val.href.slice(1)}`}
                       className="flex py-3 px-3 gap-5"
                     >
                       <span className="uppercase font-medium min-w-[40px] text-center">
                         {val.title
-                          .split(" ")
+                          .split(' ')
                           .map((val) => val[0])
-                          .join("")}
+                          .join('')}
                       </span>
                       <span className="title-admin-dashboard transition-all duration-300">
                         {val.title}

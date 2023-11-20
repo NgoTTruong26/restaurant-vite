@@ -1,1 +1,1 @@
-export * as default from "yup";
+export * as default from 'yup';

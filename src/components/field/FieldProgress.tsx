@@ -1,5 +1,5 @@
-import { Field } from "interfaces/field";
-import * as React from "react";
+import { Field } from 'interfaces/field';
+import * as React from 'react';
 
 const FieldProgress = React.forwardRef<HTMLInputElement, Field>(
   (
@@ -15,13 +15,13 @@ const FieldProgress = React.forwardRef<HTMLInputElement, Field>(
       id,
       ...props
     },
-    ref
+    ref,
   ) => (
     <>
       <div className={`relative`}>
         {label && (
           <label
-            className={`font-medium mb-2 ${labelClassName ?? ""}`}
+            className={`font-medium mb-2 ${labelClassName ?? ''}`}
             htmlFor={id}
           >
             {innerText}
@@ -43,7 +43,7 @@ const FieldProgress = React.forwardRef<HTMLInputElement, Field>(
       </div>
       {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
     </>
-  )
+  ),
 );
 
 export default FieldProgress;

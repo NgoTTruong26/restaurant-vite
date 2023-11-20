@@ -1,4 +1,4 @@
-import { GetGenderDTO } from 'modules/user/components/accountInformation/dto/get-gender.dto';
+import { GetGenderDTO } from 'modules/customer/components/user/components/accountInformation/dto/get-gender.dto';
 import { GetRoleDTO } from './get-roles.dto';
 
 export interface GetAdminsByRoleDTO {

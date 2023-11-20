@@ -1,158 +1,95 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from 'react-router-dom';
 
-import BookingLookup from "modules/bookingLookup";
-import Menu from "modules/menu";
-import LayoutBackToHomePage from "Layout/backToHomePage";
+import LayoutBackToHomePage from 'Layout/backToHomePage';
+import BookingLookup from 'modules/customer/components/bookingLookup';
+import Menu from 'modules/customer/components/menu';
 
-import { lazy } from "react";
-import Post from "modules/news/components/posts/components/Post";
-import News from "modules/news";
-import { ELinkSideBar } from "modules/user/constant";
-import AccountInformation from "modules/user/components/accountInformation";
-import OrderManagement from "modules/user/components/OrderManagement";
-import {
-  ELinkAdminManagement,
-  ELinkDishesManagement,
-  ELinkNavbarForAdmin,
-  ELinkSideBarAdminInfor,
-  ELinkUserManagement,
-} from "Layout/admin/constant";
-import AdminManagement from "modules/admin/components/adminList";
+import { adminRoute } from 'modules/admin/router';
+import AppCustomer from 'modules/customer/AppCustomer';
+import News from 'modules/customer/components/news';
+import Post from 'modules/customer/components/news/components/posts/components/Post';
+import OrderManagement from 'modules/customer/components/user/components/OrderManagement';
+import AccountInformation from 'modules/customer/components/user/components/accountInformation';
+import { ELinkSideBar } from 'modules/customer/components/user/constant';
+import { lazy } from 'react';
 
 //Layout
-const HomeLayout = lazy(() => import("Layout/customer"));
-const AdminLayout = lazy(() => import("Layout/admin"));
+const HomeLayout = lazy(() => import('Layout/customer'));
 
 //Pages customers
-const Home = lazy(() => import("modules/home"));
-const SignIn = lazy(() => import("modules/auth/components/sign-in"));
-const SignUp = lazy(() => import("modules/auth/components/sign-up"));
-const UserProfile = lazy(() => import("modules/user"));
-
-//Pages administration
-const HomeAdmin = lazy(() => import("modules/admin/components/home"));
+const Home = lazy(() => import('modules/customer/components/home/pages/Home'));
+const SignIn = lazy(
+  () => import('modules/customer/components/auth/components/sign-in'),
+);
+const SignUp = lazy(
+  () => import('modules/customer/components/auth/components/sign-up'),
+);
+const UserProfile = lazy(() => import('modules/customer/components/user'));
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <HomeLayout />,
+    path: '/',
+    element: <AppCustomer />,
     children: [
       {
-        path: "",
-        element: <Home />,
-      },
-      {
-        path: "bookings-lookup",
-        element: <BookingLookup />,
-      },
-      { path: "dish-menu", element: <Menu /> },
-      {
-        path: "news",
-        element: <News />,
-      },
-      {
-        path: "news/:id",
-        element: <Post />,
-      },
-      {
-        path: "user",
-        element: <UserProfile />,
+        path: '',
+        element: <HomeLayout />,
         children: [
-          { path: ELinkSideBar.PROFILE, element: <AccountInformation /> },
-          { path: ELinkSideBar.NOTIFICATION, element: <div>notification</div> },
+          { path: '', element: <Home /> },
           {
-            path: ELinkSideBar.ORDER_MANAGEMENT,
-            element: <OrderManagement />,
+            path: 'bookings-lookup',
+            element: <BookingLookup />,
+          },
+          { path: 'dish-menu', element: <Menu /> },
+          {
+            path: 'news',
+            element: <News />,
+          },
+          {
+            path: 'news/:id',
+            element: <Post />,
+          },
+          {
+            path: 'user',
+            element: <UserProfile />,
+            children: [
+              { path: '', element: <AccountInformation /> },
+              { path: ELinkSideBar.PROFILE, element: <AccountInformation /> },
+              {
+                path: ELinkSideBar.NOTIFICATION,
+                element: <div>notification</div>,
+              },
+              {
+                path: ELinkSideBar.ORDER_MANAGEMENT,
+                element: <OrderManagement />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: '/auth',
+        element: <LayoutBackToHomePage />,
+        children: [
+          {
+            path: '',
+            element: <SignIn />,
+          },
+          {
+            path: 'sign-in',
+            element: <SignIn />,
+          },
+          {
+            path: 'sign-up',
+            element: <SignUp />,
           },
         ],
       },
     ],
   },
+  adminRoute,
   {
-    path: "/auth",
-    element: <LayoutBackToHomePage />,
-    children: [
-      {
-        path: "sign-in",
-        element: <SignIn />,
-      },
-      {
-        path: "sign-up",
-        element: <SignUp />,
-      },
-    ],
-  },
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      {
-        path: "",
-        element: <HomeAdmin />,
-        children: [
-          {
-            path: ELinkSideBarAdminInfor.PROFILE,
-            element: <HomeAdmin />,
-          },
-          {
-            path: ELinkSideBarAdminInfor.CHANGE_PASSWORD,
-            element: <HomeAdmin />,
-          },
-          {
-            path: ELinkSideBarAdminInfor.SETTINGS,
-            element: <HomeAdmin />,
-          },
-        ],
-      },
-      {
-        path: ELinkNavbarForAdmin.ADMIN_MANAGEMENT,
-        children: [
-          {
-            path: ELinkAdminManagement.ADMIN_LIST,
-            element: <AdminManagement />,
-          },
-          {
-            path: ELinkAdminManagement.ROLES_LIST,
-            element: <HomeAdmin />,
-          },
-          {
-            path: ELinkAdminManagement.VAT_MANAGEMENT,
-            element: <HomeAdmin />,
-          },
-        ],
-      },
-      {
-        path: ELinkNavbarForAdmin.USER_MANAGEMENT,
-        element: <HomeAdmin />,
-        children: [
-          {
-            path: ELinkUserManagement.USER_LIST,
-            element: <HomeAdmin />,
-          },
-          {
-            path: ELinkUserManagement.BOOKING_LIST,
-            element: <HomeAdmin />,
-          },
-        ],
-      },
-      {
-        path: ELinkNavbarForAdmin.DISHES_MANAGEMENT,
-        element: <HomeAdmin />,
-        children: [
-          {
-            path: ELinkDishesManagement.DISH_LIST,
-            element: <HomeAdmin />,
-          },
-          {
-            path: ELinkDishesManagement.DISHES_CONNECT,
-            element: <HomeAdmin />,
-          },
-        ],
-      },
-      {
-        path: ELinkNavbarForAdmin.NEWS_MANAGEMENT,
-        element: <HomeAdmin />,
-      },
-    ],
+    path: '*',
+    element: <div>404 Not Found</div>,
   },
 ]);

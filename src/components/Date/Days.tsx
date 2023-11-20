@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import { PropsFieldSelect } from "./interfaces/PropsFieldSelect.interface";
-import React from "react";
+import clsx from 'clsx';
+import { PropsFieldSelect } from './interfaces/PropsFieldSelect.interface';
+import React from 'react';
 
 interface Props extends PropsFieldSelect {
   year?: string;
@@ -11,7 +11,7 @@ function GetDaysInMonth(year: string, month: string) {
   const daysInMonth = new Date(parseInt(year), parseInt(month), 0).getDate();
 
   return Array(daysInMonth)
-    .fill("")
+    .fill('')
     .map((val, idx) => idx + 1);
 }
 
@@ -23,8 +23,8 @@ const Days = React.forwardRef<HTMLSelectElement, Props>(
           ref={ref}
           defaultValue={props.defaultValue}
           className={clsx(
-            "select select-bordered select-sm w-full max-w-xs",
-            className
+            'select select-bordered select-sm w-full max-w-xs',
+            className,
           )}
           {...props}
         >
@@ -32,12 +32,12 @@ const Days = React.forwardRef<HTMLSelectElement, Props>(
             Ngày
           </option>
           {GetDaysInMonth(
-            year && year !== "default"
+            year && year !== 'default'
               ? year
               : new Date().getUTCFullYear().toString(),
-            month && month !== "default"
+            month && month !== 'default'
               ? month
-              : (new Date().getUTCMonth() + 1).toString()
+              : (new Date().getUTCMonth() + 1).toString(),
           ).map((val) => (
             <option key={val} value={val}>
               {val}
@@ -47,7 +47,7 @@ const Days = React.forwardRef<HTMLSelectElement, Props>(
         {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
       </div>
     );
-  }
+  },
 );
 
 export default Days;

@@ -1,11 +1,11 @@
-import React from "react";
-import { PropsFieldSelect } from "./interfaces/PropsFieldSelect.interface";
+import React from 'react';
+import { PropsFieldSelect } from './interfaces/PropsFieldSelect.interface';
 
 function GetYears(toYear: number) {
   const currentYear = new Date().getUTCFullYear();
 
   return Array(currentYear - toYear + 1)
-    .fill("")
+    .fill('')
     .map((val, idx) => currentYear - idx);
 }
 
@@ -31,7 +31,7 @@ const Years = React.forwardRef<HTMLSelectElement, PropsFieldSelect>(
         {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
       </div>
     );
-  }
+  },
 );
 
 export default Years;

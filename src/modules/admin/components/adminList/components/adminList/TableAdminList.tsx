@@ -6,24 +6,31 @@ import {
   IAdmin,
   IInputDeleteCheckedAdmin,
 } from '../../dto/delete-admin-list.dto';
+import FooterAdminList from './FooterAdminList';
 
 interface Props {
   data: GetAdminListDTO;
+  currPage: number;
   deleteCheckedAdmins: UseFieldArrayReturn<
     IInputDeleteCheckedAdmin,
     'admins',
     'id'
   >;
   handleGetAdminId: (adminId: string) => void;
+  handlePreviousPage: (previousPage: number | null) => void;
+  handleSetPage: (page: number) => void;
+  handleNextPage: (nextPage: number | null) => void;
 }
 
 const TableAdminList: React.FC<Props> = ({
   data,
+  currPage,
   deleteCheckedAdmins,
   handleGetAdminId,
+  handlePreviousPage,
+  handleSetPage,
+  handleNextPage,
 }) => {
-  console.log(deleteCheckedAdmins.fields);
-
   const arrayAdmin: string[] = deleteCheckedAdmins.fields.map(
     (admin) => admin.adminId,
   );
@@ -88,26 +95,24 @@ const TableAdminList: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex-1 overflow-x-auto overflow-y-auto">
-        <table className="table w-full">
+      <div className="flex-1 flex flex-col justify-between overflow-x-auto overflow-y-auto">
+        <table className="flex-1 table w-full">
           {/* head */}
           <thead>
             <tr
               className={clsx(
-                '[&>th]:bg-[#ffffff] [&>th]:border-y-2 [&>th]:border-y-[#f2f2f2] [&>th]:uppercase',
+                '[&>th]:bg-[#ffffff] [&>th]:border-y-2 [&>th]:border-[#f2f2f2] [&>th]:uppercase',
               )}
             >
               <th>
-                <label>
-                  <input
-                    onChange={() => {
-                      handleCheckedAll();
-                    }}
-                    checked={isCheckedAll()}
-                    type="checkbox"
-                    className="checkbox"
-                  />
-                </label>
+                <input
+                  onChange={() => {
+                    handleCheckedAll();
+                  }}
+                  checked={isCheckedAll()}
+                  type="checkbox"
+                  className="checkbox"
+                />
               </th>
               <th>Name</th>
               <th>Gender</th>
@@ -143,16 +148,14 @@ const TableAdminList: React.FC<Props> = ({
             {data.adminList.map((admin, idx) => (
               <tr key={idx}>
                 <th>
-                  <label>
-                    <input
-                      onChange={() => handleChecked(admin.id)}
-                      checked={deleteCheckedAdmins.fields
-                        .map((admin) => admin.adminId)
-                        .includes(admin.id)}
-                      type="checkbox"
-                      className="checkbox"
-                    />
-                  </label>
+                  <input
+                    onChange={() => handleChecked(admin.id)}
+                    checked={deleteCheckedAdmins.fields
+                      .map((admin) => admin.adminId)
+                      .includes(admin.id)}
+                    type="checkbox"
+                    className="checkbox"
+                  />
                 </th>
                 <td>
                   <div className="flex items-center space-x-3">
@@ -171,7 +174,11 @@ const TableAdminList: React.FC<Props> = ({
                   </div>
                 </td>
                 <td>Male</td>
-                <td>26/12/2001</td>
+                <td>
+                  {admin.dateBirth
+                    ? new Date(admin.dateBirth).toLocaleDateString('en-GB')
+                    : 'Chưa có'}
+                </td>
                 <td>
                   <div className="flex flex-wrap gap-2 max-h-12 max-w-[200px] min-w-[90px] overflow-x-hidden">
                     {admin.roles.map((role, idx) => (
@@ -196,6 +203,13 @@ const TableAdminList: React.FC<Props> = ({
           </tbody>
           {/* foot */}
         </table>
+        <FooterAdminList
+          data={data}
+          currPage={currPage}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          handleSetPage={handleSetPage}
+        />
       </div>
     </>
   );

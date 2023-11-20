@@ -1,13 +1,17 @@
-import Button from "components/Button";
-import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
-import { Link, Outlet } from "react-router-dom";
+import Button from 'components/Button';
+import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
+import { Link, Outlet } from 'react-router-dom';
+
+interface Props {
+  children?: React.ReactNode;
+}
 
 export default function LayoutBackToHomePage() {
   return (
     <div className="relative">
       <Outlet />
       <Link
-        to={"/"}
+        to={'/'}
         className="absolute z-50 top-[3%] left-[3%] cursor-pointer [&>button>#arrowNarrowLeft]:hover:animate-transfer-left  "
       >
         <Button className="flex items-center btn-outline border-solid btn-info hover:!text-[#fff] py-2 min-h-fit h-full">

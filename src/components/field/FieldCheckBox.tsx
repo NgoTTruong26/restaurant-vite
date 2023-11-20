@@ -13,9 +13,9 @@
               </label> */
 }
 
-import clsx from "clsx";
-import { Field } from "interfaces/field";
-import * as React from "react";
+import clsx from 'clsx';
+import { Field } from 'interfaces/field';
+import * as React from 'react';
 
 const FieldCheckBox = React.forwardRef<HTMLInputElement, Field>(
   (
@@ -32,7 +32,7 @@ const FieldCheckBox = React.forwardRef<HTMLInputElement, Field>(
       watch,
       ...props
     },
-    ref
+    ref,
   ) => (
     <>
       <div className={`flex relative items-center`}>
@@ -47,7 +47,7 @@ const FieldCheckBox = React.forwardRef<HTMLInputElement, Field>(
         {label && (
           <label
             className={clsx(
-              `pl-3 label cursor-pointer font-medium ${labelClassName}`
+              `pl-3 label cursor-pointer font-medium ${labelClassName}`,
             )}
             htmlFor={id}
           >
@@ -57,7 +57,7 @@ const FieldCheckBox = React.forwardRef<HTMLInputElement, Field>(
       </div>
       {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
     </>
-  )
+  ),
 );
 
 export default FieldCheckBox;

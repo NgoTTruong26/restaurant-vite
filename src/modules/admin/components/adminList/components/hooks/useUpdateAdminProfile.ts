@@ -1,15 +1,17 @@
-import { useMutation } from "@tanstack/react-query";
-import { IAxiosResponse } from "configs/api";
-import AxiosInterceptorResponse from "configs/axiosInterceptor";
-import { toast } from "react-hot-toast";
-import { GetAdminDTO } from "../../dto/get-admins.dto";
+import { useMutation } from '@tanstack/react-query';
+import { IAxiosResponse } from 'configs/api';
+import { toast } from 'react-hot-toast';
+import { GetAdminDTO } from '../../dto/get-admins.dto';
 import {
   DataUpdateAdminDTO,
   IUpdateAdminProfileDTO,
-} from "../../dto/update-admin-profile.dto";
+} from '../../dto/update-admin-profile.dto';
+import { ApiAdmin } from 'configs/axiosInterceptor';
 
 export default function useUpdateAdminProfile() {
   return useMutation(async (inputUpdateProfile: IUpdateAdminProfileDTO) => {
+    const apiAdmin = ApiAdmin(() => {});
+
     const { day, month, year, ...other } = inputUpdateProfile;
 
     const dataUpdateProfile: DataUpdateAdminDTO = {
@@ -20,22 +22,22 @@ export default function useUpdateAdminProfile() {
       !isNaN(new Date(`${month}/${parseInt(day) + 1}/${year}`).getFullYear())
     ) {
       dataUpdateProfile.dateBirth = new Date(
-        `${month}/${parseInt(day) + 1}/${year}`
+        `${month}/${parseInt(day) + 1}/${year}`,
       );
     }
     const data = await toast.promise(
-      AxiosInterceptorResponse(() => {}).put<IAxiosResponse<GetAdminDTO>>(
-        "admin/update-profile",
-        dataUpdateProfile
+      apiAdmin.put<IAxiosResponse<GetAdminDTO>>(
+        'admin/update-profile',
+        dataUpdateProfile,
       ),
       {
-        loading: "Loading",
-        success: "Update Profile Success",
-        error: "Update Profile failed",
+        loading: 'Loading',
+        success: 'Update Profile Success',
+        error: 'Update Profile failed',
       },
       {
-        position: "top-right",
-      }
+        position: 'top-right',
+      },
     );
 
     return data.data;

@@ -5,17 +5,20 @@ import { GoSearch } from 'react-icons/go';
 import useGetRoles from '../hooks/useGetRoles';
 import LoadingHeaderAdminList from './LoadingHeaderAdminList';
 import { DebouncedFunc } from 'lodash';
+import { HiMiniPlusCircle } from 'react-icons/hi2';
 
 interface Props {
   filterRole?: string;
   handleSearch: DebouncedFunc<(value: string) => void>;
   handleFilterByRole: (role: string) => void;
+  handleShowCreateAdmin: () => void;
 }
 
 const HeaderAdminList: React.FC<Props> = ({
   filterRole,
   handleSearch,
   handleFilterByRole,
+  handleShowCreateAdmin,
 }) => {
   const { data, status } = useGetRoles();
 
@@ -23,15 +26,30 @@ const HeaderAdminList: React.FC<Props> = ({
     <LoadingHeaderAdminList />
   ) : data ? (
     <div className="z-30 sticky overflow-x-auto overflow-y-hidden min-h-[105px]">
-      <div className=" top-0 flex w-full items-center gap-10 justify-between px-5 py-5 bg-[#ffffff] min-w-[1000px]">
-        <h2 className="capitalize text-3xl">Admin List</h2>
+      <div
+        className={clsx(
+          ' top-0 flex w-full items-center gap-10 justify-between px-5 py-5 bg-[#ffffff] min-w-[980px]',
+          'max-sm:min-w-[880px]',
+        )}
+      >
+        <div className="text-[#ffffff]">
+          <button
+            onClick={() => handleShowCreateAdmin()}
+            className="capitalize flex items-center gap-2 btn btn-error text-[#ffffff]"
+          >
+            <span>
+              <HiMiniPlusCircle size={22} />
+            </span>
+            <span>Create Admin</span>
+          </button>
+        </div>
         <div
           className={clsx(
-            'grid items-center grid-cols-10 gap-3',
+            'grid items-center grid-cols-9 gap-3',
             '[&>div]:max-w-fit',
           )}
         >
-          <div className="col-start-2 col-span-2 flex items-center gap-2 border-2 border-[#d8d8d8] rounded-lg py-1 px-3">
+          <div className="col-span-2 flex items-center gap-2 border-2 border-[#d8d8d8] rounded-lg py-1 px-3">
             <span className="border rounded-lg p-1 text-[#37944c] bg-[#eaf4ec]">
               <HiUserGroup size={25} />
             </span>
@@ -89,17 +107,6 @@ const HeaderAdminList: React.FC<Props> = ({
                   id="search"
                   onChange={(e) => handleSearch(e.target.value)}
                 />
-                {/* {methods.watch("idBooking") && (
-                  <div
-                    className={clsx(
-                      "px-4 font-medium underline underline-offset-4 text-[18px] cursor-pointer",
-                      "max-sm:hidden max-sm:text-[14px]"
-                    )}
-                    onClick={() => methods.setValue("idBooking", "")}
-                  >
-                    Clear
-                  </div>
-                )} */}
               </div>
             </div>
           </div>

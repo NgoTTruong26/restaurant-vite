@@ -1,13 +1,13 @@
 import clsx from 'clsx';
-import FieldOutline from 'components/field/FieldOutline';
 import Days from 'components/Date/Days';
 import Months from 'components/Date/Months';
 import Years from 'components/Date/Years';
-import useUpdateAdminProfile from '../hooks/useUpdateAdminProfile';
-import { useFormUpdateAdminProfile } from '../hooks/useFormUpdateAdminProfile';
-import useGetGenders from 'modules/user/components/accountInformation/hooks/useGetGenders';
-import { GetAdminDTO } from '../../dto/get-admins.dto';
+import FieldOutline from 'components/field/FieldOutline';
 import { queryClient } from 'main';
+import useGetGenders from 'modules/customer/components/user/components/accountInformation/hooks/useGetGenders';
+import { GetAdminDTO } from '../../dto/get-admins.dto';
+import { useFormUpdateAdminProfile } from '../hooks/useFormUpdateAdminProfile';
+import useUpdateAdminProfile from '../hooks/useUpdateAdminProfile';
 
 interface Props {
   data?: GetAdminDTO | null;
@@ -28,12 +28,8 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
 
   const { mutate } = useUpdateAdminProfile();
 
-  console.log(methods.watch('fullName'));
-
   const onSubmit = (input: IInputAdminProfileDTO) => {
     if (data) {
-      console.log(input);
-
       mutate(
         { ...input, id: data.id },
         {
@@ -61,12 +57,18 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
       {genders.data && data && (
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div>
-            <div className={clsx('flex gap-7 mb-4', 'max-sm:flex-col')}>
-              <div className="flex justify-center max-sm:bg-gradient-to-b from-[#31b6e7] from-60% to-transparent to-60%">
+            <div
+              className={clsx(
+                'grid grid-cols-4 items-center gap-7 mb-4',
+                'max-sm:flex',
+                'max-sm:flex-col',
+              )}
+            >
+              <div className=" flex w-full justify-center max-sm:bg-gradient-to-b from-[#31b6e7] from-60% to-transparent to-60%">
                 <div
                   className={clsx(
-                    'flex justify-center h-28 w-28',
-                    'max-sm:h-40 max-sm:w-40',
+                    'flex justify-center h-28 min-w-[112px]',
+                    'max-sm:h-40 max-sm:min-w-[140px]',
                   )}
                 >
                   <img
@@ -79,15 +81,15 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
                   />
                 </div>
               </div>
-              <div className="flex-1 flex items-center">
-                <div>
+              <div className="pl-4 col-span-3 flex items-center w-full">
+                <div className="max-w-[300px] w-full max-sm:max-w-full">
                   <FieldOutline
                     id="fullName"
                     type="text"
                     defaultValue={data.fullName}
                     label
-                    innerText="Họ & Tên"
-                    inputClassName="focus:border-[#e11b1e] max-w-[350px]"
+                    innerText="Tên"
+                    inputClassName={clsx('focus:border-[#e11b1e] ')}
                     watch={methods.watch('fullName')}
                     error={formState.errors.fullName}
                     {...methods.register('fullName')}
@@ -99,13 +101,14 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
               <div
                 className={clsx(
                   'grid grid-cols-4 items-center gap-7 mb-4',
-                  'max-sm:grid-cols-1',
+                  'max-sm:grid-cols-1 max-sm:gap-3',
                 )}
               >
                 <div className="max-sm:w-full ">Ngày sinh</div>
                 <div
                   className={clsx(
-                    'col-span-3 flex w-full flex-1 gap-3 [&>div]:max-w-[150px] [&>div]:flex-1 ',
+                    'pl-4 col-span-3 flex w-full flex-1 gap-3 [&>div]:max-w-[150px] [&>div]:flex-1 ',
+                    'max-xs:flex-col max-xs:items-start max-xs:[&>div]:min-w-[75px]',
                   )}
                 >
                   <Days
@@ -154,13 +157,13 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
               <div
                 className={clsx(
                   'grid grid-cols-4 items-center gap-7 mb-4',
-                  'max-sm:grid-cols-1',
+                  'max-sm:grid-cols-1 max-sm:gap-3',
                 )}
               >
                 <div className="max-sm:w-full">Giới tính</div>
                 <div
                   className={clsx(
-                    'col-span-3 flex gap-3',
+                    'pl-4 col-span-3 flex gap-3 overflow-auto',
                     'max-xs:flex-col max-xs:items-start',
                   )}
                 >
@@ -169,7 +172,7 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
                       <label className="flex gap-3 label cursor-pointer">
                         <input
                           type="radio"
-                          id="gender"
+                          id={val.id}
                           value={val.id}
                           defaultChecked={val.id === data.gender?.id}
                           className="radio checked:bg-red-500"
@@ -186,14 +189,14 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
               <div
                 className={clsx(
                   'grid grid-cols-4 items-center gap-7 mb-4',
-                  'max-sm:grid-cols-1',
+                  'max-sm:grid-cols-1 max-sm:gap-3',
                 )}
               >
                 <div>Quốc tịch</div>
-                <div className={clsx('col-span-3 flex-1')}>
+                <div className={clsx('pl-4 col-span-3 flex-1')}>
                   <select
                     defaultValue={data.nationality || 'default'}
-                    className="select select-bordered w-full max-w-md"
+                    className="select select-bordered w-full max-w-[300px] max-sm:max-w-full"
                     {...methods.register('nationality')}
                   >
                     <option value={'default'} disabled>

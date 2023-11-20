@@ -1,9 +1,15 @@
-import { AnyAction, Dispatch } from "@reduxjs/toolkit";
-import { loginDropdown } from "Layout/constant";
-import { LoginDropdown } from "Layout/interfaces/loginDropdown";
-import clsx from "clsx";
-import { IoIosArrowDown } from "react-icons/io";
-import { Link, Location } from "react-router-dom";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from '@nextui-org/react';
+import { AnyAction, Dispatch } from '@reduxjs/toolkit';
+import { LoginDropdown } from 'Layout/interfaces/loginDropdown';
+import clsx from 'clsx';
+import { Link, Location } from 'react-router-dom';
 
 interface Props {
   dispatch: Dispatch<AnyAction>;
@@ -13,37 +19,30 @@ interface Props {
 
 const GuestHeader: React.FC<Props> = (props: Props) => {
   return (
-    <div className=" dropdown dropdown-hover h-full [&>label>div>svg]:hover:animate-spin-180 [&>label>div>svg]:hover:rotate-180">
-      <label tabIndex={0} className="flex items-center h-full cursor-pointer">
-        <div className="flex">Xem Thêm</div>
-        <div className="pl-[5px]">
-          <IoIosArrowDown
-            className="rotate-0 transition duration-300"
-            size={25}
-          />
-        </div>
-      </label>
-      <ul
-        tabIndex={0}
-        className="bg-[#eee] top-10 right-0 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 "
-      >
-        {loginDropdown.map((item, idx) => (
-          <li key={idx} className="[&>a+a]:mt-1">
+    <Dropdown>
+      <DropdownTrigger>
+        <Button isIconOnly className="rounded-full">
+          <Avatar showFallback classNames={{ icon: 'text-zinc-50' }} />
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu>
+        {props.loginDropdown.map((item) => (
+          <DropdownItem
+            key={item.content}
+            className={clsx('hover:!text-red-500', {
+              'bg-[#c7c8ca] text-white': item.href === props.router.pathname,
+            })}
+          >
             <Link
               to={item.href}
-              className={clsx(
-                "flex capitalize focus:bg-[#c7c8ca] hover:text-red",
-                {
-                  "bg-[#c7c8ca]": item.href === props.router.pathname,
-                }
-              )}
+              className={clsx('flex capitalize text-medium', {})}
             >
               {item.content}
             </Link>
-          </li>
+          </DropdownItem>
         ))}
-      </ul>
-    </div>
+      </DropdownMenu>
+    </Dropdown>
   );
 };
 

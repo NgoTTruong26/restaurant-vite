@@ -1,14 +1,24 @@
-import { Outlet } from "react-router-dom";
-import Sidebar from "./sidebar";
+import clsx from 'clsx';
+import useMediaQuery from 'hooks/useMediaQuery';
+import { Outlet } from 'react-router-dom';
+import Sidebar from './sidebar';
 
 export default function AdminLayout() {
+  const { isXsSmaller } = useMediaQuery();
+
   return (
     <div className="flex justify-end bg-[#f5f5fa]">
-      <Sidebar />
-      <div className="relative flex justify-center w-[calc(100%-260px)] transition-all px-8 min-h-screen">
-        <div className="max-w-[1800px] w-full">
-          <Outlet />
-        </div>
+      {!isXsSmaller && <Sidebar />}
+      <div
+        className={clsx(
+          'relative flex justify-center w-[calc(100%-260px)] transition-all  min-h-screen',
+          '[&>div]:px-8',
+          {
+            'w-full': isXsSmaller,
+          },
+        )}
+      >
+        <Outlet />
       </div>
     </div>
   );

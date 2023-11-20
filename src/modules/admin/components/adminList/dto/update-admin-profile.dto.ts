@@ -16,7 +16,7 @@ export interface DataUpdateAdminDTO
   dateBirth?: Date;
 }
 
-export interface ChangePasswordDTO {
+export interface ChangePasswordByIdDTO {
   id: string;
   newPassword: string;
   repeatNewPassword: string;

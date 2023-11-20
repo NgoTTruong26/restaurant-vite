@@ -1,11 +1,10 @@
-import { HiMiniPlusCircle } from 'react-icons/hi2';
+import clsx from 'clsx';
+import debounce from 'lodash.debounce';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import AdminDetails from './components/adminDetails/AdminDetails';
 import HeaderAdminList from './components/HeaderAdminList';
-import debounce from 'lodash.debounce';
+import AdminDetails from './components/adminDetails/AdminDetails';
 import AdminList from './components/adminList';
-import clsx from 'clsx';
 import CreateAdmin from './components/createAdmin';
 
 export default function AdminManagement() {
@@ -38,6 +37,7 @@ export default function AdminManagement() {
   );
 
   const [getAdminId, setAdminId] = useState<string | null>();
+  const [showCreateAdmin, setShowCreateAdmin] = useState<boolean>(false);
 
   const [searchCharacters, setSearchCharacters] = useState<string>();
 
@@ -108,29 +108,30 @@ export default function AdminManagement() {
     setAdminId(null);
   };
 
+  const handleShowCreateAdmin = () => {
+    setShowCreateAdmin(true);
+  };
+
+  const handleCloseShowCreateAdmin = () => {
+    setShowCreateAdmin(false);
+  };
+
   return (
-    <div className="flex flex-col mt-16 mb-8 max-sm:mt-0">
-      <div className="flex gap-10 justify-between items-center max-sm:flex-col">
-        <h1 className="text-5xl pl-5">Admin</h1>
-        <div className="text-[#ffffff]">
-          <button className="capitalize flex items-center gap-2 btn btn-error text-[#ffffff]">
-            <span>
-              <HiMiniPlusCircle size={22} />
-            </span>
-            Add Admin
-          </button>
-        </div>
-      </div>
+    <div className="max-w-1800 w-full flex flex-col mt-10 gap-10 max-sm:gap-5 max-sm:mt-5">
+      <h1 className="text-5xl pl-5">Admin</h1>
+
       <div className="flex justify-center items-center">
         <div
           className={clsx(
-            'flex flex-col w-full h-full min-h-[750px]',
-            'border-2 border-[#d8d8d8] rounded-lg mt-10 bg-[#ffffff] shadow-lg',
-            ' overflow-x-auto whitespace-nowrap ',
-            'max-sm:min-h-[80vh]',
+            'flex flex-col w-full h-full min-h-[80vh]',
+            'border-2 border-[#d8d8d8] rounded-lg bg-[#ffffff] shadow-lg',
+            ' overflow-auto whitespace-nowrap ',
+            'max-md:max-h-[80vh]',
+            'max-xs:min-h-[75vh] max-xs:max-h-[75vh]',
           )}
         >
           <HeaderAdminList
+            handleShowCreateAdmin={handleShowCreateAdmin}
             filterRole={filterRole}
             handleFilterByRole={handleFilterByRole}
             handleSearch={debouncedSearch}
@@ -156,7 +157,9 @@ export default function AdminManagement() {
           filterRole={filterRole}
         />
       )}
-      <CreateAdmin handleCloseShowCreateAdmin={() => {}} />
+      {showCreateAdmin && (
+        <CreateAdmin handleCloseShowCreateAdmin={handleCloseShowCreateAdmin} />
+      )}
     </div>
   );
 }

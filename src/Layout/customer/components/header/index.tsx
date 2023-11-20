@@ -1,23 +1,32 @@
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
-import { setNavbarItemActive } from "redux/features/set-active/setActiveSlice";
-import { RootState } from "redux/app/store";
-import { useLocation } from "react-router-dom";
+import {
+  Button,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarMenu,
+  NavbarMenuToggle,
+} from '@nextui-org/react';
 import {
   TypeNavBarId,
   loginDropdown,
   navbarWithIcons,
   userDropdown,
-} from "Layout/constant";
-import UserHeader from "./components/UserHeader";
-import GuestHeader from "./components/GuestHeader";
-import { NavbarWithIcons } from "Layout/interfaces/navbar";
-import DesktopNavbar from "./components/DesktopNavbar";
-import MobileNavbar from "./components/MobileNavbar";
+} from 'Layout/constant';
+import { NavbarWithIcons } from 'Layout/interfaces/navbar';
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { RootState } from 'redux/app/store';
+import { setNavbarItemActive } from 'redux/features/set-active/setActiveSlice';
+import DesktopNavbar from './components/DesktopNavbar';
+import GuestHeader from './components/GuestHeader';
+import MobileNavbar from './components/MobileNavbar';
+import UserHeader from './components/UserHeader';
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const state = useSelector((state: RootState) => state);
 
   const dispatch = useDispatch();
@@ -39,10 +48,10 @@ export default function Header() {
       if (navbarItem) {
         document
           .querySelector(`#${navbarItem}`)
-          ?.scrollIntoView({ behavior: "auto" });
+          ?.scrollIntoView({ behavior: 'auto' });
       }
 
-      dispatch(setNavbarItemActive("home"));
+      dispatch(setNavbarItemActive('home'));
       listNodes = [...nodes].reduce((prevs: ChildNode[], curr: ChildNode) => {
         if ((curr as HTMLElement).id) {
           return [...prevs, curr];
@@ -62,76 +71,116 @@ export default function Header() {
           ) {
             dispatch(
               setNavbarItemActive(
-                (listNodes[idx] as HTMLElement).id as TypeNavBarId
-              )
+                (listNodes[idx] as HTMLElement).id as TypeNavBarId,
+              ),
             );
             return;
           }
         }
       };
     } else {
-      dispatch(setNavbarItemActive(""));
+      dispatch(setNavbarItemActive(''));
     }
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [router.pathname, dispatch]);
 
   const handleClickIntoView = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    item: NavbarWithIcons
+    item: NavbarWithIcons,
   ) => {
-    if (router.pathname === "/") {
+    if (router.pathname === '/') {
       e.preventDefault();
       item.id &&
         document
           .querySelector(`#${item.id}`)
-          ?.scrollIntoView({ behavior: "smooth" });
+          ?.scrollIntoView({ behavior: 'smooth' });
     }
 
     if (item.id) dispatch(setNavbarItemActive(item.id as TypeNavBarId));
   };
 
   return (
-    <div
-      className={clsx(
-        "fixed top-0 w-full z-20 bg-[#fff] py-[5px] flex justify-center items-center border-b border-[#eee] px-5"
-      )}
+    <Navbar
+      isBordered
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+      className="px-5"
+      classNames={{
+        wrapper: '!max-w-1200 px-0',
+      }}
     >
-      <div className="max-w-[1200px] w-full flex justify-between py-3 text-[#7f7f90]">
-        <MobileNavbar
-          navbarWithIcons={navbarWithIcons}
-          navbarItem={navbarItem}
-          handleClickIntoView={handleClickIntoView}
+      <NavbarContent>
+        <NavbarMenuToggle
+          className={clsx(
+            'flex xl:hidden h-full [&>span:before]:bg-primary [&>span:after]:bg-primary',
+          )}
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         />
-        <div className="flex items-center">
-          <Link to={"/"} className="font-bold text-[28px] text-[#000000]">
+
+        <NavbarBrand>
+          <Link to={'/'} className="font-bold text-[28px] text-[#000000]">
             Restaurant
             <span className="font-bold text-[28px] text-red">.</span>
           </Link>
-        </div>
+        </NavbarBrand>
+      </NavbarContent>
+
+      <NavbarContent className="w-full hidden xl:flex gap-4" justify="center">
         <DesktopNavbar
           navbarWithIcons={navbarWithIcons}
           navbarItem={navbarItem}
           handleClickIntoView={handleClickIntoView}
         />
-        <div className="flex items-center">
-          {user?.id ? (
+      </NavbarContent>
+
+      <NavbarMenu>
+        <MobileNavbar
+          navbarWithIcons={navbarWithIcons}
+          navbarItem={navbarItem}
+          handleClickIntoView={handleClickIntoView}
+        />
+      </NavbarMenu>
+
+      <NavbarContent justify="end">
+        {user?.id ? (
+          <NavbarContent
+            as="div"
+            className="flex justify-center items-center"
+            justify="end"
+          >
             <UserHeader
               dispatch={dispatch}
               router={router}
               loginDropdown={userDropdown}
             />
-          ) : (
-            <GuestHeader
-              dispatch={dispatch}
-              router={router}
-              loginDropdown={loginDropdown}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+          </NavbarContent>
+        ) : (
+          <>
+            <NavbarContent
+              as="div"
+              className="hidden xl:flex justify-center items-center"
+            >
+              <GuestHeader
+                dispatch={dispatch}
+                router={router}
+                loginDropdown={loginDropdown}
+              />
+            </NavbarContent>
+            <Button
+              className="flex xl:hidden"
+              as={Link}
+              color="danger"
+              to="/auth/sign-in"
+              variant="flat"
+            >
+              Sign In
+            </Button>
+          </>
+        )}
+      </NavbarContent>
+    </Navbar>
   );
 }

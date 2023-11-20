@@ -1,4 +1,4 @@
-import { FieldError } from "react-hook-form";
+import { FieldError } from 'react-hook-form';
 
 export interface PropsFieldSelect
   extends React.SelectHTMLAttributes<HTMLSelectElement> {

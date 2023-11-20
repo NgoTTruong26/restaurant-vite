@@ -1,8 +1,9 @@
+import useMediaQuery from 'hooks/useMediaQuery';
 import useGetAdminList from '../../hooks/useGetAdminList';
 import LoadingAdminList from '../LoadingAdminList';
 import { useDeleteCheckedAdmin } from '../hooks/useDeleteCheckedAdmin';
-import FooterAdminList from './FooterAdminList';
 import TableAdminList from './TableAdminList';
+import TableAdminListMobile from './TableAdminListMobile';
 
 interface Props {
   currPage: number;
@@ -31,22 +32,33 @@ export default function AdminList({
 
   const { deleteCheckedAdmins } = useDeleteCheckedAdmin();
 
+  const { isXsSmaller, isSmSmaller } = useMediaQuery();
+
   return status === 'loading' ? (
     <LoadingAdminList />
   ) : data ? (
     <>
-      <TableAdminList
-        deleteCheckedAdmins={deleteCheckedAdmins}
-        data={data}
-        handleGetAdminId={handleGetAdminId}
-      />
-      <FooterAdminList
-        data={data}
-        currPage={currPage}
-        handleNextPage={handleNextPage}
-        handlePreviousPage={handlePreviousPage}
-        handleSetPage={handleSetPage}
-      />
+      {!(isXsSmaller || isSmSmaller) ? (
+        <TableAdminList
+          deleteCheckedAdmins={deleteCheckedAdmins}
+          data={data}
+          currPage={currPage}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          handleSetPage={handleSetPage}
+          handleGetAdminId={handleGetAdminId}
+        />
+      ) : (
+        <TableAdminListMobile
+          deleteCheckedAdmins={deleteCheckedAdmins}
+          data={data}
+          currPage={currPage}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          handleSetPage={handleSetPage}
+          handleGetAdminId={handleGetAdminId}
+        />
+      )}
     </>
   ) : (
     <></>

@@ -1,7 +1,7 @@
-import { FieldError } from "react-hook-form";
+import { FieldError } from 'react-hook-form';
 
 export interface Field extends React.InputHTMLAttributes<HTMLInputElement> {
-  watch?: string;
+  watch?: string | null;
   innerText?: string;
   label?: boolean;
   inputClassName?: string;

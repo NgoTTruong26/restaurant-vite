@@ -1,47 +1,47 @@
-import { ImHome } from "react-icons/im";
-import { BiFoodMenu, BiMap, BiNews, BiTimeFive } from "react-icons/bi";
-import { BsFacebook, BsTelephone } from "react-icons/bs";
-import { GiPartyPopper } from "react-icons/gi";
+import clsx from 'clsx';
+import { Contact } from 'modules/customer/components/home/constant';
+import { ReactNode } from 'react';
 import {
   AiFillLinkedin,
   AiOutlineInstagram,
   AiOutlineSchedule,
   AiOutlineTwitter,
-} from "react-icons/ai";
-import { IoLocationOutline } from "react-icons/io5";
-import { ReactNode } from "react";
-import clsx from "clsx";
-import { LoginDropdown } from "./interfaces/loginDropdown";
-import { NavbarWithIcons } from "./interfaces/navbar";
-import { Contact } from "modules/home/constant";
+} from 'react-icons/ai';
+import { BiFoodMenu, BiMap, BiNews, BiTimeFive } from 'react-icons/bi';
+import { BsFacebook, BsTelephone } from 'react-icons/bs';
+import { GiPartyPopper } from 'react-icons/gi';
+import { ImHome } from 'react-icons/im';
+import { IoLocationOutline } from 'react-icons/io5';
+import { LoginDropdown } from './interfaces/loginDropdown';
+import { NavbarWithIcons } from './interfaces/navbar';
 
 const enum ENavBar {
-  HOME = "Trang Chủ",
-  OUR_MENU = "Menu & Giá",
-  NEWS = "Tin Tức",
-  BOOKINGS = "Đặt Bàn",
-  ADDRESS = "Địa Chỉ",
-  PHONE_NUMBER = "Gọi Đặt Bàn",
-  EVENT = "Sự kiện",
+  HOME = 'Trang Chủ',
+  OUR_MENU = 'Menu & Giá',
+  NEWS = 'Tin Tức',
+  BOOKINGS = 'Đặt Bàn',
+  ADDRESS = 'Địa Chỉ',
+  PHONE_NUMBER = 'Gọi Đặt Bàn',
+  EVENT = 'Sự kiện',
 }
 
 export const enum NavBarId {
-  HOME = "home",
-  OUR_MENU = "our_menu",
-  NEWS = "news",
-  BOOKINGS = "bookings",
-  ADDRESS = "address",
-  EVENTS = "events",
+  HOME = 'home',
+  OUR_MENU = 'our_menu',
+  NEWS = 'news',
+  BOOKINGS = 'bookings',
+  ADDRESS = 'address',
+  EVENTS = 'events',
 }
 
 export type TypeNavBarId =
-  | "home"
-  | "our_menu"
-  | "news"
-  | "bookings"
-  | "address"
-  | "events"
-  | "";
+  | 'home'
+  | 'our_menu'
+  | 'news'
+  | 'bookings'
+  | 'address'
+  | 'events'
+  | '';
 
 export const navbarWithIcons: NavbarWithIcons[] = [
   {
@@ -92,17 +92,17 @@ const icons: ReactNode[] = [
 ];
 
 enum EContact {
-  ADDRESS = "Địa chỉ",
-  RESERVATIONS = "Đặt bàn",
-  SCHEDULE = "Giờ mở cửa",
-  FOLLOW_US = "Theo dõi chúng tôi",
+  ADDRESS = 'Địa chỉ',
+  RESERVATIONS = 'Đặt bàn',
+  SCHEDULE = 'Giờ mở cửa',
+  FOLLOW_US = 'Theo dõi chúng tôi',
 }
 
 export const contacts: Contact<string | ReactNode, EContact>[] = [
   {
     icons: <BiMap size={35} />,
     title: EContact.ADDRESS,
-    content: "A108 Adam Street\nNew York, NY 535022 - US",
+    content: 'A108 Adam Street\nNew York, NY 535022 - US',
   },
   {
     icons: <BsTelephone size={35} />,
@@ -111,11 +111,11 @@ export const contacts: Contact<string | ReactNode, EContact>[] = [
       <>
         <div>
           <span className="font-medium">Phone:</span>
-          <span>{" +1 5589 55488 55"}</span>
+          <span>{' +1 5589 55488 55'}</span>
         </div>
         <div>
           <span className="font-medium">Email:</span>
-          <span>{" info@example.com"}</span>
+          <span>{' info@example.com'}</span>
         </div>
       </>
     ),
@@ -127,11 +127,11 @@ export const contacts: Contact<string | ReactNode, EContact>[] = [
       <>
         <div>
           <span className="font-medium">Mon-Sat:</span>
-          <span>{" 11AM - 23PM"}</span>
+          <span>{' 11AM - 23PM'}</span>
         </div>
         <div>
           <span className="font-medium">Sunday:</span>
-          <span>{" Closed"}</span>
+          <span>{' Closed'}</span>
         </div>
       </>
     ),
@@ -144,19 +144,19 @@ export const contacts: Contact<string | ReactNode, EContact>[] = [
           <span
             key={idx}
             className={clsx(
-              "flex flex-wrap",
-              "max-md:w-[50%] max-md:pl-0",
-              "max-sm:w-fit max-sm:pt-0",
+              'flex flex-wrap',
+              'max-md:w-[50%] max-md:pl-0',
+              'max-sm:w-fit max-sm:pt-0',
               {
-                "pl-2": idx > 0,
-                "max-md:pt-2": idx > 1,
-                "max-sm:pl-2": idx > 0,
-              }
+                'pl-2': idx > 0,
+                'max-md:pt-2': idx > 1,
+                'max-sm:pl-2': idx > 0,
+              },
             )}
           >
             <div
               className={clsx(
-                "p-2 border border-[#ffffff33] !text-[#ffffffb3] rounded-full hover:border-[#eee] hover:!text-[#eee] hover:cursor-pointer"
+                'p-2 border border-[#ffffff33] !text-[#ffffffb3] rounded-full hover:border-[#eee] hover:!text-[#eee] hover:cursor-pointer',
               )}
             >
               {item}
@@ -169,25 +169,25 @@ export const contacts: Contact<string | ReactNode, EContact>[] = [
 ];
 
 const enum ELoginDropdown {
-  SIGNIN = "Đăng Nhập",
-  SIGNUP = "Đăng Kí",
-  BOOKINGSLOOKUP = "Tìm Đơn Đặt Bàn",
-  SUPPORT = "Hỗ Trợ",
+  SIGNIN = 'Sign In',
+  SIGNUP = 'Sign Up',
+  BOOKINGSLOOKUP = 'Bookings Lookup',
+  SUPPORT = 'Support',
 }
 
 const enum EUserDropdown {
-  BOOKINGSLOOKUP = "Tìm Đơn Đặt Bàn",
-  SUPPORT = "Hỗ Trợ",
+  BOOKINGSLOOKUP = 'Bookings Lookup',
+  SUPPORT = 'Support',
 }
 
 export const loginDropdown: LoginDropdown[] = [
-  { content: ELoginDropdown.SIGNIN, href: "/auth/sign-in" },
-  { content: ELoginDropdown.SIGNUP, href: "/auth/sign-up" },
-  { content: ELoginDropdown.BOOKINGSLOOKUP, href: "/bookings-lookup" },
-  { content: ELoginDropdown.SUPPORT, href: "/support" },
+  { content: ELoginDropdown.SIGNIN, href: '/auth/sign-in' },
+  { content: ELoginDropdown.SIGNUP, href: '/auth/sign-up' },
+  { content: ELoginDropdown.BOOKINGSLOOKUP, href: '/bookings-lookup' },
+  { content: ELoginDropdown.SUPPORT, href: '/support' },
 ];
 
 export const userDropdown: LoginDropdown[] = [
-  { content: EUserDropdown.BOOKINGSLOOKUP, href: "/bookings-lookup" },
-  { content: EUserDropdown.SUPPORT, href: "/support" },
+  { content: EUserDropdown.BOOKINGSLOOKUP, href: '/bookings-lookup' },
+  { content: EUserDropdown.SUPPORT, href: '/support' },
 ];

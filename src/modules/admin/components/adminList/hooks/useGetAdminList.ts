@@ -7,12 +7,12 @@ export default function useGetAdminList(
   filterRole?: string,
   searchCharacters?: string,
 ) {
-  const { status, data, error, isFetching, isLoading } = useQuery({
+  const getAdminList = useQuery({
     queryKey: ['get_admin_list', page, filterRole, searchCharacters],
 
     queryFn: async () => {
       const { data } = await api.get<IAxiosResponse<GetAdminListDTO | null>>(
-        `/admin?${
+        `/admin/admin-list?${
           filterRole
             ? filterRole !== 'default'
               ? `role=${filterRole}&`
@@ -23,10 +23,7 @@ export default function useGetAdminList(
 
       return data.data;
     },
-    retry: 1,
-    refetchOnWindowFocus: false,
-    staleTime: 5000,
   });
 
-  return { status, data, error, isFetching, isLoading };
+  return getAdminList;
 }

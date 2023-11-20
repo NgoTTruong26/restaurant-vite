@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import LoadingChildrenCategory from 'modules/home/components/bookings/components/LoadingChildrenCategory';
 
-import { GrFormClose } from 'react-icons/gr';
-import useGetRoles from '../../hooks/useGetRoles';
+import LoadingChildrenCategory from 'modules/customer/components/home/components/bookings/components/LoadingChildrenCategory';
 import { UseFieldArrayReturn } from 'react-hook-form';
+import { GrFormClose } from 'react-icons/gr';
 import { IInputDataCreateAdmin } from '.';
+import useGetRoles from '../../hooks/useGetRoles';
 
 interface Props {
   roles: UseFieldArrayReturn<IInputDataCreateAdmin, 'roles', 'id'>;

@@ -1,5 +1,5 @@
-import React from "react";
-import { PropsFieldSelect } from "./interfaces/PropsFieldSelect.interface";
+import React from 'react';
+import { PropsFieldSelect } from './interfaces/PropsFieldSelect.interface';
 
 const Months = React.forwardRef<HTMLSelectElement, PropsFieldSelect>(
   ({ error, ...props }, ref) => {
@@ -15,7 +15,7 @@ const Months = React.forwardRef<HTMLSelectElement, PropsFieldSelect>(
             Tháng
           </option>
           {Array(12)
-            .fill("")
+            .fill('')
             .map((val, idx) => idx + 1)
             .map((val) => (
               <option key={val} value={val}>
@@ -26,7 +26,7 @@ const Months = React.forwardRef<HTMLSelectElement, PropsFieldSelect>(
         {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
       </div>
     );
-  }
+  },
 );
 
 export default Months;

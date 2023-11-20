@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface IListLastPage {
   idBuffetMenu: string;
@@ -14,7 +14,7 @@ const initialState: ListLastPageState = {
 };
 
 const listLastPageSlice = createSlice({
-  name: "listLastPage",
+  name: 'listLastPage',
   initialState,
   reducers: {
     setListLastPage: (state, actions: PayloadAction<IListLastPage>) => {

@@ -1,11 +1,11 @@
 import clsx from 'clsx';
-import LoadingChildrenCategory from 'modules/home/components/bookings/components/LoadingChildrenCategory';
 
 import { GrFormClose } from 'react-icons/gr';
 
+import LoadingChildrenCategory from 'modules/customer/components/home/components/bookings/components/LoadingChildrenCategory';
 import { useEffect } from 'react';
-import { useFormModifyAdminRole } from '../hooks/useFormModifyAdminRole';
 import useGetRoles from '../../hooks/useGetRoles';
+import { useFormModifyAdminRole } from '../hooks/useFormModifyAdminRole';
 import useUpdateAdminRoles from '../hooks/useUpdateAdminRoles';
 
 interface Props {
