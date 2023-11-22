@@ -1,18 +1,9 @@
-import FieldProgress from 'components/field/FieldProgress';
-import { cssBeforeOnFocusInput } from 'modules/customer/components/home/constant.styles';
-import { UseFormReturn } from 'react-hook-form';
-
 import clsx from 'clsx';
 
-import { Select, SelectItem } from '@nextui-org/react';
+import Field from 'components/field';
 import useGetListBuffetMenuPreview from '../../OurMenu/hooks/useGetListBuffetMenuPreview';
-import { CreateBookingDTO } from '../dto/booking.dto';
 
-interface Props {
-  methods: UseFormReturn<CreateBookingDTO>;
-}
-
-export default function Column2({ methods }: Props) {
+export default function Column2() {
   const buffetMenus = useGetListBuffetMenuPreview().data;
 
   return (
@@ -22,19 +13,12 @@ export default function Column2({ methods }: Props) {
         '[&>div+div]:pt-8',
       )}
     >
-      <div className="flex flex-col ">
-        <FieldProgress
-          id="numberPeople"
-          placeholder="Nhập số lượng người..."
-          type="number"
-          label
-          innerText="Số người"
-          spanClassName={cssBeforeOnFocusInput}
-          inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-          error={methods.formState.errors.numberPeople}
-          {...methods.register('numberPeople')}
-        />
-      </div>
+      <Field
+        t="input"
+        name="numberPeople"
+        type="number"
+        label="Number People"
+      />
       <div className="flex max-sm:flex-col max-md:pt-3">
         <div
           className={clsx(
@@ -42,15 +26,12 @@ export default function Column2({ methods }: Props) {
             'max-sm:w-full max-sm:mr-0',
           )}
         >
-          <FieldProgress
-            id="bookingTime"
+          <Field
+            t="input"
             type="date"
-            label
-            innerText="Ngày đặt bàn"
-            spanClassName={cssBeforeOnFocusInput}
-            inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-            error={methods.formState.errors.bookingDate}
-            {...methods.register('bookingDate')}
+            name="bookingDate"
+            label="Booking Date"
+            placeholder=" "
           />
         </div>
         <div
@@ -59,54 +40,36 @@ export default function Column2({ methods }: Props) {
             'max-sm:w-full max-sm:mr-0 max-sm:pt-3',
           )}
         >
-          <FieldProgress
-            id="bookingTime"
+          <Field
+            t="input"
             type="time"
-            label
-            innerText="Giờ đặt bàn"
-            spanClassName={cssBeforeOnFocusInput}
-            inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-            error={methods.formState.errors.bookingTime}
-            {...methods.register('bookingTime')}
+            name="bookingTime"
+            label="Booking Time"
+            placeholder=" "
           />
         </div>
       </div>
       <div>
         {buffetMenus && (
-          <Select
-            variant="faded"
-            label="Select an animal"
-            className="max-w-xs text-primary"
-            color="primary"
-          >
-            {buffetMenus.map((buffetMenu, idx) => (
-              <SelectItem
-                color="primary"
-                key={buffetMenu.name}
-                value={buffetMenu.name}
-              >
-                {buffetMenu.name}
-              </SelectItem>
-            ))}
-          </Select>
-        )}
-
-        {methods.getFieldState('buffetMenu').error?.message && (
-          <p className="text-red pl-2 pt-1">
-            {methods.getFieldState('buffetMenu').error?.message}
-          </p>
+          <Field
+            t="select"
+            name="buffetMenu"
+            label="Buffet Menu"
+            options={buffetMenus.map((buffetMenu) => ({
+              label: buffetMenu.name + 'K',
+              value: buffetMenu.price,
+            }))}
+          />
         )}
       </div>
 
       <div className="flex flex-col max-md:pt-3">
-        <FieldProgress
-          id="note"
-          type="text"
-          label
-          innerText="Ghi chú"
-          spanClassName={cssBeforeOnFocusInput}
-          inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-          {...methods.register('note')}
+        <Field
+          placeholder="Enter note..."
+          t="input"
+          name="note"
+          label="Note"
+          isInvalid={false}
         />
       </div>
     </div>

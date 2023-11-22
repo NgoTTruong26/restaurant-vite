@@ -1,16 +1,14 @@
 import { Button, Modal, ModalContent, useDisclosure } from '@nextui-org/react';
 import clsx from 'clsx';
-import FieldProgress from 'components/field/FieldProgress';
-import { cssBeforeOnFocusInput } from 'modules/customer/components/home/constant.styles';
+import Field from 'components/field';
 import { useState } from 'react';
-import { UseFieldArrayReturn, UseFormReturn } from 'react-hook-form';
+import { UseFieldArrayReturn } from 'react-hook-form';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 import { GrFormClose } from 'react-icons/gr';
 import { CreateBookingDTO } from '../dto/booking.dto';
 import ModalChildrenCategory from './ModalChildrenCategory';
 
 interface Props {
-  methods: UseFormReturn<CreateBookingDTO>;
   bookingsForChildren: UseFieldArrayReturn<
     CreateBookingDTO,
     'bookingsForChildren'
@@ -20,7 +18,6 @@ interface Props {
 }
 
 export default function Column3({
-  methods,
   bookingsForChildren,
   initChildrenCategoryId,
   enoughtChildrenCategory,
@@ -66,18 +63,12 @@ export default function Column3({
               >
                 <GrFormClose size={25} />
               </span>
-              <FieldProgress
-                key={idx}
-                id={item.childrenCategory}
-                innerText={item.childrenCategory}
+              <Field
+                t="input"
+                name={`bookingsForChildren.${idx}.quantity`}
                 type="number"
-                label
-                spanClassName={cssBeforeOnFocusInput}
-                inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-                {...methods.register(`bookingsForChildren.${idx}.quantity`)}
-                error={
-                  methods.formState.errors.bookingsForChildren?.[idx]?.quantity
-                }
+                label={item.childrenCategory}
+                placeholder=" "
               />
             </div>
           ))}
@@ -95,6 +86,7 @@ export default function Column3({
                 backdrop="opaque"
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
+                placement="center"
                 motionProps={{
                   variants: {
                     enter: {
@@ -133,29 +125,19 @@ export default function Column3({
         </div>
       </div>
       <div className="flex flex-col">
-        <FieldProgress
-          id="author"
-          placeholder="Nhập tên khách hàng..."
-          type="text"
-          label
-          innerText="Tên khách hàng"
-          spanClassName={cssBeforeOnFocusInput}
-          inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-          error={methods.formState.errors.author}
-          {...methods.register('author')}
+        <Field
+          t="input"
+          name="author"
+          label="Name"
+          placeholder="Enter Customer Name..."
         />
       </div>
       <div className="flex flex-col max-md:pt-3">
-        <FieldProgress
-          id="phoneNumber"
-          placeholder="Nhập số điện thoại..."
-          type="text"
-          label
-          innerText="Số điện thoại"
-          spanClassName={cssBeforeOnFocusInput}
-          inputClassName="border-b border-b-black [&:focus~.spanField]:before:!w-full"
-          error={methods.formState.errors.phoneNumber}
-          {...methods.register('phoneNumber')}
+        <Field
+          t="input"
+          name="phoneNumber"
+          label="Phone Number"
+          placeholder="Enter your phone number..."
         />
       </div>
       <Button

@@ -1,6 +1,7 @@
 import { NavBarId } from 'Layout/constant';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
+import { FormProvider } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/app/store';
 import Column1 from './components/Column1';
@@ -58,22 +59,21 @@ export default function Bookings() {
           {' With Us'}
         </div>
         <div className="w-full">
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <div
-              className={clsx(
-                'grid grid-cols-3 w-full border shadow-xl p-10 rounded-xl',
-                'max-sm:p-0 max-sm:py-3',
-                'max-md:flex max-md:flex-col',
-              )}
-            >
-              <Column1 />
-              <Column2 methods={methods} />
-              <Column3
-                methods={methods}
-                bookingsForChildren={bookingsForChildren}
-              />
-            </div>
-          </form>
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
+              <div
+                className={clsx(
+                  'grid grid-cols-3 w-full border shadow-xl p-10 rounded-xl',
+                  'max-sm:p-0 max-sm:py-3',
+                  'max-md:flex max-md:flex-col',
+                )}
+              >
+                <Column1 />
+                <Column2 />
+                <Column3 bookingsForChildren={bookingsForChildren} />
+              </div>
+            </form>
+          </FormProvider>
         </div>
       </div>
       {showBill && dataBooking && (

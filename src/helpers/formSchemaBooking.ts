@@ -1,11 +1,7 @@
 import { Regex } from 'configs/constants';
 import yup from 'configs/yupGlobal';
 
-import {
-  validateInvalidMessage,
-  validateRequireMessage,
-  validateRequireNumberType,
-} from 'utils/getValidateMessage';
+import { validateRequireNumberType } from 'utils/getValidateMessage';
 import { object } from 'yup';
 
 const test = {
@@ -23,18 +19,16 @@ const test = {
 export const formSchemaBooking = yup.object({
   numberPeople: yup
     .number()
-    .label('Số người')
-    .typeError(validateRequireNumberType)
-    .required(validateRequireMessage)
-
+    .label('Number People')
+    .required()
     .test({
       test: (value) => (value >= 1 ? true : false),
-      message: 'Số người ít nhất là 1 người',
+      message: ({ label }) => label + 'at least 1 person',
     }),
   bookingDate: yup
     .string()
-    .label('Ngày đặt bàn')
-    .required(validateRequireMessage)
+    .label('Booking Date')
+    .required()
     .test({
       test: (value) => {
         const currentDate = new Date();
@@ -47,13 +41,12 @@ export const formSchemaBooking = yup.object({
           ? true
           : false;
       },
-      message: ({ label }) =>
-        `${label} phải là từ ngày hôm nay đến 3 ngày gần nhất`,
+      message: ({ label }) => `${label} must be from today to the next 3 days`,
     }),
   bookingTime: yup
     .string()
-    .label('Giờ đặt bàn')
-    .required(validateRequireMessage)
+    .label('Booking Time')
+    .required()
     .test({
       test: (value) => {
         const currentTime = new Date();
@@ -72,21 +65,20 @@ export const formSchemaBooking = yup.object({
           : false;
       },
       message: ({ label }) =>
-        `${label} không hợp lệ Sáng: 9h -> 14h30 Tối: 5h -> 11h30 `,
+        `${label} invalid Morning: 9h -> 14h30 \n Tonight: 5h -> 11h30 `,
     }),
-  author: yup.string().label('Tên').required(validateRequireMessage),
+  author: yup.string().label('Name').required(),
   phoneNumber: yup
     .string()
-    .label('Số điện thoại')
-    .required(validateRequireMessage)
-    .matches(Regex.PHONENUMBER, validateInvalidMessage),
+    .label('Phone Number')
+    .required()
+    .matches(Regex.PHONENUMBER, ({ label }) => label + ' ' + 'not match'),
   buffetMenu: yup
     .string()
     .label('Buffet Menu')
-    .required(validateRequireMessage)
+    .required()
     .test({
       test: (value) => (value !== 'default' ? true : false),
-      message: validateRequireMessage,
     }),
   bookingsForChildren: yup.array().of(object().shape(test)),
 });
