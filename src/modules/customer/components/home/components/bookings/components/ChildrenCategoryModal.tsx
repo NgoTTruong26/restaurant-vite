@@ -30,7 +30,7 @@ interface Props {
   selectChildrenCategory: string[];
 }
 
-const ModalChildrenCategory: React.FC<Props> = ({
+const ChildrenCategoryModal: React.FC<Props> = ({
   bookingsForChildren,
   handleClose,
   handleHiddenBtnAddChildren,
@@ -164,4 +164,4 @@ const ModalChildrenCategory: React.FC<Props> = ({
   );
 };
 
-export default ModalChildrenCategory;
+export default ChildrenCategoryModal;

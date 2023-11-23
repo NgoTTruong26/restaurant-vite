@@ -9,10 +9,11 @@ import {
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import { LoginDropdown } from 'Layout/interfaces/loginDropdown';
 import clsx from 'clsx';
-import { Link, Location } from 'react-router-dom';
+import { Location } from 'react-router-dom';
 
 interface Props {
   dispatch: Dispatch<AnyAction>;
+  openSignInModal: () => void;
   router: Location;
   loginDropdown: LoginDropdown[];
 }
@@ -33,12 +34,13 @@ const GuestHeader: React.FC<Props> = (props: Props) => {
               'bg-[#c7c8ca] text-white': item.href === props.router.pathname,
             })}
           >
-            <Link
-              to={item.href}
+            <div
+              onClick={props.openSignInModal}
+              /* to={item.href} */
               className={clsx('flex capitalize text-medium', {})}
             >
               {item.content}
-            </Link>
+            </div>
           </DropdownItem>
         ))}
       </DropdownMenu>

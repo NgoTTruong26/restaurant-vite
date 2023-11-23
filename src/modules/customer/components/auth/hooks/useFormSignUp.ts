@@ -8,11 +8,10 @@ interface InputSignUp {
   username: string;
   password: string;
   repeat_password: string;
-  agree_terms_priacvy: boolean;
 }
 
 export function useFormSignUp() {
-  const { formState, ...methods } = useForm<InputSignUp>({
+  const methods = useForm<InputSignUp>({
     defaultValues: {
       fullName: '',
       username: '',
@@ -22,11 +21,12 @@ export function useFormSignUp() {
     resolver: yupResolver(formSchemaSignUp),
   });
 
-  const onSubmit = (data: InputSignUp) => {};
+  const onSubmit = methods.handleSubmit((data: InputSignUp) => {
+    console.log(data);
+  });
 
   return {
     methods,
-    formState,
     onSubmit,
   };
 }

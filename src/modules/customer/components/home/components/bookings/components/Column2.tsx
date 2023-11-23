@@ -57,7 +57,7 @@ export default function Column2() {
             label="Buffet Menu"
             options={buffetMenus.map((buffetMenu) => ({
               label: buffetMenu.name + 'K',
-              value: buffetMenu.price,
+              value: buffetMenu.id,
             }))}
           />
         )}

@@ -6,7 +6,7 @@ import { UseFieldArrayReturn } from 'react-hook-form';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 import { GrFormClose } from 'react-icons/gr';
 import { CreateBookingDTO } from '../dto/booking.dto';
-import ModalChildrenCategory from './ModalChildrenCategory';
+import ChildrenCategoryModal from './ChildrenCategoryModal';
 
 interface Props {
   bookingsForChildren: UseFieldArrayReturn<
@@ -111,7 +111,7 @@ export default function Column3({
               >
                 <ModalContent>
                   {(onClose) => (
-                    <ModalChildrenCategory
+                    <ChildrenCategoryModal
                       bookingsForChildren={bookingsForChildren}
                       handleClose={onClose}
                       handleHiddenBtnAddChildren={handleHiddenBtnAddChildren}

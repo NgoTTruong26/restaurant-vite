@@ -14,7 +14,7 @@ interface InputSignIn {
 }
 
 export function useFormSignIn() {
-  const { formState, ...methods } = useForm<InputSignIn>({
+  const methods = useForm<InputSignIn>({
     defaultValues: { username: '', reqPassword: '', remember_account: false },
     resolver: yupResolver(formSchemaSignIn),
   });
@@ -25,7 +25,7 @@ export function useFormSignIn() {
 
   const navigate = useNavigate();
 
-  const onSubmit = (inputSign: InputSignIn) => {
+  const onSubmit = methods.handleSubmit((inputSign: InputSignIn) => {
     mutate(inputSign, {
       onSuccess(data) {
         const { accessToken, ...user } = data!;
@@ -42,11 +42,11 @@ export function useFormSignIn() {
         dispatch(setUser(null));
       },
     });
-  };
+  });
 
   return {
     methods,
-    formState,
+
     onSubmit,
     isLoading,
   };

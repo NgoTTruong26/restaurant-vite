@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import LayoutBackToHomePage from 'Layout/backToHomePage';
 import BookingLookup from 'modules/customer/components/bookingLookup';
 import Menu from 'modules/customer/components/menu';
 
@@ -18,12 +17,7 @@ const HomeLayout = lazy(() => import('Layout/customer'));
 
 //Pages customers
 const Home = lazy(() => import('modules/customer/components/home/pages/Home'));
-const SignIn = lazy(
-  () => import('modules/customer/components/auth/components/sign-in'),
-);
-const SignUp = lazy(
-  () => import('modules/customer/components/auth/components/sign-up'),
-);
+
 const UserProfile = lazy(() => import('modules/customer/components/user'));
 
 export const router = createBrowserRouter([
@@ -64,24 +58,6 @@ export const router = createBrowserRouter([
                 element: <OrderManagement />,
               },
             ],
-          },
-        ],
-      },
-      {
-        path: '/auth',
-        element: <LayoutBackToHomePage />,
-        children: [
-          {
-            path: '',
-            element: <SignIn />,
-          },
-          {
-            path: 'sign-in',
-            element: <SignIn />,
-          },
-          {
-            path: 'sign-up',
-            element: <SignUp />,
           },
         ],
       },

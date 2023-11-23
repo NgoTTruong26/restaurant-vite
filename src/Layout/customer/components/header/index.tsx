@@ -1,10 +1,15 @@
 import {
   Button,
+  Modal,
+  ModalContent,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarMenu,
   NavbarMenuToggle,
+  Tab,
+  Tabs,
+  useDisclosure,
 } from '@nextui-org/react';
 import {
   TypeNavBarId,
@@ -14,7 +19,10 @@ import {
 } from 'Layout/constant';
 import { NavbarWithIcons } from 'Layout/interfaces/navbar';
 import clsx from 'clsx';
+import SignInModal from 'modules/customer/components/auth/components/sign-in/SignInModal';
 import { useEffect, useState } from 'react';
+
+import SignUpModal from 'modules/customer/components/auth/components/sign-up/SignUpModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { RootState } from 'redux/app/store';
@@ -27,11 +35,15 @@ import UserHeader from './components/UserHeader';
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const [selected, setSelected] = useState('login');
+
   const state = useSelector((state: RootState) => state);
 
   const dispatch = useDispatch();
 
   const router = useLocation();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const navbarItem = state.setNavbarItemActive.value.navbarItemActive;
 
@@ -164,6 +176,7 @@ export default function Header() {
               className="hidden xl:flex justify-center items-center"
             >
               <GuestHeader
+                openSignInModal={onOpen}
                 dispatch={dispatch}
                 router={router}
                 loginDropdown={loginDropdown}
@@ -181,6 +194,38 @@ export default function Header() {
           </>
         )}
       </NavbarContent>
+
+      {!user?.id && (
+        <Modal
+          placement="center"
+          backdrop="blur"
+          isOpen={isOpen}
+          onClose={onClose}
+          className="max-w-500"
+          hideCloseButton
+        >
+          <ModalContent>
+            {(onClose) => (
+              <Tabs
+                fullWidth
+                size="md"
+                aria-label="Tabs form"
+                selectedKey={selected}
+                onSelectionChange={(item) => setSelected(item as string)}
+                color="primary"
+                className="pt-2 px-6"
+              >
+                <Tab key="login" title="Login">
+                  <SignInModal onClose={onClose} />
+                </Tab>
+                <Tab key="sign-up" title="Sign up">
+                  <SignUpModal onClose={onClose} />
+                </Tab>
+              </Tabs>
+            )}
+          </ModalContent>
+        </Modal>
+      )}
     </Navbar>
   );
 }

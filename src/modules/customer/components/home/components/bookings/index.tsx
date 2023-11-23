@@ -1,31 +1,25 @@
+import { Modal, ModalContent, useDisclosure } from '@nextui-org/react';
 import { NavBarId } from 'Layout/constant';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/app/store';
 import Column1 from './components/Column1';
 import Column2 from './components/Column2';
 import Column3 from './components/Column3';
-import BookingBill from './components/bookingsBill/components/BookingBill';
+import BookingBillModal from './components/bookingsBill/components/BookingBillModal';
 import { CreateBookingDTO } from './dto/booking.dto';
 import useFormBooking from './hooks/useFormBooking';
 
 export default function Bookings() {
-  const [showBill, setShowBill] = useState<boolean>(false);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const [dataBooking, setDataBooking] = useState<CreateBookingDTO>();
 
   const userId = useSelector((state: RootState) => state.setUser.value?.id);
 
   const { methods, bookingsForChildren } = useFormBooking();
-
-  useEffect(() => {
-    if (showBill) {
-      document.body.classList.add('overflow-hidden', 'touch-pan-y');
-      return;
-    }
-    document.body.classList.remove('overflow-hidden');
-  }, [showBill]);
 
   const onSubmit = (data: CreateBookingDTO) => {
     setDataBooking(() => {
@@ -37,11 +31,7 @@ export default function Bookings() {
       }
       return data;
     });
-    setShowBill(true);
-  };
-
-  const handleCloseBill = () => {
-    setShowBill(false);
+    onOpen();
   };
 
   return (
@@ -76,11 +66,43 @@ export default function Bookings() {
           </FormProvider>
         </div>
       </div>
-      {showBill && dataBooking && (
-        <BookingBill
-          dataBooking={dataBooking}
-          handleCloseBill={handleCloseBill}
-        />
+      {dataBooking && (
+        <Modal
+          backdrop="opaque"
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          placement="center"
+          motionProps={{
+            variants: {
+              enter: {
+                y: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.3,
+                  ease: 'easeOut',
+                },
+              },
+              exit: {
+                y: -20,
+                opacity: 0,
+                transition: {
+                  duration: 0.2,
+                  ease: 'easeIn',
+                },
+              },
+            },
+          }}
+          className="max-w-800 max-h-[80vh] overflow-y-auto"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <BookingBillModal
+                dataBooking={dataBooking}
+                handleCloseBill={onClose}
+              />
+            )}
+          </ModalContent>
+        </Modal>
       )}
     </div>
   );
