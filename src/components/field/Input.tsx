@@ -5,7 +5,7 @@ import {
 import { TextInputDOMProps } from '@react-types/shared';
 
 export interface InputProps extends Omit<NextUIInputProps, 'type'> {
-  t: 'input';
+  t: 'input' | 'inputNoGetError';
   type?: TextInputDOMProps['type'];
 }
 

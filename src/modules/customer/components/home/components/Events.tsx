@@ -83,7 +83,11 @@ export default function Events({ slidesPerView }: Props) {
                   {item.decription}
                 </div>
               </div>
-              <img src={item.srcImg} alt={item.alt} className="invisible" />
+              <img
+                src={item.srcImg}
+                alt={item.alt}
+                className="invisible min-h-[300px]"
+              />
             </div>
           </SwiperSlide>
         ))}

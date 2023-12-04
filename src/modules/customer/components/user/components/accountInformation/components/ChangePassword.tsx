@@ -1,7 +1,8 @@
-import clsx from 'clsx';
-import FieldOutline from 'components/field/FieldOutline';
-import React, { useRef } from 'react';
-import { GrFormClose } from 'react-icons/gr';
+import { Button, ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
+import Field from 'components/field';
+import React from 'react';
+import { FormProvider } from 'react-hook-form';
+import { FaLock } from 'react-icons/fa';
 import { GetUserProfileDTO } from '../dto/get-user.dto';
 import useChangePassword from '../hooks/useChangePassword';
 import {
@@ -10,20 +11,15 @@ import {
 } from '../hooks/useFormChangePassword';
 
 interface Props {
-  handleCloseShowChangePassword: () => void;
+  handleClose: () => void;
 
   data: GetUserProfileDTO;
 }
 
-const ChangePassword: React.FC<Props> = ({
-  handleCloseShowChangePassword,
-  data,
-}) => {
-  const { methods, formState } = useFormChangePassword();
+const ChangePassword: React.FC<Props> = ({ handleClose, data }) => {
+  const { methods } = useFormChangePassword();
 
   const { mutate } = useChangePassword();
-
-  const ref = useRef<HTMLDivElement>(null);
 
   const onSubmit = (dataInput: InputChangePassword) => {
     mutate(
@@ -35,85 +31,69 @@ const ChangePassword: React.FC<Props> = ({
       },
       {
         onSuccess: () => {
-          handleCloseShowChangePassword();
+          handleClose();
         },
       },
     );
   };
 
   return (
-    <div
-      className={clsx(
-        'absolute flex justify-center items-center top-0 left-0 z-20 w-full h-full bg-[#0009] overflow-hidden ',
-      )}
-    >
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        ref={ref}
-        className="z-30 px-5 max-w-[500px] w-full animate-drop-top opacity-100 transition-all duration-100"
-      >
-        <div className="bg-[#ffffff] rounded-lg p-8 pb-3">
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <span className="sticky flex justify-end right-4 top-0 ">
-              <GrFormClose
-                className="hover:cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCloseShowChangePassword();
-                }}
-                size={25}
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <ModalHeader className="flex flex-col gap-1">
+          Change Password
+        </ModalHeader>
+        <ModalBody>
+          <Field
+            t="input"
+            name="old_password"
+            label="Old Password"
+            type="password"
+            endContent={
+              <FaLock
+                size={20}
+                className="text-primary pointer-events-none flex-shrink-0"
               />
-            </span>
-            <div className="mb-4 text-center text-2xl">Đổi mật khẩu</div>
-            <div className="flex-1 flex flex-col items-center [&>div]:w-full [&>div]:mb-4 [&>div]:max-w-[350px]">
-              <div>
-                <FieldOutline
-                  id="old_password"
-                  label
-                  innerText="Mật khẩu cũ"
-                  inputClassName="focus:border-[#e11b1e]"
-                  watch={methods.watch('old_password')}
-                  type="password"
-                  error={formState.errors.old_password}
-                  {...methods.register('old_password')}
-                />
-              </div>
-              <div>
-                <FieldOutline
-                  id="new_password"
-                  label
-                  innerText="Mật khẩu mới"
-                  inputClassName="focus:border-[#e11b1e]"
-                  watch={methods.watch('new_password')}
-                  type="password"
-                  error={formState.errors.new_password}
-                  {...methods.register('new_password')}
-                />
-              </div>
-              <div>
-                <FieldOutline
-                  id="repeat_new_password"
-                  label
-                  innerText="Nhập lại mật khẩu mới"
-                  inputClassName="focus:border-[#e11b1e]"
-                  watch={methods.watch('repeat_new_password')}
-                  type="text"
-                  error={formState.errors.repeat_new_password}
-                  {...methods.register('repeat_new_password')}
-                />
-              </div>
-            </div>
-            <div className="flex justify-end py-2 px-5 ">
-              <button className="p-3 font-medium text-[#ffffff] bg-[#3d4451] rounded-xl cursor-pointer">
-                Xác nhận
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+            }
+            placeholder="Enter your old password..."
+          />
+          <Field
+            t="input"
+            name="new_password"
+            label="New Password"
+            type="password"
+            endContent={
+              <FaLock
+                size={20}
+                className="text-primary pointer-events-none flex-shrink-0"
+              />
+            }
+            placeholder="Enter your new password..."
+          />
+          <Field
+            t="input"
+            name="repeat_new_password"
+            label="Repeat Password"
+            type="password"
+            endContent={
+              <FaLock
+                size={20}
+                className="text-primary pointer-events-none flex-shrink-0"
+              />
+            }
+            placeholder="Enter your repeat new password..."
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" variant="flat" onPress={handleClose}>
+            Close
+          </Button>
+          <Button type="submit" color="primary">
+            Submit
+          </Button>
+        </ModalFooter>
+      </form>
+    </FormProvider>
   );
 };
 

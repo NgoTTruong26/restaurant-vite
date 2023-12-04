@@ -240,7 +240,7 @@ const BookingBillModal: React.FC<Props> = ({
                             <div className="font-medium">
                               {children.quantity} x Set trẻ em dưới 1m3
                             </div>
-                            <div className="py-1 px-2 text-red bg-[#faebd7]">
+                            <div className="py-1 px-2 text-primary bg-[#faebd7]">
                               <div>-{children.deals}%</div>
                             </div>
                           </div>

@@ -1,4 +1,4 @@
-import Button from 'components/Button';
+import { Button } from '@nextui-org/react';
 import FieldOutline from 'components/field/FieldOutline';
 import srcLogoT12 from 'images/logoT12-2.png';
 import { Link } from 'react-router-dom';

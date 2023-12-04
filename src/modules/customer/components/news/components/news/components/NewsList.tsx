@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 
-import Button from 'components/Button';
-import LoadingNewsList from './LoadingNewsList';
-import useGetNewsList from '../hooks/useGetNewsList';
+import { Button } from '@nextui-org/react';
 import { useNavigate } from 'react-router-dom';
+import useGetNewsList from '../hooks/useGetNewsList';
+import LoadingNewsList from './LoadingNewsList';
 
 export default function NewsList() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function NewsList() {
           <LoadingNewsList />
         ) : (
           data?.pages.map(
-            (newsList, index) =>
+            (newsList) =>
               newsList?.newsList.map((news, idx) => (
                 <div
                   key={idx}
@@ -52,7 +52,7 @@ export default function NewsList() {
                     </div>
 
                     <div className="flex-1 px-[16px] pt-[26px] pb-[12px]">
-                      <div className="text-[#FF4500] font-medium">
+                      <div className="text-primary font-medium">
                         {new Date(news.createdAt).toLocaleDateString('en-GB')}
                       </div>
                       <div className="font-bold pt-1 line-clamp-2">
@@ -74,9 +74,9 @@ export default function NewsList() {
 
       <div className="flex justify-center">
         <Button
-          className="btn bg-red hover:bg-[#f43434]"
+          color="primary"
           onClick={() => handleGetDishes()}
-          disabled={!hasNextPage}
+          isDisabled={!hasNextPage}
         >
           See more
         </Button>

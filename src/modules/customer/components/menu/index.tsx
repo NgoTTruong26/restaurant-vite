@@ -1,14 +1,14 @@
 import clsx from 'clsx';
+import SkeletonLoading from 'components/SkeletonLoading';
 import { Icons } from 'interfaces/icons';
 import { useEffect, useState } from 'react';
 import { BiFoodMenu } from 'react-icons/bi';
 import { ImGlass } from 'react-icons/im';
+import DishesList from './components/DishesList';
 import LoadingDish from './components/LoadingDish';
 import LoadingMenuBuffet from './components/LoadingMenuBuffet';
-import SkeletonLoading from 'components/SkeletonLoading';
 import LoadingSetDish from './components/LoadingSetDish';
 import useGetListBuffetMenu from './hooks/useGetBuffetMenu';
-import DishesList from './components/DishesList';
 
 const icons: Icons[] = [
   {
@@ -68,7 +68,7 @@ export default function Menu() {
   return (
     <div className="flex-1 pb-10 min-h-screen">
       <div className="relative flex justify-center bg-[url('http://cdn.gastrotheme.com/wp/wp-content/uploads/2017/01/background-20.jpg')] bg-cover bg-bottom bg-no-repeat ">
-        <div className="w-full flex justify-center px-5 pt-[calc(200vh/6)]">
+        <div className="w-full flex justify-center px-5 pt-[calc(100vw/10)]">
           <div className=" max-w-[1200px] w-full">
             <div className="text-[64px] font-bold">Dish Menu</div>
             <div className="text-[18px] font-medium">

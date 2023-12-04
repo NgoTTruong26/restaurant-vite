@@ -51,7 +51,7 @@ const DishesListPreview: React.FC<Props> = ({
                           isFooterBlurred
                           radius="lg"
                           shadow="none"
-                          className="border-none"
+                          className="border-none min-w-[280px]"
                         >
                           <Image
                             alt={dish.name}

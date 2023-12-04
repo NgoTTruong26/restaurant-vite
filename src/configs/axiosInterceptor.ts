@@ -21,11 +21,10 @@ export function ApiClient(onUnauthenticated: Function) {
       error.response?.status == 401 &&
       error.config?.url !== '/auth/refresh-token'
     ) {
-      const errMessage = error.response?.data || error?.response || error;
-      return Promise.reject(errMessage);
+      return refreshTokenResponseError(error, onUnauthenticated);
     }
-
-    return refreshTokenResponseError(error, onUnauthenticated);
+    const errMessage = error.response?.data || error?.response || error;
+    return Promise.reject(errMessage);
   };
 
   const refreshTokenResponseError = async (

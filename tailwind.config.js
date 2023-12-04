@@ -39,6 +39,9 @@ module.exports = {
         'drop-top': 'drop-top 0.3s linear',
         opacity: 'opacity 0.15s linear',
       },
+      colors: {
+        default: '#4A4A4A',
+      },
     },
     fontFamily: {
       amatic: ['Amatic SC'],
@@ -67,6 +70,7 @@ module.exports = {
       1200: '1200px',
       1800: '1800px',
     },
+
     colors: {},
   },
   darkMode: 'class',

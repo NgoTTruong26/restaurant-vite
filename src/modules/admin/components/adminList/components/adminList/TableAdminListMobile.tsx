@@ -1,11 +1,11 @@
+import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
-import Button from 'components/Button';
-import { GetAdminListDTO } from '../../dto/get-admins.dto';
 import { UseFieldArrayReturn } from 'react-hook-form';
 import {
   IAdmin,
   IInputDeleteCheckedAdmin,
 } from '../../dto/delete-admin-list.dto';
+import { GetAdminListDTO } from '../../dto/get-admins.dto';
 import FooterAdminList from './FooterAdminList';
 
 interface Props {

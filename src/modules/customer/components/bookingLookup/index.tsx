@@ -1,15 +1,19 @@
-import clsx from "clsx";
-import Button from "components/Button";
-import { GoSearch } from "react-icons/go";
+import { Button, Modal, ModalContent, useDisclosure } from '@nextui-org/react';
+import clsx from 'clsx';
+import Field from 'components/field';
+import { useEffect, useState } from 'react';
+import { FormProvider } from 'react-hook-form';
+import { GoSearch } from 'react-icons/go';
+import OrderDetails from './components/OrderDetails';
 import {
   InputBookingLookup,
   useFormBookingLookup,
-} from "./hooks/useFormBookingLookup";
-import { useEffect, useState } from "react";
-import OrderDetails from "./components/OrderDetails";
+} from './hooks/useFormBookingLookup';
 
 export default function BookingLookup() {
-  const { formState, methods } = useFormBookingLookup();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { methods } = useFormBookingLookup();
 
   const [showOrder, setShowOrder] = useState<boolean>(false);
 
@@ -17,10 +21,10 @@ export default function BookingLookup() {
 
   useEffect(() => {
     if (showOrder) {
-      document.body.classList.add("overflow-hidden", "touch-pan-y");
+      document.body.classList.add('overflow-hidden', 'touch-pan-y');
       return;
     }
-    document.body.classList.remove("overflow-hidden");
+    document.body.classList.remove('overflow-hidden');
   }, [showOrder]);
 
   const handleCloseOrder = () => {
@@ -29,72 +33,75 @@ export default function BookingLookup() {
 
   const onSubmit = (data: InputBookingLookup) => {
     setGetBooking(data.idBooking);
-    setShowOrder(true);
+    onOpen();
   };
 
   return (
     <div className="flex-1 flex items-center justify-center px-5 pt-36 pb-16 bg-[url('http://cdn.gastrotheme.com/wp/wp-content/uploads/2017/01/background-20.jpg')] bg-cover bg-bottom bg-no-repeat">
-      <div
-        className={clsx(
-          "flex flex-col bg-[#ffffff] max-w-[800px] w-full items-center border shadow-xl py-5 px-6 rounded-xl transition-all duration-500",
-          " max-sm:py-2 max-sm:px-4"
-        )}
-      >
+      <FormProvider {...methods}>
         <form
-          className="flex w-full items-center"
+          className="flex w-full items-center max-w-[800px] "
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <div className="flex items-center pr-4">
-            <GoSearch className="text-[28px] max-sm:text-[14px]" />
-          </div>
-          <div className="w-full">
-            <div className="flex w-full items-center">
-              <input
-                className="flex-1 w-full text-[28px] max-sm:text-[14px]"
-                placeholder="Nhập ID đơn hàng"
-                type="text"
-                id="idBooking"
-                {...methods.register("idBooking")}
-              />
-              {methods.watch("idBooking") && (
-                <div
-                  className={clsx(
-                    "px-4 font-medium underline underline-offset-4 text-[18px] cursor-pointer",
-                    "max-sm:hidden max-sm:text-[14px]"
-                  )}
-                  onClick={() => methods.setValue("idBooking", "")}
-                >
-                  Clear
-                </div>
-              )}
-            </div>
-            {formState.errors && (
-              <p className="text-red pt-1">
-                {formState.errors.idBooking?.message}
-              </p>
-            )}
-          </div>
-
-          <Button
-            children={
+          <Field
+            startContent={
+              <GoSearch className="text-[28px] max-sm:text-[14px]" />
+            }
+            endContent={
               <>
-                <div className="max-sm:hidden">Tìm kiếm</div>
-                <div className="min-[449px]:hidden">
-                  <GoSearch className="text-[14px]" />
-                </div>
+                {methods.watch('idBooking') && (
+                  <div
+                    className={clsx(
+                      'px-4 font-medium underline underline-offset-4 text-[18px] cursor-pointer',
+                      'max-sm:hidden max-sm:text-[14px]',
+                    )}
+                    onClick={() => methods.setValue('idBooking', '')}
+                  >
+                    Clear
+                  </div>
+                )}
+                <Button
+                  children={
+                    <>
+                      <div className="max-sm:hidden">Tìm kiếm</div>
+                      <div className="min-[449px]:hidden">
+                        <GoSearch className="text-[14px]" />
+                      </div>
+                    </>
+                  }
+                  color="primary"
+                  type="submit"
+                />
               </>
             }
-            className=" bg-red hover:bg-[#ce1212cc]"
-            type="submit"
+            t="input"
+            name="idBooking"
+            placeholder="Nhập ID đơn hàng"
+            classNames={{
+              inputWrapper: 'bg-white',
+              input: 'text-lg',
+            }}
+            size="lg"
           />
         </form>
-        {showOrder && getBooking && (
-          <OrderDetails
-            handleCloseOrder={handleCloseOrder}
-            getBooking={getBooking}
-          />
-        )}
-      </div>
+      </FormProvider>
+      {getBooking && (
+        <Modal
+          backdrop="blur"
+          isOpen={isOpen}
+          onClose={onClose}
+          placement="center"
+        >
+          <ModalContent className="max-w-800 max-h-[80vh] overflow-y-auto">
+            {(onClose) => (
+              <OrderDetails
+                handleCloseOrder={onClose}
+                getBooking={getBooking}
+              />
+            )}
+          </ModalContent>
+        </Modal>
+      )}
     </div>
   );
 }

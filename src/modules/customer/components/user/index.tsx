@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet } from 'react-router-dom';
-import { RootState } from 'redux/app/store';
-import SideBar from './components/SideBar';
 import clsx from 'clsx';
 import SVGLoading from 'components/SVGLoading';
+import { useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom';
+import { RootState } from 'redux/app/store';
+import SideBar from './components/SideBar';
 
 export default function UserProfile() {
   const user = useSelector((state: RootState) => state.setUser.value);
@@ -12,16 +12,7 @@ export default function UserProfile() {
     <Navigate to={'/auth/sign-in'} />
   ) : (
     <div className="flex justify-center min-h-screen pt-28 pb-48 bg-[#f5f5fa] px-5">
-      <div className="flex flex-col max-w-[1200px] w-full">
-        <div className="leading-[4]">
-          <Link
-            to={'/'}
-            className="hover:cursor-pointer hover:text-red hover:border-b"
-          >
-            Trang chủ
-          </Link>
-          <span>{' > Thông tin tài khoản'}</span>
-        </div>
+      <div className="max-w-[1200px] w-full">
         {user ? (
           !user?.id ? (
             <div className="flex-1 flex justify-center items-center bg-[#ffffff] shadow-xl rounded-2xl">

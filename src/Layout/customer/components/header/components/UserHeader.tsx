@@ -87,9 +87,12 @@ const UserHeader: React.FC<Props> = ({
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         <DropdownSection showDivider>
           <DropdownItem key="profile" className="h-7 gap-2">
-            <p className="font-semibold pb-1 text-primary">
+            <Link
+              to="/user/profile"
+              className="font-semibold pb-1 text-primary"
+            >
               Hi, {user?.fullName}
-            </p>
+            </Link>
           </DropdownItem>
         </DropdownSection>
         <DropdownSection
@@ -106,7 +109,7 @@ const UserHeader: React.FC<Props> = ({
               })}
             >
               <Link
-                to={item.href}
+                to={item.href || ''}
                 onClick={() => dispatch(setNavbarItemActive(''))}
               >
                 {item.content}

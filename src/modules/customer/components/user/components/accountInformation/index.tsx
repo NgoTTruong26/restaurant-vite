@@ -10,7 +10,6 @@ export default function AccountInformation() {
 
   return (
     <>
-      <div className="text-2xl mb-4">Thông tin tài khoản</div>
       <div
         className={clsx(
           'flex w-full bg-[#ffffff] [&>div]:py-4 shadow-xl rounded-2xl p-5',

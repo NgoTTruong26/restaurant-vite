@@ -12,6 +12,7 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import {
+  ELoginDropdown,
   TypeNavBarId,
   loginDropdown,
   navbarWithIcons,
@@ -22,6 +23,7 @@ import clsx from 'clsx';
 import SignInModal from 'modules/customer/components/auth/components/sign-in/SignInModal';
 import { useEffect, useState } from 'react';
 
+import { LoginDropdown } from 'Layout/interfaces/loginDropdown';
 import SignUpModal from 'modules/customer/components/auth/components/sign-up/SignUpModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -35,7 +37,7 @@ import UserHeader from './components/UserHeader';
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const [selected, setSelected] = useState('login');
+  const [selected, setSelected] = useState<keyof typeof ELoginDropdown>();
 
   const state = useSelector((state: RootState) => state);
 
@@ -48,6 +50,11 @@ export default function Header() {
   const navbarItem = state.setNavbarItemActive.value.navbarItemActive;
 
   const user = state.setUser.value;
+
+  const handleOpenSignInModal = (selected: LoginDropdown['key']) => {
+    setSelected(selected);
+    onOpen();
+  };
 
   useEffect(() => {
     const nodes = document.querySelector(`#main`)?.childNodes ?? [];
@@ -176,7 +183,7 @@ export default function Header() {
               className="hidden xl:flex justify-center items-center"
             >
               <GuestHeader
-                openSignInModal={onOpen}
+                handleOpenSignInModal={handleOpenSignInModal}
                 dispatch={dispatch}
                 router={router}
                 loginDropdown={loginDropdown}
@@ -211,14 +218,16 @@ export default function Header() {
                 size="md"
                 aria-label="Tabs form"
                 selectedKey={selected}
-                onSelectionChange={(item) => setSelected(item as string)}
+                onSelectionChange={(item) =>
+                  setSelected(item as LoginDropdown['key'])
+                }
                 color="primary"
                 className="pt-2 px-6"
               >
-                <Tab key="login" title="Login">
+                <Tab key={'SIGNIN' as LoginDropdown['key']} title="Login">
                   <SignInModal onClose={onClose} />
                 </Tab>
-                <Tab key="sign-up" title="Sign up">
+                <Tab key={'SIGNUP' as LoginDropdown['key']} title="Sign up">
                   <SignUpModal onClose={onClose} />
                 </Tab>
               </Tabs>

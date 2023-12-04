@@ -1,16 +1,22 @@
-import { Link, useParams } from 'react-router-dom';
-import useGetPost from '../hooks/useGetPost';
+import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import clsx from 'clsx';
-import Sidebar from './Sidebar';
+import { BiNews } from 'react-icons/bi';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import useGetPost from '../hooks/useGetPost';
 import LoadingPost from './LoadingPost';
+import Sidebar from './Sidebar';
 
 export default function Post() {
   const { id } = useParams<{ id: string }>();
 
+  const { pathname } = useLocation();
+
+  const arrPath = pathname.split('/');
+
   const { data, status } = useGetPost(id);
 
   return (
-    <div className="flex-1 flex justify-center bg-[#eee] pt-36 pb-16 px-5">
+    <div className="flex-1 flex justify-center bg-[#eee] pt-16 pb-16 px-5">
       <div
         className={clsx(
           'flex gap-10 justify-between max-w-[1200px] w-full',
@@ -24,16 +30,22 @@ export default function Post() {
             data && (
               <>
                 <div className="text-xl">
-                  <Link
-                    to={'/news'}
-                    className="hover:cursor-pointer hover:text-red hover:border-b"
-                  >
-                    Tin tức
-                  </Link>
-                  <span>{' > Bài viết'}</span>
+                  <div className="flex">
+                    <Breadcrumbs color="primary" variant="bordered" size="lg">
+                      <BreadcrumbItem
+                        startContent={<BiNews size={18} />}
+                        className="capitalize"
+                      >
+                        <Link to="/news">{arrPath[arrPath.length - 2]}</Link>
+                      </BreadcrumbItem>
+                      <BreadcrumbItem startContent={<BiNews size={17} />}>
+                        {arrPath[arrPath.length - 1]}
+                      </BreadcrumbItem>
+                    </Breadcrumbs>
+                  </div>
                 </div>
                 <div className="border-b-2 border-[#bababa] py-5">
-                  <h1 className="font-bold">{data?.title}</h1>
+                  <h1 className="font-bold text-primary">{data?.title}</h1>
                   <div className="pt-2">
                     Ngày đăng:{' '}
                     {new Date(data.createdAt).toLocaleDateString('en-GB')}

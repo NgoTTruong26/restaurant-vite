@@ -15,17 +15,17 @@ import { IoLocationOutline } from 'react-icons/io5';
 import { LoginDropdown } from './interfaces/loginDropdown';
 import { NavbarWithIcons } from './interfaces/navbar';
 
-const enum ENavBar {
-  HOME = 'Trang Chủ',
-  OUR_MENU = 'Menu & Giá',
-  NEWS = 'Tin Tức',
-  BOOKINGS = 'Đặt Bàn',
-  ADDRESS = 'Địa Chỉ',
-  PHONE_NUMBER = 'Gọi Đặt Bàn',
-  EVENT = 'Sự kiện',
+enum ENavBar {
+  HOME = 'Home',
+  OUR_MENU = 'Our Menu',
+  NEWS = 'News',
+  BOOKINGS = 'Bookings',
+  ADDRESS = 'Address',
+  PHONE_NUMBER = 'Phone Number',
+  EVENTS = 'Events',
 }
 
-export const enum NavBarId {
+export enum NavBarId {
   HOME = 'home',
   OUR_MENU = 'our_menu',
   NEWS = 'news',
@@ -55,7 +55,7 @@ export const navbarWithIcons: NavbarWithIcons[] = [
     id: NavBarId.OUR_MENU,
   },
   {
-    content: ENavBar.EVENT,
+    content: ENavBar.EVENTS,
     icons: <GiPartyPopper size={22} />,
     id: NavBarId.EVENTS,
   },
@@ -168,26 +168,34 @@ export const contacts: Contact<string | ReactNode, EContact>[] = [
   },
 ];
 
-const enum ELoginDropdown {
+export enum ELoginDropdown {
   SIGNIN = 'Sign In',
   SIGNUP = 'Sign Up',
   BOOKINGSLOOKUP = 'Bookings Lookup',
   SUPPORT = 'Support',
 }
 
-const enum EUserDropdown {
+enum EUserDropdown {
   BOOKINGSLOOKUP = 'Bookings Lookup',
   SUPPORT = 'Support',
 }
 
 export const loginDropdown: LoginDropdown[] = [
-  { content: ELoginDropdown.SIGNIN, href: '/auth/sign-in' },
-  { content: ELoginDropdown.SIGNUP, href: '/auth/sign-up' },
-  { content: ELoginDropdown.BOOKINGSLOOKUP, href: '/bookings-lookup' },
-  { content: ELoginDropdown.SUPPORT, href: '/support' },
+  { content: ELoginDropdown.SIGNIN, key: 'SIGNIN' },
+  { content: ELoginDropdown.SIGNUP, key: 'SIGNUP' },
+  {
+    content: ELoginDropdown.BOOKINGSLOOKUP,
+    href: '/bookings-lookup',
+    key: 'BOOKINGSLOOKUP',
+  },
+  { content: ELoginDropdown.SUPPORT, href: '/support', key: 'SUPPORT' },
 ];
 
 export const userDropdown: LoginDropdown[] = [
-  { content: EUserDropdown.BOOKINGSLOOKUP, href: '/bookings-lookup' },
-  { content: EUserDropdown.SUPPORT, href: '/support' },
+  {
+    content: EUserDropdown.BOOKINGSLOOKUP,
+    href: '/bookings-lookup',
+    key: 'BOOKINGSLOOKUP',
+  },
+  { content: EUserDropdown.SUPPORT, href: '/support', key: 'SUPPORT' },
 ];

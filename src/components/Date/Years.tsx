@@ -1,5 +1,7 @@
-import React from 'react';
-import { PropsFieldSelect } from './interfaces/PropsFieldSelect.interface';
+import { SelectProps as NextUISelectProps } from '@nextui-org/react';
+import Field from 'components/field';
+
+interface Props extends Omit<NextUISelectProps, 'children'> {}
 
 function GetYears(toYear: number) {
   const currentYear = new Date().getUTCFullYear();
@@ -9,29 +11,17 @@ function GetYears(toYear: number) {
     .map((val, idx) => currentYear - idx);
 }
 
-const Years = React.forwardRef<HTMLSelectElement, PropsFieldSelect>(
-  ({ className, error, ...props }, ref) => {
-    return (
-      <div className="flex flex-col">
-        <select
-          ref={ref}
-          defaultValue={props.defaultValue}
-          className="select select-bordered select-sm w-full max-w-xs"
-          {...props}
-        >
-          <option value="default" disabled>
-            Năm
-          </option>
-          {GetYears(1900).map((val) => (
-            <option key={val} value={val}>
-              {val}
-            </option>
-          ))}
-        </select>
-        {error && <p className="text-red pl-2 pt-1">{error.message}</p>}
-      </div>
-    );
-  },
-);
-
-export default Years;
+export default function Years({ ...props }: Props) {
+  return (
+    <Field
+      {...props}
+      label="Year"
+      t="select"
+      name="year"
+      options={GetYears(1900).map((value) => ({
+        label: value.toString(),
+        value: value,
+      }))}
+    />
+  );
+}

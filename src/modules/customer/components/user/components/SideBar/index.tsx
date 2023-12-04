@@ -20,28 +20,29 @@ const SideBar: React.FC<Props> = ({ user }) => {
           alt="avatar"
         />
         <div className="flex flex-col">
-          <span>Tài Khoản của</span>
-          <span className="font-medium">{`${user?.fullName}`}</span>
+          <span className="font-semibold">Account of,</span>
+          <span className="font-medium text-primary">{`${user?.fullName}`}</span>
         </div>
       </div>
 
-      <ul>
+      <ul className="space-y-1">
         {sideBar.map((val, idx) => (
-          <div key={idx}>
-            <li
-              key={idx}
-              className={clsx('hover:cursor-pointer [&>a]:px-3 [&>a]:py-2', {
-                'text-red border border-red rounded-2xl bg-[#fee]':
+          <li
+            key={idx}
+            className={clsx(
+              'hover:cursor-pointer hover:bg-primary-50 rounded-2xl [&>a]:px-3 [&>a]:py-2 text-primary',
+              {
+                'text-red border border-primary  bg-primary-100 ':
                   `/user/${val.href}` === location.pathname ||
                   `/user/${val.href}` === `${location.pathname}/profile`,
-              })}
-            >
-              <Link to={val.href} className="flex gap-6">
-                <span>{val.icons}</span>
-                <span>{val.title}</span>
-              </Link>
-            </li>
-          </div>
+              },
+            )}
+          >
+            <Link to={val.href} className="flex items-center gap-3">
+              <span className="text-primary">{val.icons}</span>
+              <span>{val.title}</span>
+            </Link>
+          </li>
         ))}
       </ul>
     </>

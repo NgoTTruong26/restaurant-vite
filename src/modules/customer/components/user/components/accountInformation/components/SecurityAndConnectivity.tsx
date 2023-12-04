@@ -1,6 +1,6 @@
+import { Button, Modal, ModalContent, useDisclosure } from '@nextui-org/react';
 import clsx from 'clsx';
 import { connectSociety } from 'modules/customer/components/user/constant';
-import { useState } from 'react';
 import { AiFillLock, AiOutlineMail } from 'react-icons/ai';
 import { BsTelephone } from 'react-icons/bs';
 import { GetUserProfileDTO } from '../dto/get-user.dto';
@@ -11,11 +11,7 @@ interface Props {
 }
 
 export default function SecurityAndConnectivity({ data }: Props) {
-  const [showChangePassword, setShowChangePassword] = useState<boolean>(false);
-
-  const handleCloseShowChangePassword = () => {
-    setShowChangePassword(false);
-  };
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <div className="w-[50%] pr-4 pl-6 max-md:w-full">
@@ -29,7 +25,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
             )}
           >
             <div className="col-span-3 overflow-hidden text-ellipsis flex gap-5">
-              <BsTelephone size={25} className="min-w-[25px]" />
+              <BsTelephone size={25} className="min-w-[25px] text-primary" />
               <div
                 className={clsx(
                   'flex flex-col overflow-hidden',
@@ -37,13 +33,15 @@ export default function SecurityAndConnectivity({ data }: Props) {
                 )}
               >
                 <span>Số điện thoại</span>
-                <span>{data.phone || 'Chưa kết nối'}</span>
+                <span className="text-primary">
+                  {data.phone || 'Chưa kết nối'}
+                </span>
               </div>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
-              <button className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]">
+              <Button color="primary" className="w-full max-w-[100px]">
                 {data.phone ? 'Cập nhật' : 'Thiết lập'}
-              </button>
+              </Button>
             </div>
           </div>
           <div
@@ -53,7 +51,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
             )}
           >
             <div className="col-span-3 overflow-hidden text-ellipsis flex gap-5">
-              <AiOutlineMail size={25} className="min-w-[25px]" />
+              <AiOutlineMail size={25} className="min-w-[25px] text-primary" />
               <div
                 className={clsx(
                   'flex flex-col overflow-hidden',
@@ -61,15 +59,15 @@ export default function SecurityAndConnectivity({ data }: Props) {
                 )}
               >
                 <span>Địa chỉ email</span>
-                <span className="text-ellipsis">
+                <span className="text-ellipsis text-primary">
                   {data.email || 'Chưa kết nối'}
                 </span>
               </div>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
-              <button className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]">
+              <Button color="primary" className="w-full max-w-[100px]">
                 {data.phone ? 'Cập nhật' : 'Thiết lập'}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -89,25 +87,25 @@ export default function SecurityAndConnectivity({ data }: Props) {
                 '[&>span]:overflow-hidden [&>span]:text-ellipsis [&>span]:whitespace-nowrap',
               )}
             >
-              <AiFillLock size={25} className="min-w-[25px]" />
+              <AiFillLock size={25} className="min-w-[25px] text-primary" />
               <span>Đổi mật khẩu</span>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
-              <button
-                onClick={() => setShowChangePassword(true)}
-                className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]"
+              <Button
+                color="primary"
+                className="w-full max-w-[100px]"
+                onClick={() => onOpen()}
               >
                 Cập nhật
-              </button>
+              </Button>
             </div>
           </div>
         </div>
-        {showChangePassword && (
-          <ChangePassword
-            handleCloseShowChangePassword={handleCloseShowChangePassword}
-            data={data}
-          />
-        )}
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
+          <ModalContent className="max-w-500 max-h-[80vh]">
+            {(onClose) => <ChangePassword handleClose={onClose} data={data} />}
+          </ModalContent>
+        </Modal>
       </div>
       <div>
         <div className="text-lg">Liên kết mạng xã hội</div>
@@ -131,17 +129,13 @@ export default function SecurityAndConnectivity({ data }: Props) {
                 <span>{val.title}</span>
               </div>
               <div className="col-start-5 col-span-2 flex justify-end">
-                <button
-                  disabled={idx === 1}
-                  className={clsx(
-                    'btn min-h-0 h-10 min-w-[110px] border-solid btn-outline btn-info hover:!text-[#ffffff]',
-                    {
-                      'btn-disabled': idx === 1,
-                    },
-                  )}
+                <Button
+                  color="primary"
+                  isDisabled={idx === 1}
+                  className="w-full max-w-[100px]"
                 >
                   {idx === 1 ? 'Đã kết nối' : 'Kết nối'}
-                </button>
+                </Button>
               </div>
             </div>
           ))}

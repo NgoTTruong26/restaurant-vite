@@ -1,9 +1,9 @@
-import clsx from "clsx";
-import SkeletonLoading from "components/SkeletonLoading";
+import clsx from 'clsx';
+import SkeletonLoading from 'components/SkeletonLoading';
 
 export default function LoadingOrderDetail() {
   return (
-    <div className="relative bg-[#fff] max-w-[700px] max-h-[800px] w-full rounded-3xl p-8">
+    <div className="relative bg-[#fff] max-w-[800px] max-h-[80vh] w-full rounded-3xl">
       <div className="flex justify-center">
         <div className="w-[40%] h-4 rounded-full overflow-hidden">
           <SkeletonLoading />
@@ -66,8 +66,8 @@ export default function LoadingOrderDetail() {
             <div className="flex pt-5 items-center h-full">
               <div
                 className={clsx(
-                  "w-[40%] h-[24vw] max-h-[170px] rounded-lg overflow-hidden",
-                  "max-sm:rounded-lg max-sm:h-[20vw]"
+                  'w-[40%] h-[24vw] max-h-[170px] rounded-lg overflow-hidden',
+                  'max-sm:rounded-lg max-sm:h-[20vw]',
                 )}
               >
                 <div className="h-full">
@@ -76,12 +76,12 @@ export default function LoadingOrderDetail() {
               </div>
               <div
                 className={clsx(
-                  "flex gap-10 justify-between items-center w-full pl-5 font-medium",
-                  "max-sm:flex-col max-sm:gap-0 max-sm:w-[40%]"
+                  'flex gap-10 justify-between items-center w-full pl-5 font-medium',
+                  'max-sm:flex-col max-sm:gap-0 max-sm:w-[40%]',
                 )}
               >
                 <div
-                  className={clsx("w-[40%] pr-5", "max-sm:w-full max-sm:p-0")}
+                  className={clsx('w-[40%] pr-5', 'max-sm:w-full max-sm:p-0')}
                 >
                   <div className="w-full rounded-full overflow-hidden">
                     <div className="h-2">
@@ -114,7 +114,7 @@ export default function LoadingOrderDetail() {
           </div>
           <div className="pl-5 [&>div+div]:pt-3">
             {Array(3)
-              .fill("")
+              .fill('')
               .map((item, val) => (
                 <div key={val} className="flex justify-between gap-10">
                   <div className="w-[30%] h-2 rounded-full overflow-hidden">

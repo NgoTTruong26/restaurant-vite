@@ -1,9 +1,9 @@
+import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
 import { UseFieldArrayReturn } from 'react-hook-form';
-import FooterRoleList from './FooterRoleList';
-import { GetRoleListDTO } from '../../dto/get-roles.dto';
-import Button from 'components/Button';
 import { IInputDeleteCheckedRole, IRole } from '../../dto/delete-role-list.dto';
+import { GetRoleListDTO } from '../../dto/get-roles.dto';
+import FooterRoleList from './FooterRoleList';
 
 interface Props {
   data: GetRoleListDTO;

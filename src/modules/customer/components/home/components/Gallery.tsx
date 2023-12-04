@@ -90,7 +90,7 @@ export default function Gallery({ slidesPerView }: Props) {
         >
           {data.map((item, idx) => (
             <SwiperSlide key={idx}>
-              <img src={item.srcImg} alt={item.alt} />
+              <img src={item.srcImg} alt={item.alt} className="min-h-[300px]" />
             </SwiperSlide>
           ))}
         </Swiper>

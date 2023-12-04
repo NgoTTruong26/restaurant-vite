@@ -1,8 +1,8 @@
-import Button from 'components/Button';
+import { Button } from '@nextui-org/react';
+import clsx from 'clsx';
 import useGetDishes from '../hooks/useGetDishes';
 import Dish from './Dish';
 import LoadingDish from './LoadingDish';
-import clsx from 'clsx';
 
 interface Props {
   setDish: string;
@@ -48,7 +48,7 @@ const ListDish: React.FC<Props> = ({ setDish, buffet }) => {
         <Button
           className={clsx('btn bg-red hover:bg-[#f43434]')}
           onClick={() => handleGetDishes()}
-          disabled={!hasNextPage}
+          isDisabled={!hasNextPage}
         >
           See more
         </Button>

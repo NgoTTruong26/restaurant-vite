@@ -1,6 +1,6 @@
+import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import useGetLatestNewsList from '../hooks/useGetLatestNewsList';
-import clsx from 'clsx';
 import LoadingSidebar from './LoadingSidebar';
 
 interface Props {
@@ -20,7 +20,7 @@ export default function Sidebar({ idPost }: Props) {
         <LoadingSidebar />
       ) : (
         <>
-          <div className="capitalize">latest news</div>
+          <div className="capitalize text-primary">latest news</div>
           <div className="pt-2 [&>div+div]:pt-4">
             {data?.map((item, idx) => (
               <div key={idx}>

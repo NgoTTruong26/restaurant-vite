@@ -9,7 +9,7 @@ export interface InputChangePassword {
 }
 
 export function useFormChangePassword() {
-  const { formState, ...methods } = useForm<InputChangePassword>({
+  const methods = useForm<InputChangePassword>({
     defaultValues: {
       old_password: '',
       new_password: '',
@@ -19,7 +19,6 @@ export function useFormChangePassword() {
   });
 
   return {
-    formState,
     methods,
   };
 }
