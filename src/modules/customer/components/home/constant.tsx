@@ -1,13 +1,13 @@
+import { ReactNode } from 'react';
 import { AiOutlineMail } from 'react-icons/ai';
 import { BsMap, BsShare } from 'react-icons/bs';
 import { IoCallOutline } from 'react-icons/io5';
-import { ReactNode } from 'react';
 
 const enum EContact {
-  ADDRESS = 'Địa Chỉ',
-  EMAIL = 'Địa chỉ EMAIL',
-  PHONENUMBER = 'Số Điện Thoại',
-  SCHEDULE = 'Lịch Trình',
+  ADDRESS = 'Address',
+  EMAIL = 'Email',
+  PHONENUMBER = 'Phone Number',
+  SCHEDULE = 'Schedule',
 }
 
 export interface Contact<T, R> {
@@ -36,12 +36,10 @@ export const contacts: Contact<ReactNode, EContact>[] = [
     icons: <BsShare size={25} />,
     title: EContact.SCHEDULE,
     content: (
-      <>
-        <span className="font-medium">Mon-Sat:</span>
-        {' 11AM - 23PM; '}
-        <span className="font-medium">Sunday:</span>
-        {' Closed'}
-      </>
+      <div className="flex flex-col">
+        <span>Mon-Sat: 11AM - 23PM</span>
+        <span>Sunday: Closed</span>
+      </div>
     ),
   },
 ];

@@ -146,7 +146,7 @@ export default function Column3({
         radius="full"
         className="mb-5 mt-8 py-5 h-12"
       >
-        Đặt bàn
+        Bookings
       </Button>
     </div>
   );

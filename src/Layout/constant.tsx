@@ -92,10 +92,10 @@ const icons: ReactNode[] = [
 ];
 
 enum EContact {
-  ADDRESS = 'Địa chỉ',
-  RESERVATIONS = 'Đặt bàn',
-  SCHEDULE = 'Giờ mở cửa',
-  FOLLOW_US = 'Theo dõi chúng tôi',
+  ADDRESS = 'Address',
+  RESERVATIONS = 'Bookings',
+  SCHEDULE = 'Business Hours',
+  FOLLOW_US = 'Follow Us ',
 }
 
 export const contacts: Contact<string | ReactNode, EContact>[] = [

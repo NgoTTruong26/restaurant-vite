@@ -1,9 +1,6 @@
 import clsx from 'clsx';
-import Days from 'components/Date/Days';
-import Months from 'components/Date/Months';
-import Years from 'components/Date/Years';
-import FieldOutline from 'components/field/FieldOutline';
 import { queryClient } from 'main';
+import { GetGenderDTO } from 'modules/customer/components/user/components/accountInformation/dto/get-gender.dto';
 import {
   GetPreviewProfileDTO,
   GetUserProfileDTO,
@@ -19,17 +16,28 @@ interface Props {
 }
 
 export interface IInputProfileDTO {
+  id: string;
   fullName: string;
-  day?: string;
-  month?: string;
-  year?: string;
-  gender: string;
-  nationality: string;
+  day?: string | null;
+  month?: string | null;
+  year?: string | null;
+  gender: GetGenderDTO | null;
+  nationality: string | null;
 }
 export default function Profile({ data }: Props) {
   const genders = useGetGenders();
 
-  const { formState, methods } = useFormUpdateProfile();
+  const { methods } = useFormUpdateProfile({
+    day: data.dateBirth
+      ? new Date(data.dateBirth).getUTCDate().toString()
+      : undefined,
+    month: data.dateBirth
+      ? (new Date(data.dateBirth).getUTCMonth() + 1).toString()
+      : undefined,
+    year: data.dateBirth
+      ? new Date(data.dateBirth).getUTCFullYear().toString()
+      : undefined,
+  });
 
   const dispatch = useDispatch();
 
@@ -65,7 +73,7 @@ export default function Profile({ data }: Props) {
       {genders.data && (
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div>
-            <div
+            {/* <div
               className={clsx(
                 'grid grid-cols-4 items-center gap-7 mb-4',
                 'max-sm:flex',
@@ -104,8 +112,8 @@ export default function Profile({ data }: Props) {
                   />
                 </div>
               </div>
-            </div>
-            <div className="[&>div]:mb-8">
+            </div> */}
+            {/* <div className="[&>div]:mb-8">
               <div
                 className={clsx(
                   'grid grid-cols-4 items-center gap-7 mb-4',
@@ -215,7 +223,7 @@ export default function Profile({ data }: Props) {
                   </select>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-center">
             <button

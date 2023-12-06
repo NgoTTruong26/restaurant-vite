@@ -105,7 +105,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                       <div className="flex items-center">
                         <BsCalendar2Date size={20} />
                         <div className="pl-2">
-                          Ngày đặt bàn:{' '}
+                          Booking date:{' '}
                           {data &&
                             new Date(data?.bookingDate).toLocaleDateString(
                               'en-GB',
@@ -115,7 +115,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                       <div className="flex items-center">
                         <BiTime size={20} />
                         <div className="pl-2">
-                          Giờ đặt bàn:{' '}
+                          Booking time:{' '}
                           {new Date(
                             `${data?.bookingDate} ${data?.bookingTime}`,
                           ).toLocaleTimeString('en-US', {
@@ -134,12 +134,12 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                   >
                     <div className="flex items-center">
                       <AiOutlineUser size={20} />
-                      <div className="pl-2">Người đặt bàn: {data?.author}</div>
+                      <div className="pl-2">Author: {data?.author}</div>
                     </div>
                     <div className="flex items-center max-sm:pl-0 max-sm:pt-2">
                       <BiPhone size={20} />
                       <div className="pl-2">
-                        Số điện thoại: {data?.phoneNumber}
+                        Phone Number: {data?.phoneNumber}
                       </div>
                     </div>
                   </div>
@@ -172,7 +172,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                               </div>
                             </div>
                             <div>
-                              SL:{' '}
+                              Quantity:{' '}
                               {data?.bookingsForChildren.reduce(
                                 (prevs: number, curr) => {
                                   return prevs + curr.quantity;
@@ -224,7 +224,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                     </div>
                   </div>
                   <div className="flex justify-between max-sm:flex-col">
-                    <div>Hotline nhà hàng:</div>
+                    <div>Hotline:</div>
                     <div className="pl-2 max-sm:pl-0">0988888888</div>
                   </div>
                 </div>
@@ -368,7 +368,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                     <div className="flex items-center">
                       <BsCalendar2Date size={20} />
                       <div className="pl-2">
-                        Ngày đặt bàn:{' '}
+                        Booking date:{' '}
                         <span className="text-primary">
                           {new Date(data.bookingDate).toLocaleDateString(
                             'en-GB',
@@ -379,7 +379,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                     <div className="flex items-center">
                       <BiTime size={20} />
                       <div className="pl-2">
-                        Giờ đặt bàn:{' '}
+                        Booking time:{' '}
                         <span className="text-primary">
                           {new Date(
                             `${data.bookingDate} ${data.bookingTime}`,
@@ -401,14 +401,14 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                   <div className="flex items-center">
                     <AiOutlineUser size={20} />
                     <div className="pl-2">
-                      Người đặt bàn:{' '}
+                      Author:{' '}
                       <span className="text-primary">{data.author}</span>
                     </div>
                   </div>
                   <div className="flex items-center max-sm:pl-0 max-sm:pt-2">
                     <BiPhone size={20} />
                     <div className="pl-2">
-                      Số điện thoại:{' '}
+                      Phone Number:{' '}
                       <span className="text-primary">{data.phoneNumber}</span>
                     </div>
                   </div>
@@ -442,7 +442,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                             </div>
                           </div>
                           <div>
-                            SL:{' '}
+                            Quantity:{' '}
                             {data?.bookingsForChildren.reduce(
                               (prevs: number, curr) => {
                                 return prevs + curr.quantity;
@@ -494,7 +494,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
                   </div>
                 </div>
                 <div className="flex justify-between max-sm:flex-col">
-                  <div>Hotline nhà hàng:</div>
+                  <div>Hotline:</div>
                   <div className="pl-2 max-sm:pl-0">0988888888</div>
                 </div>
               </div>

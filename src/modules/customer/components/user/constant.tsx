@@ -6,9 +6,9 @@ import { IoMdNotifications } from 'react-icons/io';
 import { RiBookReadFill } from 'react-icons/ri';
 
 export const enum ESideBar {
-  PROFILE = 'Thông tin tài khoản',
-  NOTIFICATION = 'Thông báo của tôi',
-  ORDER_MANAGEMENT = 'Quản lý đơn hàng',
+  PROFILE = 'Profile',
+  NOTIFICATION = 'Notification',
+  ORDER_MANAGEMENT = 'Order Management',
 }
 
 export const enum ELinkSideBar {

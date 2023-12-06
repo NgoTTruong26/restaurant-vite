@@ -71,7 +71,7 @@ const Profile: React.FC<Props> = ({ data }) => {
           'max-sm:text-center max-sm:pt-3 max-sm:bg-[#31b6e7] max-sm:text-[#ffffff] max-sm:rounded-t-3xl',
         )}
       >
-        Thông tin cá nhân
+        User Profile
       </div>
       {genders.data && (
         <FormProvider {...methods}>
@@ -186,6 +186,9 @@ const Profile: React.FC<Props> = ({ data }) => {
                   label="Select nationality"
                   t="select"
                   name="nationality"
+                  defaultSelectedKeys={
+                    data.nationality ? [data.nationality] : undefined
+                  }
                   options={['VietNam', 'Korea'].map((val) => ({
                     label: val,
                     value: val,
@@ -194,7 +197,11 @@ const Profile: React.FC<Props> = ({ data }) => {
               </div>
             </div>
             <div className="flex justify-center">
-              <Button color="primary" className="w-full max-w-[250px]">
+              <Button
+                type="submit"
+                color="primary"
+                className="w-full max-w-[250px]"
+              >
                 Lưu thay đổi
               </Button>
             </div>

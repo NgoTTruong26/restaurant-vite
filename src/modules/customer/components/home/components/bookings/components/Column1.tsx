@@ -6,13 +6,13 @@ export default function Column1() {
   return (
     <div className="flex-1 flex flex-col px-4 font-medium text-primary">
       <div className="flex-col pb-5 border-b border-black border-dashed">
-        <div className="font-medium">Nhà Hàng Buffet Lẩu & Nướng T12</div>
+        <div className="font-medium">Buffet Restaurant T12</div>
         <div className="max-w-[69px] w-full pt-2">
           <img src={srcLogoT12} alt="logo" />
         </div>
       </div>
       <div className="flex flex-col pt-5">
-        <div className="font-medium ">Cơ sở:</div>
+        <div className="font-medium ">Facility:</div>
         <div className="relative flex pt-1">
           <IoLocationOutline
             size={35}

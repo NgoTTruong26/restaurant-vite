@@ -91,7 +91,7 @@ const BookingBillModal: React.FC<Props> = ({
                     <div className="flex items-center">
                       <BsCalendar2Date size={20} />
                       <div className="pl-2">
-                        Ngày đặt bàn:{' '}
+                        Booking date:{' '}
                         <span className="text-primary">
                           {new Date(dataBooking.bookingDate).toLocaleDateString(
                             'en-GB',
@@ -102,7 +102,7 @@ const BookingBillModal: React.FC<Props> = ({
                     <div className="flex items-center">
                       <BiTime size={20} />
                       <div className="pl-2">
-                        Giờ đặt bàn:{' '}
+                        Booking time:{' '}
                         <span className="text-primary">
                           {new Date(
                             `${dataBooking.bookingDate} ${dataBooking.bookingTime}`,
@@ -124,14 +124,14 @@ const BookingBillModal: React.FC<Props> = ({
                   <div className="flex items-center">
                     <AiOutlineUser size={20} />
                     <div className="pl-2">
-                      Người đặt bàn:{' '}
+                      Author:{' '}
                       <span className="text-primary">{dataBooking.author}</span>
                     </div>
                   </div>
                   <div className="flex items-center max-sm:pl-0 max-sm:pt-2">
                     <BiPhone size={20} />
                     <div className="pl-2">
-                      Số điện thoại:{' '}
+                      Phone Number:{' '}
                       <span className="text-primary">
                         {dataBooking.phoneNumber}
                       </span>
@@ -161,7 +161,7 @@ const BookingBillModal: React.FC<Props> = ({
                             </div>
                           </div>
                           <div>
-                            SL:{' '}
+                            Quantity:{' '}
                             {dataBooking.bookingsForChildren.reduce(
                               (prevs: number, curr) => {
                                 return prevs + curr.quantity;
@@ -211,7 +211,7 @@ const BookingBillModal: React.FC<Props> = ({
                   </div>
                 </div>
                 <div className="flex justify-between max-sm:flex-col">
-                  <div>Hotline nhà hàng:</div>
+                  <div>Hotline:</div>
                   <div className="pl-2 max-sm:pl-0">0988888888</div>
                 </div>
               </div>

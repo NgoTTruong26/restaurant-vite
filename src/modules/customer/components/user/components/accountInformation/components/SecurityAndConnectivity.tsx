@@ -16,7 +16,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
   return (
     <div className="w-[50%] pr-4 pl-6 max-md:w-full">
       <div>
-        <div className="text-lg">Số điện thoại và Email</div>
+        <div className="text-lg">Phone Number and Email</div>
         <div className="[&>div]:py-4">
           <div
             className={clsx(
@@ -32,15 +32,15 @@ export default function SecurityAndConnectivity({ data }: Props) {
                   '[&>span]:overflow-hidden [&>span]:text-ellipsis [&>span]:whitespace-nowrap',
                 )}
               >
-                <span>Số điện thoại</span>
+                <span>Phone Number</span>
                 <span className="text-primary">
-                  {data.phone || 'Chưa kết nối'}
+                  {data.phone || 'Not Connected Yet'}
                 </span>
               </div>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
               <Button color="primary" className="w-full max-w-[100px]">
-                {data.phone ? 'Cập nhật' : 'Thiết lập'}
+                {data.phone ? 'Update' : 'Add'}
               </Button>
             </div>
           </div>
@@ -58,22 +58,22 @@ export default function SecurityAndConnectivity({ data }: Props) {
                   '[&>span]:overflow-hidden [&>span]:text-ellipsis [&>span]:whitespace-nowrap',
                 )}
               >
-                <span>Địa chỉ email</span>
+                <span>Email</span>
                 <span className="text-ellipsis text-primary">
-                  {data.email || 'Chưa kết nối'}
+                  {data.email || 'Not Connected Yet'}
                 </span>
               </div>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
               <Button color="primary" className="w-full max-w-[100px]">
-                {data.phone ? 'Cập nhật' : 'Thiết lập'}
+                {data.phone ? 'Update' : 'Add'}
               </Button>
             </div>
           </div>
         </div>
       </div>
       <div>
-        <div className="text-lg">Bảo mật</div>
+        <div className="text-lg">Security</div>
         <div className="[&>div]:py-4">
           <div
             className={clsx(
@@ -88,7 +88,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
               )}
             >
               <AiFillLock size={25} className="min-w-[25px] text-primary" />
-              <span>Đổi mật khẩu</span>
+              <span>Change Password</span>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
               <Button
@@ -96,7 +96,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
                 className="w-full max-w-[100px]"
                 onClick={() => onOpen()}
               >
-                Cập nhật
+                Update
               </Button>
             </div>
           </div>
@@ -108,7 +108,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
         </Modal>
       </div>
       <div>
-        <div className="text-lg">Liên kết mạng xã hội</div>
+        <div className="text-lg">Social Network</div>
         <div className="[&>div]:py-4">
           {connectSociety.map((val, idx) => (
             <div
@@ -134,7 +134,7 @@ export default function SecurityAndConnectivity({ data }: Props) {
                   isDisabled={idx === 1}
                   className="w-full max-w-[100px]"
                 >
-                  {idx === 1 ? 'Đã kết nối' : 'Kết nối'}
+                  {idx === 1 ? 'Connected' : 'Connect'}
                 </Button>
               </div>
             </div>

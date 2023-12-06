@@ -1,8 +1,6 @@
+import { BaseGetList } from 'interfaces/getList';
 import { GetBookingDTO } from 'modules/customer/components/home/components/bookings/dto/booking.dto';
 
-export interface GetBookingAuthDTO extends GetBookingDTO {
-  user: {
-    id: string;
-    fullName: string;
-  } | null;
+export interface GetBookingListResponse extends BaseGetList {
+  data: GetBookingDTO[];
 }

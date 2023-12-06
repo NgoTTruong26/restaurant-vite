@@ -1,6 +1,6 @@
+import { GetBookingDTO } from '../../home/components/bookings/dto/booking.dto';
 import { GetBookingStatusDTO } from '../../user/components/OrderManagement/dto/booking-status.dto';
-import { GetBookingAuthDTO } from '../../user/components/OrderManagement/dto/get-booking-auth.dto';
 
-export interface GetBookingWithStatusDTO extends GetBookingAuthDTO {
+export interface GetBookingWithStatusDTO extends GetBookingDTO {
   allBookingStatus: GetBookingStatusDTO[];
 }

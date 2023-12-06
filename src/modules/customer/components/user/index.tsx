@@ -9,9 +9,9 @@ export default function UserProfile() {
   const user = useSelector((state: RootState) => state.setUser.value);
 
   return !user ? (
-    <Navigate to={'/auth/sign-in'} />
+    <Navigate to={'/'} />
   ) : (
-    <div className="flex justify-center min-h-screen pt-28 pb-48 bg-[#f5f5fa] px-5">
+    <div className="flex justify-center min-h-screen pt-20 pb-48 bg-[#f5f5fa] px-5">
       <div className="max-w-[1200px] w-full">
         {user ? (
           !user?.id ? (

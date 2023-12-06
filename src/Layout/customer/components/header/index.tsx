@@ -189,13 +189,7 @@ export default function Header() {
                 loginDropdown={loginDropdown}
               />
             </NavbarContent>
-            <Button
-              className="flex xl:hidden"
-              as={Link}
-              color="danger"
-              to="/auth/sign-in"
-              variant="flat"
-            >
+            <Button className="flex xl:hidden" color="danger" variant="flat">
               Sign In
             </Button>
           </>

@@ -133,7 +133,7 @@ export default function AdminSecurityAndConnectivity({
                       '[&>span]:overflow-hidden [&>span]:text-ellipsis [&>span]:whitespace-nowrap',
                     )}
                   >
-                    <span>Địa chỉ email</span>
+                    <span>Email</span>
                     <span className="text-ellipsis">
                       {data.email || 'Chưa kết nối'}
                     </span>

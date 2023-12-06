@@ -35,7 +35,7 @@ export default function useGetProfile() {
         console.log(error);
         dispatch(setUser(null));
         localStorage.removeItem('access_token');
-        navigate('/auth/sign-in');
+        navigate('/');
         return null;
       }
     },

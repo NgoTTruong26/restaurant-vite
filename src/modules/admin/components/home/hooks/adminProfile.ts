@@ -24,7 +24,7 @@ function useGetAdminProfile() {
     queryFn: async () => {
       try {
         const response =
-          await apiAdmin.get<IAxiosResponse<GetAdminDTO>>('admin/auth/profile');
+          await apiAdmin.get<IAxiosResponse<GetAdminDTO>>('admin/profile');
 
         return response.data.data;
       } catch (error) {

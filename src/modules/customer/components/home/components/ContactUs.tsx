@@ -44,7 +44,7 @@ export default function ContactUs() {
                 },
               )}
             >
-              <div className="flex w-full bg-[#ffffff] p-7 rounded-md">
+              <div className="flex items-center w-full bg-[#ffffff] p-7 rounded-md">
                 <div className="flex justify-center items-center text-[#fff] ">
                   <div className="p-3 bg-primary rounded-full">
                     {item.icons}
