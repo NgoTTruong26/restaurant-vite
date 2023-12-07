@@ -1,5 +1,6 @@
 import { Button, Modal, ModalContent, useDisclosure } from '@nextui-org/react';
 import clsx from 'clsx';
+import LoadingIcons from 'components/LoadingIcons';
 import Field from 'components/field';
 import { useState } from 'react';
 import { UseFieldArrayReturn } from 'react-hook-form';
@@ -15,12 +16,14 @@ interface Props {
   >;
   initChildrenCategoryId?: string[];
   enoughtChildrenCategory?: boolean;
+  isLoading?: boolean;
 }
 
 export default function Column3({
   bookingsForChildren,
   initChildrenCategoryId,
   enoughtChildrenCategory,
+  isLoading,
 }: Props) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -50,8 +53,8 @@ export default function Column3({
       )}
     >
       <div className="flex flex-col">
-        <div className="font-medium">Trẻ em</div>
-        <div className="flex justify-between gap-4 pt-4">
+        <div className="font-medium">Children</div>
+        <div className="flex justify-between items-center gap-4 pt-4">
           {bookingsForChildren.fields.map((item, idx) => (
             <div key={idx} className="relative w-[45%]">
               <span
@@ -145,6 +148,7 @@ export default function Column3({
         type="submit"
         radius="full"
         className="mb-5 mt-8 py-5 h-12"
+        startContent={isLoading ? <LoadingIcons /> : false}
       >
         Bookings
       </Button>

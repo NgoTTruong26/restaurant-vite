@@ -10,11 +10,13 @@ import {
 import { GetChildrenCategoryDTO } from 'modules/customer/components/home/components/bookings/dto/get-children-category.dto';
 import useFormBooking from 'modules/customer/components/home/components/bookings/hooks/useFormBooking';
 import useGetChildrenCategory from 'modules/customer/components/home/components/bookings/hooks/useGetChildrenCategory';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
+import { ModalBody, ModalHeader } from '@nextui-org/react';
 import { queryClient } from 'main';
-import { GrFormClose } from 'react-icons/gr';
-import { GetBookingAuthDTO } from '../dto/get-booking-auth.dto';
+import OrderNotFound from 'modules/customer/components/bookingLookup/components/OrderNotFound';
+import { FormProvider } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 import LoadingReOrder from './LoadingReOrder';
 
 interface Props {
@@ -23,9 +25,7 @@ interface Props {
 }
 
 const ReOrder: React.FC<Props> = ({ getBooking, handleCloseOrder }) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const createBooking = useCreateBooking<GetBookingAuthDTO>();
+  const createBooking = useCreateBooking();
 
   const { data, status } = useGetBooking({
     getBooking: getBooking,
@@ -38,7 +38,6 @@ const ReOrder: React.FC<Props> = ({ getBooking, handleCloseOrder }) => {
   useEffect(() => {
     if (data) {
       methods.reset({
-        userId: data.user?.id,
         numberPeople: data.numberPeople,
         buffetMenu: data.buffetMenu.id,
         note: data.note,
@@ -77,96 +76,58 @@ const ReOrder: React.FC<Props> = ({ getBooking, handleCloseOrder }) => {
 
   const onSubmit = (data: CreateBookingDTO) => {
     createBooking.mutate(data, {
-      onSuccess(data) {
-        const token: string | null = localStorage.getItem(
-          import.meta.env.VITE_ACCESS_TOKEN,
-        );
-        queryClient.setQueryData<GetBookingAuthDTO[] | undefined>(
-          [`get_bookings_table_${token}`],
-          (oldData) => {
-            if (oldData) {
-              oldData.unshift(data.data!);
-            }
+      onSuccess() {
+        queryClient.refetchQueries(['get_bookings_table']);
 
-            return oldData;
-          },
-        );
-      },
-      onSettled: () => {
+        toast.success('Create bookings success');
         handleCloseOrder();
       },
     });
   };
 
   return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-        handleCloseOrder();
-      }}
-      className="fixed top-0 flex w-full h-full items-center justify-center bg-[#0009] z-30 px-5 "
-    >
-      <div
-        ref={ref}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className="max-w-[1000px] w-full animate-opacity bg-[#fff] max-h-[80vh] rounded-3xl border-2 border-[#eee] overflow-hidden opacity-100 transition-all duration-150"
-      >
-        <div
-          className={clsx(
-            'relative py-10 px-8 max-h-[80vh] h-full overflow-y-auto ',
-            'max-sm:p-5 ',
-          )}
-        >
-          <span className="sticky flex justify-end right-4 top-0 ">
-            <GrFormClose
-              className="hover:cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCloseOrder();
-              }}
-              size={25}
-            />
-          </span>
-          <div className="text-[38px] font-medium text-center max-sm:text-[28px]">
-            ReOrder
-          </div>
-          {status === 'loading' ? (
-            <LoadingReOrder />
-          ) : (
-            <div>
-              <form onSubmit={methods.handleSubmit(onSubmit)}>
-                <div
-                  className={clsx(
-                    'grid grid-cols-2 w-full border shadow-xl p-10 rounded-xl',
-                    'max-sm:p-0 max-sm:py-3',
-                    'max-md:flex max-md:flex-col',
+    <>
+      <ModalHeader className="flex flex-col gap-1 text-4xl text-center text-primary">
+        ReOrder
+      </ModalHeader>
+
+      <ModalBody className="flex items-center">
+        {status === 'loading' ? (
+          <LoadingReOrder />
+        ) : data ? (
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full">
+              <div
+                className={clsx(
+                  'grid grid-cols-2 w-full',
+                  'max-sm:p-0 max-sm:py-3',
+                  'max-md:flex max-md:flex-col',
+                )}
+              >
+                <Column2 buffetMenu={data.buffetMenu.id} />
+                <Column3
+                  isLoading={createBooking.isLoading}
+                  bookingsForChildren={bookingsForChildren}
+                  initChildrenCategoryId={
+                    methods.getValues('bookingsForChildren')
+                      ? initChildrenCategoryId(
+                          methods.getValues('bookingsForChildren'),
+                        )
+                      : []
+                  }
+                  enoughtChildrenCategory={checkEnoughtChildrenCategory(
+                    dataChildrenCategory?.data,
+                    methods.getValues('bookingsForChildren'),
                   )}
-                >
-                  <Column2 methods={methods} />
-                  <Column3
-                    methods={methods}
-                    bookingsForChildren={bookingsForChildren}
-                    initChildrenCategoryId={
-                      methods.getValues('bookingsForChildren')
-                        ? initChildrenCategoryId(
-                            methods.getValues('bookingsForChildren'),
-                          )
-                        : []
-                    }
-                    enoughtChildrenCategory={checkEnoughtChildrenCategory(
-                      dataChildrenCategory?.data,
-                      methods.getValues('bookingsForChildren'),
-                    )}
-                  />
-                </div>
-              </form>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+                />
+              </div>
+            </form>
+          </FormProvider>
+        ) : (
+          <OrderNotFound />
+        )}
+      </ModalBody>
+    </>
   );
 };
 

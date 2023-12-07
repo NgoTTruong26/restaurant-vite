@@ -1,6 +1,7 @@
 import { Tab, Tabs } from '@nextui-org/react';
 import clsx from 'clsx';
 import ListBookingsTable from './components/ListBookingsTable';
+import LoadingOrderManagement from './components/LoadingOrderManagement';
 import useGetBookingStatus from './hooks/useGetStatusBooking';
 
 export interface IBookingStatusTabs {
@@ -19,24 +20,28 @@ export default function OrderManagement() {
           'flex flex-col bg-primary-50 h-full shadow-xl rounded-2xl p-5 overflow-hidden',
         )}
       >
-        {data && (
-          <div className="h-full">
-            <Tabs
-              fullWidth
-              color="primary"
-              radius="full"
-              classNames={{ tab: 'font-medium' }}
-            >
-              <Tab key="ALL" title="All">
-                <ListBookingsTable />
-              </Tab>
-              {data.map((val) => (
-                <Tab key={val.name} title={val.name}>
-                  <ListBookingsTable bookingStatus={val.name} />
+        {status === 'loading' ? (
+          <LoadingOrderManagement />
+        ) : (
+          data && (
+            <div className="h-full">
+              <Tabs
+                fullWidth
+                color="primary"
+                radius="full"
+                classNames={{ tab: 'font-medium' }}
+              >
+                <Tab key="ALL" title="All">
+                  <ListBookingsTable />
                 </Tab>
-              ))}
-            </Tabs>
-          </div>
+                {data.map((val) => (
+                  <Tab key={val.name} title={val.name}>
+                    <ListBookingsTable bookingStatus={val.name} />
+                  </Tab>
+                ))}
+              </Tabs>
+            </div>
+          )
         )}
       </div>
     </>

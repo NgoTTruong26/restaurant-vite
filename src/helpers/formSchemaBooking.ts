@@ -7,12 +7,12 @@ import { object } from 'yup';
 const test = {
   quantity: yup
     .number()
-    .label('Trẻ em')
+    .label('Children')
     .typeError(validateRequireNumberType)
 
     .test({
       test: (value) => (value === 0 || value ? value >= 0 || false : false),
-      message: 'Trẻ em ít nhất là 0 người',
+      message: 'Children ít nhất là 0 người',
     }),
 };
 

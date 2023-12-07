@@ -29,12 +29,8 @@ export default function useGetBookingTableList({
   page,
   bookingStatus,
 }: GetBookingTableListRequest) {
-  const token: string | null = localStorage.getItem(
-    import.meta.env.VITE_ACCESS_TOKEN,
-  );
-
   const { status, data, error, isFetching, isLoading } = useQuery({
-    queryKey: [`get_bookings_table_${token}`, take, page, bookingStatus],
+    queryKey: [`get_bookings_table`, take, page, bookingStatus],
     queryFn: async () => getBookingTableList({ take, page, bookingStatus }),
   });
   return { status, data, error, isFetching, isLoading };

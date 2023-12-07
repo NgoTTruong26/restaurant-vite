@@ -105,7 +105,7 @@ export default function ChangePasswordAdmin({
             </div>
             <div className="flex justify-end py-2 px-5 ">
               <button className="p-3 font-medium text-[#ffffff] bg-[#3d4451] rounded-xl cursor-pointer">
-                Xác nhận
+                Confirm
               </button>
             </div>
           </form>

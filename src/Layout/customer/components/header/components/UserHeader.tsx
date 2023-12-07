@@ -84,7 +84,7 @@ const UserHeader: React.FC<Props> = ({
           size="sm"
         />
       </DropdownTrigger>
-      <DropdownMenu aria-label="Profile Actions" variant="flat">
+      <DropdownMenu aria-label="Profile Actions" variant="flat" color="primary">
         <DropdownSection showDivider>
           <DropdownItem key="profile" className="h-7 gap-2">
             <Link

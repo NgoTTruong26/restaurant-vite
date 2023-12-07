@@ -6,7 +6,10 @@ import {
   Chip,
   Divider,
   Image,
+  Modal,
+  ModalContent,
   Pagination,
+  useDisclosure,
 } from '@nextui-org/react';
 import clsx from 'clsx';
 import OrderDetails from 'modules/customer/components/bookingLookup/components/OrderDetails';
@@ -25,29 +28,13 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
 
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const [showOrder, setShowOrder] = useState<boolean>(false);
-
-  const [showReOrder, setShowReOrder] = useState<boolean>(false);
-
   const [getBooking, setGetBooking] = useState<string>();
 
-  useEffect(() => {
-    if (showOrder) {
-      document.body.classList.add('overflow-hidden', 'touch-pan-y');
-      return;
-    }
-    document.body.classList.remove('overflow-hidden');
-  }, [showOrder]);
+  const disclosureOrderDetails = useDisclosure();
+
+  const disclosureReOrder = useDisclosure();
 
   const { data, status } = useGetBookingsTable({ page: page, bookingStatus });
-
-  const handleCloseOrder = () => {
-    setShowOrder(false);
-  };
-
-  const handleCloseReOrder = () => {
-    setShowReOrder(false);
-  };
 
   useEffect(() => {
     if (data?.data) {
@@ -150,9 +137,8 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
                           color="primary"
                           onClick={() => {
                             setGetBooking(booking.id);
-                            setShowReOrder(true);
+                            disclosureReOrder.onOpen();
                           }}
-                          className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]"
                         >
                           Re-order
                         </Button>
@@ -160,9 +146,8 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
                           color="primary"
                           onClick={() => {
                             setGetBooking(booking.id);
-                            setShowOrder(true);
+                            disclosureOrderDetails.onOpen();
                           }}
-                          className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]"
                         >
                           Order details
                         </Button>
@@ -177,22 +162,50 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
           <></>
         )}
       </div>
-      <Pagination showControls total={totalPages} onChange={setPage} />
-      {showOrder && getBooking && (
-        <div className="fixed top-0 left-0 right-0 z-30">
-          <OrderDetails
-            handleCloseOrder={handleCloseOrder}
-            getBooking={getBooking}
-          />
-        </div>
+
+      <Pagination
+        showControls
+        total={totalPages}
+        onChange={setPage}
+        className="flex justify-center w-full "
+        classNames={{
+          item: 'min-w-[36px] min-h-[36px]',
+          next: 'min-w-[36px] min-h-[36px]',
+          prev: 'min-w-[36px] min-h-[36px]',
+          wrapper: ' overflow-x-auto overflow-y-hidden',
+        }}
+      />
+
+      {getBooking && (
+        <Modal
+          backdrop="blur"
+          isOpen={disclosureOrderDetails.isOpen}
+          onClose={disclosureOrderDetails.onClose}
+          placement="center"
+        >
+          <ModalContent className="max-w-800 max-h-[80vh] overflow-y-auto">
+            {(onClose) => (
+              <OrderDetails
+                handleCloseOrder={onClose}
+                getBooking={getBooking}
+              />
+            )}
+          </ModalContent>
+        </Modal>
       )}
-      {showReOrder && getBooking && (
-        <div className="fixed top-0 left-0 right-0 z-30">
-          <ReOrder
-            handleCloseOrder={handleCloseReOrder}
-            getBooking={getBooking}
-          />
-        </div>
+      {getBooking && (
+        <Modal
+          backdrop="blur"
+          isOpen={disclosureReOrder.isOpen}
+          onClose={disclosureReOrder.onClose}
+          placement="center"
+        >
+          <ModalContent className="max-w-800 max-h-[80vh] overflow-y-auto py-5">
+            {(onClose) => (
+              <ReOrder handleCloseOrder={onClose} getBooking={getBooking} />
+            )}
+          </ModalContent>
+        </Modal>
       )}
     </div>
   );

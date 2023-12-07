@@ -3,7 +3,11 @@ import clsx from 'clsx';
 import Field from 'components/field';
 import useGetListBuffetMenuPreview from '../../OurMenu/hooks/useGetListBuffetMenuPreview';
 
-export default function Column2() {
+interface Props {
+  buffetMenu?: string;
+}
+
+export default function Column2({ buffetMenu }: Props) {
   const buffetMenus = useGetListBuffetMenuPreview().data;
 
   return (
@@ -55,6 +59,7 @@ export default function Column2() {
             t="select"
             name="buffetMenu"
             label="Buffet Menu"
+            defaultSelectedKeys={buffetMenu ? [buffetMenu] : undefined}
             options={buffetMenus.map((buffetMenu) => ({
               label: buffetMenu.name + 'K',
               value: buffetMenu.id,

@@ -1,7 +1,7 @@
 import { Button, ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import clsx from 'clsx';
 import { CreateBookingDTO } from 'modules/customer/components/home/components/bookings/dto/booking.dto';
-import React, { useRef } from 'react';
+import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { BiPhone, BiTime } from 'react-icons/bi';
 import { BsCalendar2Date } from 'react-icons/bs';
@@ -18,8 +18,6 @@ const BookingBillModal: React.FC<Props> = ({
   dataBooking,
   handleCloseBill,
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-
   const createBooking = useCreateBooking();
 
   const { data, status } = useGetBuffetMenu({
@@ -36,11 +34,7 @@ const BookingBillModal: React.FC<Props> = ({
   );
 
   const onSubmit = (dataBooking: CreateBookingDTO) => {
-    createBooking.mutate(dataBooking, {
-      onSettled() {
-        ref.current?.classList.add('!opacity-0');
-      },
-    });
+    createBooking.mutate(dataBooking);
   };
 
   return (
@@ -68,7 +62,7 @@ const BookingBillModal: React.FC<Props> = ({
                     <div className="flex items-center">
                       <BsCalendar2Date size={20} />
                       <div className="pl-2">
-                        Ngày tạo đơn:{' '}
+                        Created date:{' '}
                         <span className="text-primary">
                           {new Date().toLocaleDateString('en-GB')}
                         </span>
@@ -77,7 +71,7 @@ const BookingBillModal: React.FC<Props> = ({
                     <div className="flex items-center">
                       <BiTime size={20} />
                       <div className="pl-2">
-                        Giờ tạo đơn:{' '}
+                        Created time:{' '}
                         <span className="text-primary">
                           {new Date().toLocaleTimeString('en-US', {
                             hour: '2-digit',
@@ -154,7 +148,8 @@ const BookingBillModal: React.FC<Props> = ({
                           <div>
                             <div>Set {data.name}K</div>
                             <div className="text-primary">
-                              Giá: {new Intl.NumberFormat().format(data.price)}
+                              Prices:{' '}
+                              {new Intl.NumberFormat().format(data.price)}
                               <span className="relative font-bold text-[12px] top-[-1.5px]">
                                 ₫
                               </span>
@@ -178,15 +173,15 @@ const BookingBillModal: React.FC<Props> = ({
             </div>
             <div className="py-5 border-y [&>div]:pt-2">
               <div className="text-[28px] font-medium max-sm:text-[20px]">
-                Chi tiết đơn hàng
+                Order details
               </div>
               <div className="px-10 [&>div+div]:pt-2">
                 <div>
-                  <div className="">Số lượng:</div>
+                  <div className="">Quantity:</div>
                   <div className="pt-1">
                     <div className="pl-5 [&>div+div]:pt-2">
                       <div className="flex gap-20 justify-between items-center">
-                        <div>Người Lớn:</div>
+                        <div>Adult:</div>
                         <div>{dataBooking.numberPeople}</div>
                       </div>
                       {dataBooking.bookingsForChildren.map(
@@ -196,7 +191,7 @@ const BookingBillModal: React.FC<Props> = ({
                               key={idx}
                               className="flex gap-20 justify-between items-center"
                             >
-                              <div>Trẻ Em {children.childrenCategory}:</div>
+                              <div>Children {children.childrenCategory}:</div>
                               <div>{children.quantity}</div>
                             </div>
                           ),
@@ -205,7 +200,7 @@ const BookingBillModal: React.FC<Props> = ({
                   </div>
                 </div>
                 <div className="flex justify-between max-sm:flex-col">
-                  <div className="">Ghi chú:</div>
+                  <div className="">Note:</div>
                   <div className="pl-2 max-sm:pl-0">
                     {dataBooking.note || 'Không có'}
                   </div>
@@ -218,13 +213,13 @@ const BookingBillModal: React.FC<Props> = ({
             </div>
             <div className="pt-5 font-medium">
               <div className="text-[28px] font-medium max-sm:text-[20px]">
-                Tạm tính
+                Provisional total amount
               </div>
               <div className="px-10">
                 <div className="border-b pb-5 [&>div+div]:pt-2 [&>div]:items-center">
                   <div className="flex gap-20 justify-between">
                     <div className="font-medium">
-                      {dataBooking.numberPeople} x Set người lớn {data?.name}K
+                      {dataBooking.numberPeople} x Adult set {data?.name}K
                     </div>
                     <div className="text-primary">
                       {new Intl.NumberFormat().format(
@@ -238,7 +233,7 @@ const BookingBillModal: React.FC<Props> = ({
                         <div key={idx} className="flex gap-20 justify-between">
                           <div className="flex gap-2 items-center">
                             <div className="font-medium">
-                              {children.quantity} x Set trẻ em dưới 1m3
+                              {children.quantity} x Set for children under 1m3
                             </div>
                             <div className="py-1 px-2 text-primary bg-[#faebd7]">
                               <div>-{children.deals}%</div>
@@ -255,14 +250,14 @@ const BookingBillModal: React.FC<Props> = ({
                       ),
                   )}
                   <div className="flex gap-20 justify-between">
-                    <div className="font-medium">Thuế VAT 5%</div>
+                    <div className="font-medium">VAT 5%</div>
                     <div className="text-primary">
                       {new Intl.NumberFormat().format(totalBill * 0.05)}
                     </div>
                   </div>
                 </div>
                 <div className="pt-5 flex gap-20 justify-between text-[18px] font-medium max-sm:text-[20px]">
-                  <div>Tổng cộng</div>
+                  <div>Total</div>
                   <div className="text-primary">
                     {new Intl.NumberFormat().format(
                       totalBill + totalBill * 0.05,

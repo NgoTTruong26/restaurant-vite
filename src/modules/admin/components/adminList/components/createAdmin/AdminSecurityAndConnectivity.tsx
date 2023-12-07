@@ -26,8 +26,6 @@ export default function AdminSecurityAndConnectivity({
     setVisibleListRole(false);
   };
 
-
-
   return (
     <div
       className={clsx(
@@ -179,7 +177,7 @@ export default function AdminSecurityAndConnectivity({
             'btn min-h-0 h-10 min-w-[110px] max-w-[250px] w-full btn-info text-[#ffffff] max-xs:min-w-[80px]',
           )}
         >
-          Xác Nhận
+          Confirm
         </button>
       </div>
     </div>

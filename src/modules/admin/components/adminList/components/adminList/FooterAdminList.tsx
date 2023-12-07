@@ -1,12 +1,12 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
+import useMediaQuery from 'hooks/useMediaQuery';
+import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { GrFormClose } from 'react-icons/gr';
+import { validateRequireMessage } from 'utils/getValidateMessage';
 import * as yup from 'yup';
 import { GetAdminListDTO } from '../../dto/get-admins.dto';
-import useMediaQuery from 'hooks/useMediaQuery';
-import { GrFormClose } from 'react-icons/gr';
-import { useCallback, useState } from 'react';
-import { validateRequireMessage } from 'utils/getValidateMessage';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 
 interface Props {
   currPage: number;
@@ -162,7 +162,7 @@ const FooterAdminList: React.FC<Props> = ({
                           )}
                           <div className="flex justify-end py-2 px-5 ">
                             <button className="p-3 font-medium text-[#ffffff] bg-[#3d4451] rounded-xl cursor-pointer">
-                              Xác nhận
+                              Confirm
                             </button>
                           </div>
                         </form>

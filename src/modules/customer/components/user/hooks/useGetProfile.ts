@@ -13,21 +13,14 @@ export default function useGetProfile() {
 
   const apiClient = ApiClient(() => {});
 
-  const token: string | null = localStorage.getItem(
-    import.meta.env.VITE_ACCESS_TOKEN,
-  );
-
   const getProfile = useQuery({
-    queryKey: [`get_profile_${token}`],
+    queryKey: [`get_profile`],
     queryFn: async () => {
       try {
-        const response = await apiClient.get<
-          IAxiosResponse<Omit<IUser, 'accessToken'>>
-        >('/auth/profile', {
-          headers: {
-            Authorization: token ? `Bearer ${token}` : undefined,
-          },
-        });
+        const response =
+          await apiClient.get<IAxiosResponse<Omit<IUser, 'accessToken'>>>(
+            '/auth/profile',
+          );
 
         return response.data.data;
       } catch (error) {

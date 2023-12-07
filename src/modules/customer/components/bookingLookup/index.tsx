@@ -1,7 +1,7 @@
 import { Button, Modal, ModalContent, useDisclosure } from '@nextui-org/react';
 import clsx from 'clsx';
 import Field from 'components/field';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { GoSearch } from 'react-icons/go';
 import OrderDetails from './components/OrderDetails';
@@ -15,21 +15,7 @@ export default function BookingLookup() {
 
   const { methods } = useFormBookingLookup();
 
-  const [showOrder, setShowOrder] = useState<boolean>(false);
-
   const [getBooking, setGetBooking] = useState<string>();
-
-  useEffect(() => {
-    if (showOrder) {
-      document.body.classList.add('overflow-hidden', 'touch-pan-y');
-      return;
-    }
-    document.body.classList.remove('overflow-hidden');
-  }, [showOrder]);
-
-  const handleCloseOrder = () => {
-    setShowOrder(false);
-  };
 
   const onSubmit = (data: InputBookingLookup) => {
     setGetBooking(data.idBooking);
