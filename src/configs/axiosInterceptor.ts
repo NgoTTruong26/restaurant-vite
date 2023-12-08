@@ -29,12 +29,12 @@ export function ApiClient(onUnauthenticated: Function) {
 
   const refreshTokenResponseError = async (
     error: AxiosError,
-    signout: Function,
+    signOut: Function,
   ) => {
     const refreshToken = Cookies.get(import.meta.env.VITE_REFRESH_TOKEN);
 
     if (!refreshToken) {
-      signout();
+      signOut();
       return;
     }
     try {
@@ -55,19 +55,19 @@ export function ApiClient(onUnauthenticated: Function) {
 
       return newInstance(error.config!);
     } catch (error) {
-      signout();
+      signOut();
       return;
     }
   };
 
   const refreshTokenResponseSuccess = async (
     response: AxiosResponse,
-    signout: Function,
+    signOut: Function,
   ) => {
     const refreshToken = Cookies.get(import.meta.env.VITE_REFRESH_TOKEN);
 
     if (!refreshToken) {
-      signout();
+      signOut();
       return response;
     }
     try {
@@ -88,7 +88,7 @@ export function ApiClient(onUnauthenticated: Function) {
 
       return newInstance(response.config!);
     } catch (error) {
-      signout();
+      signOut();
       return response;
     }
   };
@@ -138,12 +138,12 @@ export function ApiAdmin(onUnauthenticated: Function) {
 
   const refreshTokenResponseError = async (
     error: AxiosError,
-    signout: Function,
+    signOut: Function,
   ) => {
     const refreshToken = Cookies.get(import.meta.env.VITE_REFRESH_TOKEN_ADMIN);
 
     if (!refreshToken) {
-      signout();
+      signOut();
       return;
     }
     try {
@@ -164,7 +164,7 @@ export function ApiAdmin(onUnauthenticated: Function) {
 
       return newInstance(error.config!);
     } catch (error) {
-      signout();
+      signOut();
       return;
     }
   };

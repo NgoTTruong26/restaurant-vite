@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
 import { ApiClient } from 'configs/axiosInterceptor';
+import useCheckAuth from 'modules/customer/components/auth/hooks/useCheckAuth';
+import { toast } from 'react-hot-toast';
 import { EBookingStatus } from '../dto/booking-status.dto';
 import { GetBookingListResponse } from '../dto/get-booking-auth.dto';
 
@@ -10,18 +12,22 @@ interface GetBookingTableListRequest {
   bookingStatus?: keyof typeof EBookingStatus;
 }
 
-export async function getBookingTableList({
-  take = 5,
-  page,
-  bookingStatus,
-}: GetBookingTableListRequest) {
-  return (
-    await ApiClient(() => {}).get<IAxiosResponse<GetBookingListResponse>>(
-      `/booking-table/get-bookings-table?page=${page}&take=${take}${
-        bookingStatus ? '&status=' + bookingStatus : ''
-      }`,
-    )
-  ).data;
+export async function getBookingTableList(
+  { take = 5, page, bookingStatus }: GetBookingTableListRequest,
+  signOut: () => void,
+) {
+  try {
+    return (
+      await ApiClient(signOut).get<IAxiosResponse<GetBookingListResponse>>(
+        `/booking-table/get-bookings-table?page=${page}&take=${take}${
+          bookingStatus ? '&status=' + bookingStatus : ''
+        }`,
+      )
+    ).data;
+  } catch (error) {
+    toast.error("Can't get booking table list");
+    return null;
+  }
 }
 
 export default function useGetBookingTableList({
@@ -29,9 +35,11 @@ export default function useGetBookingTableList({
   page,
   bookingStatus,
 }: GetBookingTableListRequest) {
-  const { status, data, error, isFetching, isLoading } = useQuery({
+  const { signOut } = useCheckAuth();
+
+  return useQuery({
     queryKey: [`get_bookings_table`, take, page, bookingStatus],
-    queryFn: async () => getBookingTableList({ take, page, bookingStatus }),
+    queryFn: async () =>
+      getBookingTableList({ take, page, bookingStatus }, signOut),
   });
-  return { status, data, error, isFetching, isLoading };
 }

@@ -118,7 +118,7 @@ const Profile: React.FC<Props> = ({ data }) => {
                   <div
                     className={clsx(
                       'pl-4 col-span-3 flex w-full flex-1 gap-3 overflow-x-auto',
-                      '[&>div]:min-w-[85px] [&>div]:max-w-[150px] [&>div]:flex-1',
+                      '[&>div]:min-w-[85px] [&>div]:flex-1',
                       'max-sm:flex-col max-sm:items-start max-sm:[&>div]:max-w-full',
                     )}
                   >
@@ -178,7 +178,8 @@ const Profile: React.FC<Props> = ({ data }) => {
                     value: val.id,
                   }))}
                   classNames={{
-                    wrapper: 'pl-4 space-x-3',
+                    wrapper:
+                      'pl-4 space-x-3  flex-nowrap overflow-x-auto overflow-y-hidden',
                     label: 'text-default',
                   }}
                 />
@@ -202,7 +203,7 @@ const Profile: React.FC<Props> = ({ data }) => {
                 color="primary"
                 className="w-full max-w-[250px]"
               >
-                Lưu thay đổi
+                Submit
               </Button>
             </div>
           </form>

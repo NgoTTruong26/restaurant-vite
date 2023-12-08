@@ -49,6 +49,7 @@ const ChangePassword: React.FC<Props> = ({ handleClose, data }) => {
             name="old_password"
             label="Old Password"
             type="password"
+            autoComplete="on"
             endContent={
               <FaLock
                 size={20}
@@ -62,6 +63,7 @@ const ChangePassword: React.FC<Props> = ({ handleClose, data }) => {
             name="new_password"
             label="New Password"
             type="password"
+            autoComplete="on"
             endContent={
               <FaLock
                 size={20}
@@ -75,6 +77,7 @@ const ChangePassword: React.FC<Props> = ({ handleClose, data }) => {
             name="repeat_new_password"
             label="Repeat Password"
             type="password"
+            autoComplete="on"
             endContent={
               <FaLock
                 size={20}

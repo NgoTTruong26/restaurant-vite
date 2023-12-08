@@ -66,6 +66,7 @@ export default function SignInModal({ onClose }: Props) {
             placeholder="Enter your password"
             type="password"
             variant="bordered"
+            autoComplete="on"
           />
           <div className="flex py-2 px-1 justify-between">
             <Checkbox

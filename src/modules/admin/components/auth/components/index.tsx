@@ -21,17 +21,21 @@ export default function SignInAdmin() {
   }
 
   return (
-    <div className="relative flex h-full bg-gradient-to-b from-purple-500 to-pink-500 min-h-screen justify-center items-center">
-      <div className="flex max-w-[1200px] w-full bg-[#fff] rounded-xl shadow-xl p-5 ">
+    <div className="relative flex h-full bg-primary-50 min-h-screen justify-center items-center">
+      <div className="flex gap-5 max-w-[1200px] w-full bg-[#fff] rounded-xl shadow-xl p-5 mx-5">
         <div
           className={clsx(
             "relative z-10 flex-1 bg-[url('https://img.freepik.com/premium-vector/it-specialists-administrate-cloud-service-data-storage-hosting-platform-big-data-processing-transferring-online-computing-technology-software-solutions-share-informations-digital-network_458444-947.jpg?w=2000')]",
-            'bg-[length:1000px] bg-no-repeat bg-center rounded-l-xl rounded-r-md',
+            'bg-[length:1000px] bg-no-repeat bg-center rounded-l-xl rounded-r-md max-sm:hidden',
           )}
         ></div>
-        <div className={clsx('flex-1 flex min-h-[800px] items-center')}>
+        <div
+          className={clsx(
+            'flex-1 flex justify-center min-h-[80vh] items-center max-sm:min-h-[60vh]',
+          )}
+        >
           <div className="flex flex-col justify-between">
-            <div className="flex justify-center">
+            <div className="w-full flex justify-center">
               <FormSignIn />
             </div>
           </div>

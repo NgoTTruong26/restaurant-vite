@@ -93,6 +93,7 @@ export default function SignUpModal({ onClose }: Props) {
             color="primary"
             label="Password"
             type="password"
+            autoComplete="on"
             placeholder="Enter your password"
           />
 
@@ -102,6 +103,7 @@ export default function SignUpModal({ onClose }: Props) {
             color="primary"
             label="Repeat Password"
             type="password"
+            autoComplete="on"
             placeholder="Repeat password"
           />
         </ModalBody>

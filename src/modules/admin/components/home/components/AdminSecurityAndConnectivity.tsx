@@ -1,3 +1,10 @@
+import {
+  Button,
+  Chip,
+  Modal,
+  ModalContent,
+  useDisclosure,
+} from '@nextui-org/react';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { AiFillLock, AiOutlineMail } from 'react-icons/ai';
@@ -11,13 +18,9 @@ interface Props {
 }
 
 export default function AdminSecurityAndConnectivity({ data }: Props) {
-  const [showChangePassword, setShowChangePassword] = useState<boolean>(false);
-
   const [showRoleListDetail, setShowRoleListDetail] = useState<boolean>(false);
 
-  const handleCloseShowChangePassword = () => {
-    setShowChangePassword(false);
-  };
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handleCloseShowRoleListDetail = () => {
     setShowRoleListDetail(false);
@@ -35,21 +38,20 @@ export default function AdminSecurityAndConnectivity({ data }: Props) {
           {data.roles ? (
             <>
               {data.roles.slice(0, 4).map((role, idx) => (
-                <div
-                  key={idx}
-                  className="badge badge-accent badge-outline badge-lg"
-                >
+                <Chip key={idx} color="primary" variant="bordered">
                   {role.position}
-                </div>
+                </Chip>
               ))}
               {data.roles.length > 4 && (
                 <>
-                  <div
+                  <Chip
                     onClick={() => setShowRoleListDetail(true)}
-                    className="hover:cursor-pointer badge badge-neutral badge-lg"
+                    color="primary"
+                    variant="bordered"
+                    className="cursor-pointer hover:border-primary-300"
                   >
-                    {data.roles.length - 4}
-                  </div>
+                    +{data.roles.length - 4}
+                  </Chip>
                   {showRoleListDetail && (
                     <RoleListDetail
                       roles={data.roles}
@@ -84,13 +86,15 @@ export default function AdminSecurityAndConnectivity({ data }: Props) {
                 )}
               >
                 <span>Số điện thoại</span>
-                <span>{data.phone || 'Chưa kết nối'}</span>
+                <span className="text-primary">
+                  {data.phone || 'Chưa kết nối'}
+                </span>
               </div>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
-              <button className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]">
+              <Button color="primary">
                 {data.phone ? 'Cập nhật' : 'Thiết lập'}
-              </button>
+              </Button>
             </div>
           </div>
           <div
@@ -108,15 +112,15 @@ export default function AdminSecurityAndConnectivity({ data }: Props) {
                 )}
               >
                 <span>Địa chỉ email</span>
-                <span className="text-ellipsis">
+                <span className="text-ellipsis text-primary">
                   {data.email || 'Chưa kết nối'}
                 </span>
               </div>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
-              <button className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]">
+              <Button color="primary">
                 {data.phone ? 'Cập nhật' : 'Thiết lập'}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -140,20 +144,18 @@ export default function AdminSecurityAndConnectivity({ data }: Props) {
               <span>Đổi mật khẩu</span>
             </div>
             <div className="col-start-5 col-span-2 flex justify-end">
-              <button
-                onClick={() => setShowChangePassword(true)}
-                className="btn min-h-0 h-10 min-w-[110px]  border-solid btn-outline btn-info hover:!text-[#ffffff]"
-              >
+              <Button onClick={onOpen} color="primary">
                 Cập nhật
-              </button>
+              </Button>
             </div>
           </div>
         </div>
-        {showChangePassword && (
-          <ChangePasswordAdmin
-            handleCloseShowChangePassword={handleCloseShowChangePassword}
-          />
-        )}
+
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
+          <ModalContent className="max-w-500 max-h-[80vh]">
+            {(onClose) => <ChangePasswordAdmin handleClose={onClose} />}
+          </ModalContent>
+        </Modal>
       </div>
     </div>
   );

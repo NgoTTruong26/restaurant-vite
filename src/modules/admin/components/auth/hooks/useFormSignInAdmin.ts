@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setAdmin } from 'redux/features/auth-admin/setAdminSlice';
 import { setUser } from 'redux/features/auth/setUserSlice';
-import useSignIn from '../services/useSignInAdmin.service';
+import useSignIn from './useSignInAdmin';
 
 interface InputSignIn {
   username: string;
@@ -14,9 +14,7 @@ interface InputSignIn {
 }
 
 export function useFormSignInAdmin() {
-  console.log('signInAdmin');
-
-  const { formState, ...methods } = useForm<InputSignIn>({
+  const methods = useForm<InputSignIn>({
     defaultValues: { username: '', reqPassword: '', remember_account: false },
     resolver: yupResolver(formSchemaSignIn),
   });
@@ -48,7 +46,6 @@ export function useFormSignInAdmin() {
 
   return {
     methods,
-    formState,
     onSubmit,
     isLoading,
   };

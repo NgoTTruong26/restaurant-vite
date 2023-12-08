@@ -1,59 +1,71 @@
 import { Button } from '@nextui-org/react';
-import FieldOutline from 'components/field/FieldOutline';
+import Field from 'components/field';
 import srcLogoT12 from 'images/logoT12-2.png';
-import { Link } from 'react-router-dom';
+import { FormProvider } from 'react-hook-form';
+import { FaLock, FaUser } from 'react-icons/fa';
 import { useFormSignInAdmin } from '../hooks/useFormSignInAdmin';
 
 export default function FormSignIn() {
-  const { methods, onSubmit, formState } = useFormSignInAdmin();
+  const { methods, onSubmit } = useFormSignInAdmin();
 
   return (
-    <div className="flex flex-col justify-between w-[58%]">
+    <div className="flex flex-col justify-between w-full max-w-400">
       <div className="w-full flex flex-col items-center">
         <div className="w-[25%]">
           <img src={srcLogoT12} alt="image" />
         </div>
-        <div className="text-[28px] font-bold py-4">Sign in with Admin</div>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full">
-          <div className="relative my-3 w-full">
-            <FieldOutline
-              id="username"
-              label
-              innerText="Tên đăng nhập"
-              inputClassName="focus:border-[#e11b1e]"
-              watch={methods.watch('username')}
-              type="text"
-              error={formState.errors.username}
-              {...methods.register('username')}
+        <div className="text-[28px] font-bold py-4 text-center">
+          Sign in with Admin
+        </div>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="w-full space-y-2"
+          >
+            <Field
+              t="input"
+              name="username"
+              label="Username"
+              placeholder="Enter your username ..."
+              endContent={
+                <FaUser
+                  size={20}
+                  className="text-primary pointer-events-none flex-shrink-0"
+                />
+              }
             />
-          </div>
-          <div className="relative mt-3 w-full">
-            <FieldOutline
-              id="reqPassword"
-              label
-              innerText="Mật khẩu"
-              inputClassName="focus:border-[#e11b1e]"
-              watch={methods.watch('reqPassword')}
+
+            <Field
+              t="input"
               type="password"
-              error={formState.errors.reqPassword}
-              {...methods.register('reqPassword')}
+              name="reqPassword"
+              label="Password"
+              autoComplete="on"
+              placeholder="Enter your password ..."
+              endContent={
+                <FaLock
+                  size={20}
+                  className="text-primary pointer-events-none flex-shrink-0"
+                />
+              }
             />
-          </div>
-          <div className="w-full flex justify-end items-center">
-            <div>
-              <Link to={'/'} className="font-medium text-[#428cf9]">
-                Lấy lại mật khẩu
-              </Link>
+            <div className="w-full flex justify-end items-center">
+              <div>
+                <div className="font-medium text-[#428cf9]">
+                  Lấy lại mật khẩu
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="w-full pt-12">
-            <Button
-              type="submit"
-              children="Đăng nhập"
-              className="w-full bg-red hover:!bg-[#e51717]"
-            />
-          </div>
-        </form>
+            <div className="w-full">
+              <Button
+                type="submit"
+                children="Đăng nhập"
+                color="primary"
+                fullWidth
+              />
+            </div>
+          </form>
+        </FormProvider>
       </div>
     </div>
   );

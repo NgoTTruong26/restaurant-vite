@@ -4,6 +4,7 @@ import { ApiClient } from 'configs/axiosInterceptor';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/features/auth/setUserSlice';
+import useCheckAuth from '../../auth/hooks/useCheckAuth';
 import { IUser } from '../interfaces/user.interface';
 
 export default function useGetProfile() {
@@ -11,7 +12,9 @@ export default function useGetProfile() {
 
   const navigate = useNavigate();
 
-  const apiClient = ApiClient(() => {});
+  const { signOut } = useCheckAuth();
+
+  const apiClient = ApiClient(signOut);
 
   const getProfile = useQuery({
     queryKey: [`get_profile`],

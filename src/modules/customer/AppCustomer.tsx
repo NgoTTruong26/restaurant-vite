@@ -5,10 +5,12 @@ import useCheckAuth from './components/auth/hooks/useCheckAuth';
 // Create a client
 
 function AppCustomer() {
-  const { mutate: checkAuth, isLoading, isSuccess, isError } = useCheckAuth();
+  const { checkAuth } = useCheckAuth();
+
+  const { mutate, isLoading, isSuccess, isError } = checkAuth;
 
   useEffect(() => {
-    checkAuth();
+    mutate();
   }, []);
 
   console.log(isLoading);
