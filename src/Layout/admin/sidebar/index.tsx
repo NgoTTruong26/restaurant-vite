@@ -1,9 +1,10 @@
+import { Divider } from '@nextui-org/react';
 import clsx from 'clsx';
-import AdminInfor from './components/AdminInfor';
-import Navbar from './components/Navbar';
+import useMediaQuery from 'hooks/useMediaQuery';
 import { useState } from 'react';
 import { MdSpaceDashboard } from 'react-icons/md';
-import useMediaQuery from 'hooks/useMediaQuery';
+import AdminInfor from './components/AdminInfor';
+import Navbar from './components/Navbar';
 
 export default function Sidebar() {
   const [isSidebarMini, setSidebarMini] = useState<boolean>(false);
@@ -27,19 +28,19 @@ export default function Sidebar() {
     >
       <div
         className={clsx(
-          'relative w-[260px] text-[#ffffff] transition-all min-h-full ',
+          'relative w-[300px] text-[#ffffff] transition-all min-h-full ',
           'before:absolute before:top-0 before:left-0 before:bottom-0 before:bg-[#000] before:w-full before:opacity-30',
           {
             '!w-20': isSidebarMini || isMdSmaller || isSmSmaller,
             '[&>div>div>div>div]:before:opacity-0':
               isSidebarMini || isMdSmaller || isSmSmaller,
-            'hover:!w-[260px] [&:hover>div>div>div>div]:before:opacity-100':
+            'hover:!w-[300px] [&:hover>div>div>div>div]:before:opacity-100':
               isSidebarMini || isMdSmaller || isSmSmaller,
             'admin-dashboard': isSidebarMini || isMdSmaller || isSmSmaller,
           },
         )}
       >
-        <div className="relative z-10 max-h-[calc(100% - 80px)] min-h-full pb-20 whitespace-nowrap">
+        <div className="relative z-10 max-h-[calc(100% - 80px)] min-h-full pb-20 whitespace-nowrap space-y-2">
           <h1 className="flex justify-center items-center text-base uppercase text-center py-2 border-b border-[#ffffff4d] mx-5 transition-all">
             <MdSpaceDashboard size={40} />
           </h1>
@@ -47,6 +48,7 @@ export default function Sidebar() {
             isSidebarMini={isSidebarMini}
             handleSetSidebarMini={handleSetSidebarMini}
           />
+          <Divider className="bg-[#ffffff4d]" />
           <Navbar />
         </div>
       </div>

@@ -1,3 +1,4 @@
+import Loading from 'components/Loading';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import useCheckAuth from './components/auth/hooks/useCheckAuth';
@@ -16,8 +17,11 @@ function AppCustomer() {
   console.log(isLoading);
 
   if (isSuccess || isError) return <Outlet />;
+  {
+    /* <div>Loading</div> */
+  }
 
-  return <div>Loading</div>;
+  return <Loading />;
 }
 
 export default AppCustomer;

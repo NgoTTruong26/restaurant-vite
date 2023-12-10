@@ -11,7 +11,7 @@ export default function AdminLayout() {
       {!isXsSmaller && <Sidebar />}
       <div
         className={clsx(
-          'relative flex justify-center w-[calc(100%-260px)] transition-all  min-h-screen',
+          'relative flex justify-center w-[calc(100%-300px)] transition-all  min-h-screen',
           '[&>div]:px-8',
           {
             'w-full': isXsSmaller,

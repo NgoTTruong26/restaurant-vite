@@ -1,139 +1,100 @@
-import { navbarForAdmin } from 'Layout/admin/constant';
+import { Accordion, AccordionItem } from '@nextui-org/react';
+import { EAuthority, navbarForAdmin } from 'Layout/admin/constant';
 import clsx from 'clsx';
+import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-export default function Navbar() {
+interface Props {
+  A?: (keyof typeof EAuthority)[];
+}
+
+export default function Navbar({}: Props) {
   const location = useLocation();
 
+  const initKey = useMemo(
+    () =>
+      location.pathname.slice(1).split('/')[1].replace('-', '_').toUpperCase(),
+    [location.pathname],
+  );
+
   return (
-    <div className="px-2">
-      {navbarForAdmin.map((item, idx) => (
-        <div key={idx} className="collapse flex flex-col mt-1">
-          {!item.children ? (
-            <Link
-              to={item.href}
-              key={idx}
-              className={clsx(
-                'collapse-title relative transition-all p-0 bg-base-200 rounded-md overflow-hidden',
-                'flex items-center',
-                'hover:bg-[#ffffff21] hover:cursor-pointer',
-                {
-                  '!bg-[#ffffff3b]':
-                    location.pathname.split('/')[2] === item.href,
-                  'before:absolute before:border-4 before:border-b-0 before:border-l-transparent before:border-b-transparent before:border-r-transparent before:border-[#ffffff]':
-                    item.children,
-                  'before:top-[48%] before:right-2 before:transition-all before:duration-300':
-                    item.children,
-                },
-              )}
-            >
-              <div className={clsx('flex gap-3 py-3 px-2')}>
-                <span className="flex justify-center w-12 ">{item.icons}</span>
-                <span
+    <Accordion
+      selectionMode="multiple"
+      showDivider={false}
+      className="space-y-2"
+      defaultExpandedKeys={[initKey]}
+    >
+      {navbarForAdmin.map((item) => (
+        <AccordionItem
+          key={item.key}
+          aria-label={item.title}
+          title={item.title}
+          startContent={
+            <span className="flex justify-center w-12 ">{item.icons}</span>
+          }
+          classNames={{
+            title:
+              'text-white text-md title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300',
+            trigger: clsx(
+              'relative h-12 py-3 transition-all bg-base-200 rounded-md overflow-hidden',
+              'flex items-center',
+              'hover:cursor-pointer',
+              {
+                'aria-[expanded=false]:!bg-[#ffffff3b]':
+                  location.pathname.split('/').slice(1, 3).join('/') ===
+                  `${import.meta.env.VITE_API_ADMIN.slice(1)}/${item.href.slice(
+                    1,
+                  )}`,
+              },
+            ),
+            indicator: 'text-white px-2',
+            content: 'overflow-hidden',
+          }}
+          className="px-2"
+        >
+          {item.children && (
+            <ul className={clsx('transition-all duration-300', '[&>li]:mt-1')}>
+              {item.children.map((val, idx) => (
+                <li
+                  key={idx}
                   className={clsx(
-                    'title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300',
+                    'hover:bg-[#ffffff21] transition-all rounded-md',
+                    {
+                      '!bg-[#ffffff3b]':
+                        `${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
+                          1,
+                        )}/${val.href.slice(1)}` === location.pathname ||
+                        `${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
+                          1,
+                        )}/${val.href.slice(1)}` ===
+                          `${location.pathname}/${
+                            item.children ? item.children[0].href.slice(1) : ''
+                          }`,
+                    },
                   )}
                 >
-                  {item.title}
-                </span>
-              </div>
-            </Link>
-          ) : (
-            <>
-              <input
-                type="checkbox"
-                className={clsx(
-                  'absolute [&:checked~.collapse-custom]:max-h-[500px] [&:checked~div:before]:rotate-180',
-                  {
-                    '[&:not(:checked)~#admin-navbar]:!bg-[#ffffff3b] ':
-                      location.pathname.split('/').slice(1, 3).join('/') ===
-                      `${import.meta.env.VITE_API_ADMIN.slice(
-                        1,
-                      )}/${item.href.slice(1)}`,
-                  },
-                )}
-              />
-              <div
-                id="admin-navbar"
-                key={idx}
-                className={clsx(
-                  'collapse-title relative transition-all p-0 bg-base-200 rounded-md overflow-hidden',
-                  'flex items-center',
-                  'hover:bg-[#ffffff21] hover:cursor-pointer',
-                  {
-                    '!bg-[#ffffff3b]':
-                      location.pathname.split('/')[2] === item.href,
-                    'before:absolute before:border-4 before:border-b-0 before:border-l-transparent before:border-b-transparent before:border-r-transparent before:border-[#ffffff]':
-                      item.children,
-                    'before:top-[48%] before:right-2 before:transition-all before:duration-300':
-                      item.children,
-                  },
-                )}
-              >
-                <div className={clsx('flex gap-3 py-3 px-2')}>
-                  <span className="flex justify-center w-12 ">
-                    {item.icons}
-                  </span>
-                  <span
-                    className={clsx(
-                      'title-admin-dashboard translate-x-0 opacity-100 transition-all duration-300',
-                    )}
+                  <Link
+                    to={`${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
+                      1,
+                    )}/${val.href.slice(1)}`}
+                    className="flex py-3 gap-5"
                   >
-                    {item.title}
-                  </span>
-                </div>
-              </div>
-
-              <ul
-                className={clsx(
-                  'collapse-custom transition-all duration-300 max-h-0',
-                  '[&>li]:mt-1',
-                )}
-              >
-                {item.children.map((val, idx) => (
-                  <li
-                    key={idx}
-                    className={clsx(
-                      'hover:bg-[#ffffff21] transition-all rounded-md',
-                      {
-                        '!bg-[#ffffff3b]':
-                          `${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
-                            1,
-                          )}/${val.href.slice(1)}` === location.pathname ||
-                          `${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
-                            1,
-                          )}/${val.href.slice(1)}` ===
-                            `${location.pathname}/${
-                              item.children
-                                ? item.children[0].href.slice(1)
-                                : ''
-                            }`,
-                      },
-                    )}
-                  >
-                    <Link
-                      to={`${import.meta.env.VITE_API_ADMIN}/${item.href.slice(
-                        1,
-                      )}/${val.href.slice(1)}`}
-                      className="flex py-3 px-3 gap-5"
-                    >
-                      <span className="uppercase font-medium min-w-[40px] text-center">
-                        {val.title
-                          .split(' ')
-                          .map((val) => val[0])
-                          .join('')}
-                      </span>
-                      <span className="title-admin-dashboard transition-all duration-300">
-                        {val.title}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </>
+                    <span className="flex-shrink-0 flex justify-center w-12 uppercase font-medium">
+                      {val.title
+                        .split(' ')
+                        .map((val) => val[0])
+                        .join('')}
+                    </span>
+                    <span className="title-admin-dashboard transition-all duration-300">
+                      {val.title}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           )}
-        </div>
+        </AccordionItem>
       ))}
-    </div>
+    </Accordion>
   );
 }

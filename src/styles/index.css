@@ -198,3 +198,12 @@ h1 {
   transform: translate3d(0px, 0, 0);
   opacity: 1;
 }
+
+.border-loading::before {
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #f54180
+  );
+}

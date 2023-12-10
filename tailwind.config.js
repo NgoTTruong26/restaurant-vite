@@ -36,6 +36,7 @@ module.exports = {
       animation: {
         'transfer-left': 'transfer-left 1s linear infinite',
         'spin-180': 'spin-180 0.3s linear',
+        'spin-slow-3s': 'spin 3s linear infinite',
         'drop-top': 'drop-top 0.3s linear',
         opacity: 'opacity 0.15s linear',
       },

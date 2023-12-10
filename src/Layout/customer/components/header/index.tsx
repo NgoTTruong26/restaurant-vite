@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   ModalContent,
   Navbar,
@@ -165,11 +164,7 @@ export default function Header() {
 
       <NavbarContent justify="end">
         {user?.id ? (
-          <NavbarContent
-            as="div"
-            className="flex justify-center items-center"
-            justify="end"
-          >
+          <NavbarContent as="div" className="flex items-center" justify="end">
             <UserHeader
               dispatch={dispatch}
               router={router}
@@ -178,10 +173,7 @@ export default function Header() {
           </NavbarContent>
         ) : (
           <>
-            <NavbarContent
-              as="div"
-              className="hidden xl:flex justify-center items-center"
-            >
+            <NavbarContent as="div" className="flex items-center" justify="end">
               <GuestHeader
                 handleOpenSignInModal={handleOpenSignInModal}
                 dispatch={dispatch}
@@ -189,9 +181,6 @@ export default function Header() {
                 loginDropdown={loginDropdown}
               />
             </NavbarContent>
-            <Button className="flex xl:hidden" color="danger" variant="flat">
-              Sign In
-            </Button>
           </>
         )}
       </NavbarContent>

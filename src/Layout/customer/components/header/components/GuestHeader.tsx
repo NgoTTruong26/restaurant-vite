@@ -30,21 +30,21 @@ const GuestHeader: React.FC<Props> = (props: Props) => {
         {props.loginDropdown.map((item) => (
           <DropdownItem
             key={item.content}
-            className={clsx('hover:text-white hover:!bg-primary-300', {
+            className={clsx('hover:text-white hover:!bg-primary-300 p-0', {
               'bg-primary text-white': item.href === props.router.pathname,
             })}
           >
             {item.href ? (
               <Link
                 to={item.href}
-                className={clsx('flex capitalize text-medium')}
+                className={clsx('flex capitalize text-medium px-2 py-[6px]')}
               >
                 {item.content}
               </Link>
             ) : (
               <div
                 onClick={() => props.handleOpenSignInModal(item.key)}
-                className={clsx('flex capitalize text-medium')}
+                className={clsx('flex capitalize text-medium px-2 py-[6px]')}
               >
                 {item.content}
               </div>

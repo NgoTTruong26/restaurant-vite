@@ -6,6 +6,13 @@ import {
   MdOutlineRestaurantMenu,
 } from 'react-icons/md';
 
+export enum EAuthority {
+  ADMIN_MANAGEMENT,
+  USER_MANAGEMENT,
+  DISHES_MANAGEMENT,
+  NEWS_MANAGEMENT,
+}
+
 export enum ENavAdmin {
   ADMIN_MANAGEMENT = '/admin-management',
   USER_MANAGEMENT = '/user-management',
@@ -58,6 +65,7 @@ interface NavbarProfileAdmin {
 interface NavbarAdmin {
   icons: ReactNode;
   title: ENavTitleAdmin;
+  key: keyof typeof EAuthority;
   href: ENavAdmin;
   children?: IChildrenNavAdmin[];
 }
@@ -83,6 +91,7 @@ export const navbarForAdmin: NavbarAdmin[] = [
   {
     icons: <MdOutlineAdminPanelSettings size={25} />,
     title: ENavTitleAdmin.ADMIN_MANAGEMENT,
+    key: 'ADMIN_MANAGEMENT',
     href: ENavAdmin.ADMIN_MANAGEMENT,
     children: [
       {
@@ -102,6 +111,7 @@ export const navbarForAdmin: NavbarAdmin[] = [
   {
     icons: <BiUser size={25} />,
     title: ENavTitleAdmin.USER_MANAGEMENT,
+    key: 'USER_MANAGEMENT',
     href: ENavAdmin.USER_MANAGEMENT,
     children: [
       {
@@ -117,6 +127,7 @@ export const navbarForAdmin: NavbarAdmin[] = [
   {
     icons: <MdOutlineRestaurantMenu size={25} />,
     title: ENavTitleAdmin.DISHES_MANAGEMENT,
+    key: 'DISHES_MANAGEMENT',
     href: ENavAdmin.DISHES_MANAGEMENT,
     children: [
       {
@@ -132,6 +143,7 @@ export const navbarForAdmin: NavbarAdmin[] = [
   {
     icons: <ImNewspaper size={25} />,
     title: ENavTitleAdmin.NEWS_MANAGEMENT,
+    key: 'NEWS_MANAGEMENT',
     href: ENavAdmin.NEWS_MANAGEMENT,
   },
 ];

@@ -1,5 +1,6 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Loading from 'components/Loading';
 import { router } from 'configs/router.tsx';
 import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
@@ -24,7 +25,7 @@ export const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <QueryClientProvider client={queryClient}>
         <NextUIProvider>
           <RouterProvider router={router} />
