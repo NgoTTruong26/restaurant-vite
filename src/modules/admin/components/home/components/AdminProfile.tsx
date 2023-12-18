@@ -12,10 +12,10 @@ import {
 } from 'modules/customer/components/user/components/accountInformation/dto/get-user.dto';
 import { useFormUpdateProfile } from 'modules/customer/components/user/components/accountInformation/hooks/useFormUpdateProfile';
 import useGetGenders from 'modules/customer/components/user/components/accountInformation/hooks/useGetGenders';
-import useUpdateProfile from 'modules/customer/components/user/components/accountInformation/hooks/useUpdateProfile';
 import { FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'redux/features/auth/setUserSlice';
+import useUpdateProfileAdmin from '../hooks/useUpdateProfileAdmin';
 
 interface Props {
   data: GetUserProfileDTO;
@@ -47,7 +47,7 @@ export default function Profile({ data }: Props) {
 
   const dispatch = useDispatch();
 
-  const { mutate } = useUpdateProfile();
+  const { mutate } = useUpdateProfileAdmin();
 
   const onSubmit = (input: IInputProfileDTO) => {
     mutate(

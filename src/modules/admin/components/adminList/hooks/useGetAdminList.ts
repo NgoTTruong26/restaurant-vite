@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { IAxiosResponse, api } from 'configs/api';
+import { IAxiosResponse } from 'configs/api';
+import { ApiAdmin } from 'configs/axiosInterceptor';
+import useCheckAuth from 'modules/customer/components/auth/hooks/useCheckAuth';
 import { GetAdminListDTO } from '../dto/get-admins.dto';
 
 export default function useGetAdminList(
@@ -7,11 +9,15 @@ export default function useGetAdminList(
   filterRole?: string,
   searchCharacters?: string,
 ) {
+  const { signOut } = useCheckAuth();
+
   const getAdminList = useQuery({
     queryKey: ['get_admin_list', page, filterRole, searchCharacters],
 
     queryFn: async () => {
-      const { data } = await api.get<IAxiosResponse<GetAdminListDTO | null>>(
+      const { data } = await ApiAdmin(signOut).get<
+        IAxiosResponse<GetAdminListDTO>
+      >(
         `/admin/admin-list?${
           filterRole
             ? filterRole !== 'default'

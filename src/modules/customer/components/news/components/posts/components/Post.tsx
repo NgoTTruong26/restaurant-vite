@@ -16,7 +16,7 @@ export default function Post() {
   const { data, status } = useGetPost(id);
 
   return (
-    <div className="flex-1 flex justify-center bg-[#eee] pt-16 pb-16 px-5">
+    <div className="flex-1 flex justify-center bg-[#eee] pt-16 pb-48 px-5">
       <div
         className={clsx(
           'flex gap-10 justify-between max-w-[1200px] w-full',
@@ -45,7 +45,7 @@ export default function Post() {
                   </div>
                 </div>
                 <div className="border-b-2 border-[#bababa] py-5">
-                  <h1 className="font-bold text-primary">{data?.title}</h1>
+                  <h1 className="font-bold text-black">{data?.title}</h1>
                   <div className="pt-2">
                     Ngày đăng:{' '}
                     {new Date(data.createdAt).toLocaleDateString('en-GB')}

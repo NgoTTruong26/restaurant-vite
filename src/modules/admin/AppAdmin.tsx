@@ -5,7 +5,7 @@ import { RootState } from 'redux/app/store';
 import useCheckAuthAdmin from './components/auth/hooks/useCheckAuthAdmin';
 
 export default function AppAdmin() {
-  const { mutate: checkAuth, isSuccess, isError } = useCheckAuthAdmin();
+  const { checkAuth } = useCheckAuthAdmin();
 
   const { value: admin, status: statusRedux } = useSelector(
     (state: RootState) => state.setAdmin,
@@ -14,7 +14,7 @@ export default function AppAdmin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkAuth();
+    checkAuth.mutate();
   }, []);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function AppAdmin() {
     }
   }, [admin, statusRedux]);
 
-  if (isSuccess || isError) {
+  if (checkAuth.isSuccess || checkAuth.isError) {
     return <Outlet />;
   }
 

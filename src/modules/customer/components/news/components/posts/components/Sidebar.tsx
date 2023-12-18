@@ -20,7 +20,7 @@ export default function Sidebar({ idPost }: Props) {
         <LoadingSidebar />
       ) : (
         <>
-          <div className="capitalize text-primary">latest news</div>
+          <div className="capitalize text-black">latest news</div>
           <div className="pt-2 [&>div+div]:pt-4">
             {data?.map((item, idx) => (
               <div key={idx}>

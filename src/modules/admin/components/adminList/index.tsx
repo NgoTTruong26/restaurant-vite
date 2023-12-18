@@ -117,13 +117,11 @@ export default function AdminManagement() {
   };
 
   return (
-    <div className="max-w-1800 w-full flex flex-col mt-10 gap-10 max-sm:gap-5 max-sm:mt-5">
-      <h1 className="text-5xl pl-5">Admin</h1>
-
-      <div className="flex justify-center items-center">
+    <div className="max-w-1800 h-screen w-full flex flex-col py-20 gap-10 max-sm:gap-5 max-sm:mt-5">
+      <div className="h-full flex justify-center items-center">
         <div
           className={clsx(
-            'flex flex-col w-full h-full min-h-[80vh]',
+            'flex flex-col w-full h-full my-20',
             'border-2 border-[#d8d8d8] rounded-lg bg-[#ffffff] shadow-lg',
             ' overflow-auto whitespace-nowrap ',
             'max-md:max-h-[80vh]',

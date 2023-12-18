@@ -9,7 +9,7 @@ import Navbar from './components/Navbar';
 export default function Sidebar() {
   const [isSidebarMini, setSidebarMini] = useState<boolean>(false);
 
-  const { isSmSmaller, isMdSmaller } = useMediaQuery();
+  const { isSmSmaller, isMdSmaller, isXsSmaller } = useMediaQuery();
 
   const handleSetSidebarMini = () => {
     return setSidebarMini((prevs) => !prevs);
@@ -21,8 +21,9 @@ export default function Sidebar() {
         "z-50 h-full bg-[url('https://demos.creative-tim.com//light-bootstrap-dashboard-pro-react/static/media/full-screen-image-3.21a228cd.jpg')] bg-cover bg-center bg-no-repeat",
         'fixed left-0 overflow-y-auto overflow-x-hidden',
         {
-          '[&~div]:!w-[calc(100%-80px)]':
+          '[&~div]:w-[calc(100%-80px)]':
             isSidebarMini || isMdSmaller || isSmSmaller,
+          'hidden [&~div]:w-full': isXsSmaller,
         },
       )}
     >

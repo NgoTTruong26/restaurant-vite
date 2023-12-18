@@ -4,6 +4,7 @@ import Months from 'components/Date/Months';
 import Years from 'components/Date/Years';
 import FieldOutline from 'components/field/FieldOutline';
 import { queryClient } from 'main';
+import { GetGenderDTO } from 'modules/customer/components/user/components/accountInformation/dto/get-gender.dto';
 import useGetGenders from 'modules/customer/components/user/components/accountInformation/hooks/useGetGenders';
 import { GetAdminDTO } from '../../dto/get-admins.dto';
 import { useFormUpdateAdminProfile } from '../hooks/useFormUpdateAdminProfile';
@@ -18,8 +19,8 @@ export interface IInputAdminProfileDTO {
   day: string;
   month: string;
   year: string;
-  gender: string;
-  nationality: string;
+  gender: GetGenderDTO | null;
+  nationality: string | null;
 }
 const AdminProfile: React.FC<Props> = ({ data }) => {
   const genders = useGetGenders();
@@ -112,10 +113,10 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
                   )}
                 >
                   <Days
-                    defaultValue={
+                    defaultSelectedKeys={
                       data.dateBirth
-                        ? new Date(data.dateBirth).getUTCDate()
-                        : 'default'
+                        ? [new Date(data.dateBirth).getUTCDate().toString()]
+                        : undefined
                     }
                     month={
                       methods.watch('month') ||
@@ -131,26 +132,24 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
                         ? new Date(data.dateBirth).getUTCFullYear().toString()
                         : undefined)
                     }
-                    error={formState.errors.day}
-                    {...methods.register('day')}
                   />
                   <Months
-                    defaultValue={
-                      (data.dateBirth
-                        ? new Date(data.dateBirth).getUTCMonth() + 1
-                        : methods.watch('month')) || 'default'
+                    defaultSelectedKeys={
+                      data.dateBirth
+                        ? [
+                            (
+                              new Date(data.dateBirth).getUTCMonth() + 1
+                            ).toString(),
+                          ]
+                        : undefined
                     }
-                    error={formState.errors.month}
-                    {...methods.register('month')}
                   />
                   <Years
-                    defaultValue={
-                      (data.dateBirth
-                        ? new Date(data.dateBirth).getUTCFullYear()
-                        : methods.watch('year')) || 'default'
+                    defaultSelectedKeys={
+                      data.dateBirth
+                        ? [new Date(data.dateBirth).getUTCFullYear().toString()]
+                        : undefined
                     }
-                    error={formState.errors.year}
-                    {...methods.register('year')}
                   />
                 </div>
               </div>

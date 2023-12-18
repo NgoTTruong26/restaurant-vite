@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 const breakpoints = {
   xs: 330,
-  sm: 450,
+  sm: 550,
   md: 850,
   lg: 1024,
   xl: 1280,

@@ -3,7 +3,7 @@ import Days from 'components/Date/Days';
 import Months from 'components/Date/Months';
 import Years from 'components/Date/Years';
 import FieldOutline from 'components/field/FieldOutline';
-import { GetGenderDTO } from 'modules/admin/components/user/components/accountInformation/dto/get-gender.dto';
+import { GetGenderDTO } from 'modules/customer/components/user/components/accountInformation/dto/get-gender.dto';
 import { UseFormReturn } from 'react-hook-form';
 import { IInputDataCreateAdmin } from '.';
 
@@ -128,17 +128,9 @@ const AdminProfile: React.FC<Props> = ({ genders, methods }) => {
             <Days
               month={methods.watch('month') || undefined}
               year={methods.watch('year') || undefined}
-              error={methods.formState.errors.day}
-              {...methods.register('day')}
             />
-            <Months
-              error={methods.formState.errors.month}
-              {...methods.register('month')}
-            />
-            <Years
-              error={methods.formState.errors.year}
-              {...methods.register('year')}
-            />
+            <Months />
+            <Years />
           </div>
         </div>
         <div

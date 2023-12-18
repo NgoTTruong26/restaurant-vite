@@ -26,11 +26,14 @@ const GuestHeader: React.FC<Props> = (props: Props) => {
           <Avatar color="primary" showFallback />
         </Button>
       </DropdownTrigger>
-      <DropdownMenu color="primary">
+      <DropdownMenu
+        color="primary"
+        defaultSelectedKeys={[props.router.pathname]}
+      >
         {props.loginDropdown.map((item) => (
           <DropdownItem
-            key={item.content}
-            className={clsx('hover:text-white hover:!bg-primary-300 p-0', {
+            key={item.href}
+            className={clsx('hover:text-white hover:bg-primary-300 p-0', {
               'bg-primary text-white': item.href === props.router.pathname,
             })}
           >

@@ -8,7 +8,7 @@ export default function AdminLayout() {
 
   return (
     <div className="flex justify-end bg-[#f5f5fa]">
-      {!isXsSmaller && <Sidebar />}
+      <Sidebar />
       <div
         className={clsx(
           'relative flex justify-center w-[calc(100%-300px)] transition-all  min-h-screen',

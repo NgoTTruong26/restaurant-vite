@@ -11,11 +11,16 @@ interface Props {
 export default function Navbar({}: Props) {
   const location = useLocation();
 
-  const initKey = useMemo(
-    () =>
-      location.pathname.slice(1).split('/')[1].replace('-', '_').toUpperCase(),
-    [location.pathname],
-  );
+  const initKey = useMemo(() => {
+    if (location.pathname.slice(1).split('/')[1]) {
+      return location.pathname
+        .slice(1)
+        .split('/')[1]
+        .replace('-', '_')
+        .toUpperCase();
+    }
+    return '';
+  }, [location.pathname]);
 
   return (
     <Accordion

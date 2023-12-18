@@ -1,3 +1,4 @@
+import { GetGenderDTO } from 'modules/customer/components/user/components/accountInformation/dto/get-gender.dto';
 import { IInputAdminProfileDTO } from '../components/adminDetails/AdminProfile';
 
 export interface IUpdateAdminProfileDTO {
@@ -6,8 +7,8 @@ export interface IUpdateAdminProfileDTO {
   day: string;
   month: string;
   year: string;
-  gender: string;
-  nationality: string;
+  gender: GetGenderDTO | null;
+  nationality: string | null;
 }
 
 export interface DataUpdateAdminDTO
