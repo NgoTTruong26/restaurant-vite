@@ -1,4 +1,5 @@
 import useMediaQuery from 'hooks/useMediaQuery';
+import { useEffect } from 'react';
 import useGetAdminList from '../../hooks/useGetAdminList';
 import LoadingAdminList from '../LoadingAdminList';
 import { useDeleteCheckedAdmin } from '../hooks/useDeleteCheckedAdmin';
@@ -7,12 +8,11 @@ import TableAdminListMobile from './TableAdminListMobile';
 
 interface Props {
   currPage: number;
-  filterRole?: string;
+  filterRole: string[];
   searchCharacters?: string;
   handleGetAdminId: (adminId: string) => void;
-  handlePreviousPage: (previousPage: number | null) => void;
-  handleSetPage: (page: number) => void;
-  handleNextPage: (nextPage: number | null) => void;
+  handleSetTotalAdmins: (totalAdmins: number) => void;
+  handleSetTotalPages: (totalPages: number | null) => void;
 }
 
 export default function AdminList({
@@ -20,47 +20,55 @@ export default function AdminList({
   filterRole,
   searchCharacters,
   handleGetAdminId,
-  handlePreviousPage,
-  handleNextPage,
-  handleSetPage,
+  handleSetTotalAdmins,
+  handleSetTotalPages,
 }: Props) {
-  const { data, status } = useGetAdminList(
-    currPage,
-    filterRole,
-    searchCharacters,
-  );
+  const { data, status, isFetching } = useGetAdminList({
+    page: currPage,
+    role: filterRole,
+    search: searchCharacters,
+  });
+
+  useEffect(() => {
+    if (status === 'success') {
+      if (data) {
+        handleSetTotalPages(data.totalPages);
+        handleSetTotalAdmins(data.totalAdmins);
+        return;
+      }
+      handleSetTotalPages(null);
+      handleSetTotalAdmins(0);
+    }
+  }, [data]);
 
   const { deleteCheckedAdmins } = useDeleteCheckedAdmin();
 
   const { isXsSmaller, isSmSmaller } = useMediaQuery();
 
-  return status === 'loading' ? (
-    <LoadingAdminList />
-  ) : data ? (
+  console.log(data);
+
+  return (
     <>
-      {!(isXsSmaller || isSmSmaller) ? (
-        <TableAdminList
-          deleteCheckedAdmins={deleteCheckedAdmins}
-          data={data}
-          currPage={currPage}
-          handleNextPage={handleNextPage}
-          handlePreviousPage={handlePreviousPage}
-          handleSetPage={handleSetPage}
-          handleGetAdminId={handleGetAdminId}
-        />
+      {isFetching && <LoadingAdminList />}
+      {data ? (
+        <>
+          {!(isXsSmaller || isSmSmaller) ? (
+            <TableAdminList
+              deleteCheckedAdmins={deleteCheckedAdmins}
+              data={data}
+              handleGetAdminId={handleGetAdminId}
+            />
+          ) : (
+            <TableAdminListMobile
+              deleteCheckedAdmins={deleteCheckedAdmins}
+              data={data}
+              handleGetAdminId={handleGetAdminId}
+            />
+          )}
+        </>
       ) : (
-        <TableAdminListMobile
-          deleteCheckedAdmins={deleteCheckedAdmins}
-          data={data}
-          currPage={currPage}
-          handleNextPage={handleNextPage}
-          handlePreviousPage={handlePreviousPage}
-          handleSetPage={handleSetPage}
-          handleGetAdminId={handleGetAdminId}
-        />
+        <></>
       )}
     </>
-  ) : (
-    <></>
   );
 }

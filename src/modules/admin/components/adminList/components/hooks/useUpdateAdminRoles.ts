@@ -1,14 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
-import { IUpdateRolesAdminDTO } from '../../dto/modify-role-admin.dto';
-import { toast } from 'react-hot-toast';
 import { IAxiosResponse } from 'configs/api';
-import { GetAdminDTO } from '../../dto/get-admins.dto';
-import { queryClient } from 'main';
 import { ApiAdmin } from 'configs/axiosInterceptor';
+import { queryClient } from 'main';
+import { toast } from 'react-hot-toast';
+import { GetAdminDTO } from '../../dto/get-admins.dto';
+import { IUpdateRolesAdminDTO } from '../../dto/modify-role-admin.dto';
 
 interface Props {
   currPage: number;
-  filterRole?: string;
+  filterRole: string[];
   searchCharacters?: string;
 }
 
@@ -17,10 +17,6 @@ export default function useUpdateAdminRoles({
   filterRole,
   searchCharacters,
 }: Props) {
-  const token: string | null = localStorage.getItem(
-    import.meta.env.VITE_ACCESS_TOKEN_ADMIN,
-  );
-
   return useMutation(
     async (inputUpdateProfile: IUpdateRolesAdminDTO) => {
       const apiAdmin = ApiAdmin(() => {});
@@ -29,11 +25,6 @@ export default function useUpdateAdminRoles({
         apiAdmin.put<IAxiosResponse<GetAdminDTO>>(
           'admin/update-roles-admin',
           inputUpdateProfile,
-          {
-            headers: {
-              admin_authorization: token ? `Bearer ${token}` : undefined,
-            },
-          },
         ),
         {
           loading: 'Loading',

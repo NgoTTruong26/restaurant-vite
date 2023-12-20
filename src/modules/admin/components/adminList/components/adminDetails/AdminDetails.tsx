@@ -9,7 +9,7 @@ import AdminSecurityAndConnectivity from './AdminSecurityAndConnectivity';
 interface Props {
   adminId: string;
   currPage: number;
-  filterRole?: string;
+  filterRole: string[];
   searchCharacters?: string;
   handleCloseShowAdminProfile: () => void;
 }

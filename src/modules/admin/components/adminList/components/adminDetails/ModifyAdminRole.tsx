@@ -12,7 +12,7 @@ interface Props {
   roles: string[];
   adminId: string;
   currPage: number;
-  filterRole?: string;
+  filterRole: string[];
   searchCharacters?: string;
   handleCloseVisible: () => void;
 }

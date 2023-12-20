@@ -23,4 +23,11 @@ export interface GetAdminListDTO {
   previousPage: number | null;
   nextPage: number | null;
   totalPages: number;
+  totalAdmins: number;
+}
+
+export interface GetAdminListRequest {
+  page: number;
+  role: string[];
+  search?: string;
 }

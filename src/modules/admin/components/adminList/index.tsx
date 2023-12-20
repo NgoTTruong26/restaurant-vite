@@ -1,40 +1,20 @@
 import clsx from 'clsx';
 import debounce from 'lodash.debounce';
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import HeaderAdminList from './components/HeaderAdminList';
 import AdminDetails from './components/adminDetails/AdminDetails';
 import AdminList from './components/adminList';
+import FooterAdminList from './components/adminList/FooterAdminList';
 import CreateAdmin from './components/createAdmin';
 
 export default function AdminManagement() {
-  // logic checked all dùng hàm every check theo idx của hàm every
+  const [currPage, setCurrPage] = useState<number>(1);
 
-  const navigate = useNavigate();
+  const [totalPages, setTotalPages] = useState<number | null>();
 
-  const location = useLocation();
+  const [totalAdmins, setTotalAdmins] = useState<number>();
 
-  const [currPage, setCurrPage] = useState<number>(
-    parseInt(
-      (location.search
-        ? location.search
-            .split('?')[1]
-            .split('&')
-            .find((val) => val.includes('page='))
-            ?.split('=')[1]
-        : '1') || '1',
-    ),
-  );
-
-  const [filterRole, setFilterByRole] = useState<string | undefined>(
-    location.search
-      ? location.search
-          .split('?')[1]
-          .split('&')
-          .find((val) => val.includes('role='))
-          ?.split('=')[1]
-      : undefined,
-  );
+  const [filterRole, setFilterByRole] = useState<string[]>([]);
 
   const [getAdminId, setAdminId] = useState<string | null>();
   const [showCreateAdmin, setShowCreateAdmin] = useState<boolean>(false);
@@ -53,51 +33,16 @@ export default function AdminManagement() {
   }, [debouncedSearch]);
 
   const handleFilterByRole = (role: string) => {
-    setFilterByRole(role);
+    if (filterRole.includes(role))
+      return setFilterByRole((prevs) => prevs.filter((val) => val !== role));
+    setFilterByRole((prevs) => [...prevs, role]);
     setCurrPage(1);
-    navigate(role !== 'default' ? '?role=' + role : '');
-  };
-
-  const handleQueryForNavigate = (page: number) => {
-    if (location.search) {
-      if (!location.search.includes('page=')) {
-        return navigate(`${location.search + '&page='}` + page);
-      }
-
-      const query = location.search
-        .split('?')[1]
-        .split('&')
-        .map((val) => {
-          if (val.includes('page=')) {
-            return 'page=' + page;
-          }
-          return val;
-        })
-        .join('&');
-
-      return navigate('?' + query);
-    }
-
-    return navigate('?page=' + page);
-  };
-
-  const handlePreviousPage = (previousPage: number | null) => {
-    if (previousPage) {
-      setCurrPage(previousPage);
-      handleQueryForNavigate(previousPage);
-    }
-  };
-
-  const handleNextPage = (nextPage: number | null) => {
-    if (nextPage) {
-      setCurrPage(nextPage);
-      handleQueryForNavigate(nextPage);
-    }
   };
 
   const handleSetPage = (page: number) => {
+    console.log(page);
+
     setCurrPage(page);
-    handleQueryForNavigate(page);
   };
 
   const handleGetAdminId = (adminId: string) => {
@@ -117,15 +62,15 @@ export default function AdminManagement() {
   };
 
   return (
-    <div className="max-w-1800 h-screen w-full flex flex-col py-20 gap-10 max-sm:gap-5 max-sm:mt-5">
+    <div className="max-w-1400 h-screen w-full flex flex-col py-16 gap-10 max-sm:gap-5 max-sm:mt-5">
       <div className="h-full flex justify-center items-center">
         <div
           className={clsx(
-            'flex flex-col w-full h-full my-20',
+            'flex flex-col gap-5 w-full h-full p-8 min-h-[80vh]',
             'border-2 border-[#d8d8d8] rounded-lg bg-[#ffffff] shadow-lg',
             ' overflow-auto whitespace-nowrap ',
             'max-md:max-h-[80vh]',
-            'max-xs:min-h-[75vh] max-xs:max-h-[75vh]',
+            'max-xs:min-h-[75vh] max-xs:max-h-[75vh] overflow-hidden',
           )}
         >
           <HeaderAdminList
@@ -133,6 +78,7 @@ export default function AdminManagement() {
             filterRole={filterRole}
             handleFilterByRole={handleFilterByRole}
             handleSearch={debouncedSearch}
+            totalAdmins={totalAdmins}
           />
 
           <AdminList
@@ -140,10 +86,17 @@ export default function AdminManagement() {
             filterRole={filterRole}
             searchCharacters={searchCharacters}
             handleGetAdminId={handleGetAdminId}
-            handlePreviousPage={handlePreviousPage}
-            handleNextPage={handleNextPage}
-            handleSetPage={handleSetPage}
+            handleSetTotalAdmins={setTotalAdmins}
+            handleSetTotalPages={setTotalPages}
           />
+
+          {totalPages && (
+            <FooterAdminList
+              totalPages={totalPages}
+              currPage={currPage}
+              handleSetPage={handleSetPage}
+            />
+          )}
         </div>
       </div>
       {getAdminId && (

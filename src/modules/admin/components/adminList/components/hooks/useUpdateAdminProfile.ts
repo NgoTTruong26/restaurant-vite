@@ -1,17 +1,19 @@
 import { useMutation } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
+import { ApiAdmin } from 'configs/axiosInterceptor';
+import useCheckAuthAdmin from 'modules/admin/components/auth/hooks/useCheckAuthAdmin';
 import { toast } from 'react-hot-toast';
 import { GetAdminDTO } from '../../dto/get-admins.dto';
 import {
   DataUpdateAdminDTO,
   IUpdateAdminProfileDTO,
 } from '../../dto/update-admin-profile.dto';
-import { ApiAdmin } from 'configs/axiosInterceptor';
 
 export default function useUpdateAdminProfile() {
-  return useMutation(async (inputUpdateProfile: IUpdateAdminProfileDTO) => {
-    const apiAdmin = ApiAdmin(() => {});
+  const { signOut } = useCheckAuthAdmin();
+  const apiAdmin = ApiAdmin(signOut);
 
+  return useMutation(async (inputUpdateProfile: IUpdateAdminProfileDTO) => {
     const { day, month, year, ...other } = inputUpdateProfile;
 
     const dataUpdateProfile: DataUpdateAdminDTO = {

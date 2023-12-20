@@ -11,7 +11,7 @@ import ModifyAdminRole from './ModifyAdminRole';
 interface Props {
   data?: GetAdminDTO | null;
   currPage: number;
-  filterRole?: string;
+  filterRole: string[];
   searchCharacters?: string;
 }
 

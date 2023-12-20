@@ -6,5 +6,4 @@ export interface GetRoleDTO {
 export interface GetRoleListDTO {
   roles: GetRoleDTO[];
   total: number;
-  totalAdmins: number;
 }

@@ -8,30 +8,17 @@ import {
   IInputDeleteCheckedAdmin,
 } from '../../dto/delete-admin-list.dto';
 import { GetAdminListDTO } from '../../dto/get-admins.dto';
-import FooterAdminList from './FooterAdminList';
 interface Props {
   data: GetAdminListDTO;
-  currPage: number;
   deleteCheckedAdmins: UseFieldArrayReturn<
     IInputDeleteCheckedAdmin,
     'admins',
     'id'
   >;
   handleGetAdminId: (adminId: string) => void;
-  handlePreviousPage: (previousPage: number | null) => void;
-  handleSetPage: (page: number) => void;
-  handleNextPage: (nextPage: number | null) => void;
 }
 
-const TableAdminList: React.FC<Props> = ({
-  data,
-  currPage,
-  deleteCheckedAdmins,
-  handleGetAdminId,
-  handlePreviousPage,
-  handleSetPage,
-  handleNextPage,
-}) => {
+const TableAdminList: React.FC<Props> = ({ data, deleteCheckedAdmins }) => {
   const arrayAdmin: string[] = deleteCheckedAdmins.fields.map(
     (admin) => admin.adminId,
   );
@@ -103,117 +90,106 @@ const TableAdminList: React.FC<Props> = ({
   };
 
   return (
-    <>
-      <div className="flex-1 flex flex-col justify-between overflow-y-auto p-4 pt-0">
-        <div className="flex-1 bg-zinc-100 p-4 w-full overflow-x-auto rounded-xl">
-          <table
-            className={clsx('flex-1 table w-full h-full border-collapse ')}
-          >
-            {/* head */}
-            <thead className="sticky top-0 z-50 shadow-sm rounded-xl">
+    <div className="flex flex-col gap-5 overflow-hidden">
+      <div className=" bg-zinc-100 p-4 w-full overflow-x-auto rounded-xl">
+        <table className={clsx('table w-full h-full border-collapse ')}>
+          {/* head */}
+          <thead className="sticky top-0 z-30 shadow-sm rounded-xl">
+            <tr
+              className={clsx(
+                ' [&>th]:font-semibold [&>th]:p-3 [&>th]:bg-zinc-300 [&>th]:uppercase [&>th]:text-start [&>*:first-child]:rounded-l-xl [&>*:last-child]:rounded-r-xl overflow-hidden',
+              )}
+            >
+              <th className="!text-center">
+                <Checkbox
+                  size="md"
+                  onValueChange={handleCheckedAll}
+                  isSelected={isCheckedAll()}
+                  isIndeterminate={hasChecked() && !isCheckedAll()}
+                />
+              </th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Date Of Birth</th>
+              <th>Roles</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {data.adminList.map((admin, idx) => (
               <tr
-                className={clsx(
-                  ' [&>th]:font-semibold [&>th]:p-3 [&>th]:bg-zinc-300 [&>th]:uppercase [&>th]:text-start [&>*:first-child]:rounded-l-xl [&>*:last-child]:rounded-r-xl overflow-hidden',
-                )}
+                key={idx}
+                className="[&>th]:px-3 [&>th]:py-3 [&>td]:px-3 [&>td]:py-3"
               >
-                <th className="!text-center">
+                <th>
                   <Checkbox
                     size="md"
-                    onValueChange={handleCheckedAll}
-                    isSelected={isCheckedAll()}
-                    isIndeterminate={hasChecked() && !isCheckedAll()}
+                    onValueChange={() => handleChecked(admin.id)}
+                    isSelected={deleteCheckedAdmins.fields
+                      .map((admin) => admin.adminId)
+                      .includes(admin.id)}
                   />
                 </th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Date Of Birth</th>
-                <th>Roles</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Action</th>
+                <td>
+                  <User
+                    avatarProps={{
+                      radius: 'lg',
+                      src: 'https://lh5.googleusercontent.com/-mydS1cjmPIo/AAAAAAAAAAI/AAAAAAAAAco/ZYCSiYX747o/photo.jpg',
+                    }}
+                    description="United States"
+                    name={admin.fullName}
+                    classNames={{ name: 'font-semibold' }}
+                  >
+                    {admin.fullName}
+                  </User>
+                </td>
+                <td>Male</td>
+                <td>
+                  {admin.dateBirth
+                    ? new Date(admin.dateBirth).toLocaleDateString('en-GB')
+                    : 'Not yet added'}
+                </td>
+                <td>
+                  <div className="flex gap-2 max-w-[200px] overflow-x-auto">
+                    {admin.roles.map((role) => (
+                      <Chip
+                        key={role.id}
+                        className="capitalize"
+                        color="primary"
+                        size="sm"
+                        variant="flat"
+                      >
+                        {role.position}
+                      </Chip>
+                    ))}
+                  </div>
+                </td>
+                <td>{admin.email}</td>
+                <td>{admin.phone}</td>
+                <th>
+                  <div className="relative flex items-center gap-3">
+                    <Tooltip content="Edit user">
+                      <span className="text-xl cursor-pointer active:opacity-50">
+                        <CiEdit />
+                      </span>
+                    </Tooltip>
+                    <Tooltip color="danger" content="Delete user">
+                      <span className="text-xl text-danger cursor-pointer active:opacity-50">
+                        <ImBin />
+                      </span>
+                    </Tooltip>
+                  </div>
+                </th>
               </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {data.adminList.map((admin, idx) => (
-                <tr
-                  key={idx}
-                  className="[&>th]:px-3 [&>th]:py-2 [&>td]:px-3 [&>td]:py-2"
-                >
-                  <th>
-                    <Checkbox
-                      size="md"
-                      onValueChange={() => handleChecked(admin.id)}
-                      isSelected={deleteCheckedAdmins.fields
-                        .map((admin) => admin.adminId)
-                        .includes(admin.id)}
-                    />
-                  </th>
-                  <td>
-                    <User
-                      avatarProps={{
-                        radius: 'lg',
-                        src: 'https://lh5.googleusercontent.com/-mydS1cjmPIo/AAAAAAAAAAI/AAAAAAAAAco/ZYCSiYX747o/photo.jpg',
-                      }}
-                      description="United States"
-                      name={admin.fullName}
-                      classNames={{ name: 'font-semibold' }}
-                    >
-                      {admin.fullName}
-                    </User>
-                  </td>
-                  <td>Male</td>
-                  <td>
-                    {admin.dateBirth
-                      ? new Date(admin.dateBirth).toLocaleDateString('en-GB')
-                      : 'Not yet added'}
-                  </td>
-                  <td>
-                    <div className="flex gap-2 max-w-[200px] overflow-x-auto">
-                      {admin.roles.map((role) => (
-                        <Chip
-                          key={role.id}
-                          className="capitalize"
-                          color="primary"
-                          size="sm"
-                          variant="flat"
-                        >
-                          {role.position}
-                        </Chip>
-                      ))}
-                    </div>
-                  </td>
-                  <td>{admin.email}</td>
-                  <td>{admin.phone}</td>
-                  <th>
-                    <div className="relative flex items-center gap-3">
-                      <Tooltip content="Edit user">
-                        <span className="text-xl cursor-pointer active:opacity-50">
-                          <CiEdit />
-                        </span>
-                      </Tooltip>
-                      <Tooltip color="danger" content="Delete user">
-                        <span className="text-xl text-danger cursor-pointer active:opacity-50">
-                          <ImBin />
-                        </span>
-                      </Tooltip>
-                    </div>
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-            {/* foot */}
-          </table>
-        </div>
-        <FooterAdminList
-          data={data}
-          currPage={currPage}
-          handleNextPage={handleNextPage}
-          handlePreviousPage={handlePreviousPage}
-          handleSetPage={handleSetPage}
-        />
+            ))}
+          </tbody>
+          {/* foot */}
+        </table>
       </div>
-    </>
+    </div>
   );
 };
 

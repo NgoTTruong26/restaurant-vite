@@ -6,30 +6,21 @@ import {
   IInputDeleteCheckedAdmin,
 } from '../../dto/delete-admin-list.dto';
 import { GetAdminListDTO } from '../../dto/get-admins.dto';
-import FooterAdminList from './FooterAdminList';
 
 interface Props {
   data: GetAdminListDTO;
-  currPage: number;
   deleteCheckedAdmins: UseFieldArrayReturn<
     IInputDeleteCheckedAdmin,
     'admins',
     'id'
   >;
   handleGetAdminId: (adminId: string) => void;
-  handlePreviousPage: (previousPage: number | null) => void;
-  handleSetPage: (page: number) => void;
-  handleNextPage: (nextPage: number | null) => void;
 }
 
 export default function TableAdminListMobile({
   data,
-  currPage,
   deleteCheckedAdmins,
   handleGetAdminId,
-  handlePreviousPage,
-  handleSetPage,
-  handleNextPage,
 }: Props) {
   const arrayAdmin: string[] = deleteCheckedAdmins.fields.map(
     (admin) => admin.adminId,
@@ -206,16 +197,6 @@ export default function TableAdminListMobile({
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="flex justify-center border-t-2 border-[#f2f2f2]">
-          <FooterAdminList
-            data={data}
-            currPage={currPage}
-            handleNextPage={handleNextPage}
-            handlePreviousPage={handlePreviousPage}
-            handleSetPage={handleSetPage}
-          />
         </div>
       </div>
     </div>
