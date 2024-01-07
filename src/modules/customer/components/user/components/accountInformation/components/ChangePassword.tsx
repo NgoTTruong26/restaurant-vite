@@ -45,10 +45,9 @@ const ChangePassword: React.FC<Props> = ({ handleClose, data }) => {
         </ModalHeader>
         <ModalBody>
           <Field
-            t="input"
+            t="password"
             name="old_password"
             label="Old Password"
-            type="password"
             autoComplete="on"
             endContent={
               <FaLock
@@ -59,10 +58,9 @@ const ChangePassword: React.FC<Props> = ({ handleClose, data }) => {
             placeholder="Enter your old password..."
           />
           <Field
-            t="input"
+            t="password"
             name="new_password"
             label="New Password"
-            type="password"
             autoComplete="on"
             endContent={
               <FaLock
@@ -73,10 +71,9 @@ const ChangePassword: React.FC<Props> = ({ handleClose, data }) => {
             placeholder="Enter your new password..."
           />
           <Field
-            t="input"
+            t="password"
             name="repeat_new_password"
             label="Repeat Password"
-            type="password"
             autoComplete="on"
             endContent={
               <FaLock

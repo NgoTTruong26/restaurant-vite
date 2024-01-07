@@ -53,7 +53,7 @@ export default function SignInModal({ onClose }: Props) {
             variant="bordered"
           />
           <Field
-            t="input"
+            t="password"
             name="reqPassword"
             color="primary"
             endContent={
@@ -64,7 +64,6 @@ export default function SignInModal({ onClose }: Props) {
             }
             label="Password"
             placeholder="Enter your password"
-            type="password"
             variant="bordered"
             autoComplete="on"
           />

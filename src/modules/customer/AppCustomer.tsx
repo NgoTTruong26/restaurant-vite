@@ -17,9 +17,6 @@ function AppCustomer() {
   console.log(isLoading);
 
   if (isSuccess || isError) return <Outlet />;
-  {
-    /* <div>Loading</div> */
-  }
 
   return <Loading />;
 }

@@ -88,21 +88,19 @@ export default function SignUpModal({ onClose }: Props) {
           />
 
           <Field
-            t="input"
+            t="password"
             name="password"
             color="primary"
             label="Password"
-            type="password"
             autoComplete="on"
             placeholder="Enter your password"
           />
 
           <Field
-            t="input"
+            t="password"
             name="repeat_password"
             color="primary"
             label="Repeat Password"
-            type="password"
             autoComplete="on"
             placeholder="Repeat password"
           />

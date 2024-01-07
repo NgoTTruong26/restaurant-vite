@@ -49,7 +49,7 @@ export default function BookingLookup() {
                 <Button
                   children={
                     <>
-                      <div className="max-sm:hidden">Tìm kiếm</div>
+                      <div className="max-sm:hidden">Search</div>
                       <div className="min-[449px]:hidden">
                         <GoSearch className="text-[14px]" />
                       </div>
