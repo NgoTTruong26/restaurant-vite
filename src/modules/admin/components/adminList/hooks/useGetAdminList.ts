@@ -1,15 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
-import { ApiAdmin } from 'configs/axiosInterceptor';
+import { apiAdmin } from 'configs/apiAdmin';
 import { toast } from 'react-hot-toast';
-import useCheckAuthAdmin from '../../auth/hooks/useCheckAuthAdmin';
 import { GetAdminListDTO, GetAdminListRequest } from '../dto/get-admins.dto';
 
 async function getAdminList(request: GetAdminListRequest) {
   try {
-    const signOut = () => useCheckAuthAdmin().signOut();
     return (
-      await ApiAdmin(signOut).post<IAxiosResponse<GetAdminListDTO>>(
+      await apiAdmin.post<IAxiosResponse<GetAdminListDTO>>(
         '/admin/admin-list',
         request,
       )

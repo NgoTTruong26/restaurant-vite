@@ -6,7 +6,7 @@ import { RootState } from 'redux/app/store';
 import SideBar from './components/SideBar';
 
 export default function UserProfile() {
-  const user = useSelector((state: RootState) => state.setUser.value);
+  const user = useSelector((state: RootState) => state.auth.value);
 
   return !user ? (
     <Navigate to={'/'} />

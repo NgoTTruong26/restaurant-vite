@@ -2,10 +2,10 @@ import clsx from 'clsx';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { sideBar } from '../../constant';
-import { GetPreviewProfileDTO } from '../accountInformation/dto/get-user.dto';
+import { GetUserProfileDTO } from '../accountInformation/dto/get-user.dto';
 
 interface Props {
-  user: GetPreviewProfileDTO;
+  user: GetUserProfileDTO;
 }
 
 const SideBar: React.FC<Props> = ({ user }) => {

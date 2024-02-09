@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from 'redux/features/auth/setUserSlice';
+import { setUser } from 'redux/features/auth/authSlice';
 import useSignIn from './useSignIn';
 
 interface InputSignIn {

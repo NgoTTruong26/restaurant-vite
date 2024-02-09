@@ -1,6 +1,7 @@
 import { NextUIProvider } from '@nextui-org/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import Loading from 'components/Loading';
+import { queryClient } from 'configs/queryClient';
 import { router } from 'configs/router.tsx';
 import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
@@ -9,20 +10,6 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { store } from 'redux/app/store.ts';
 import 'styles/index.css';
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-      refetchOnWindowFocus: false,
-      staleTime: 5000,
-      keepPreviousData: true,
-    },
-    mutations: {
-      retry: 0,
-    },
-  },
-});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>

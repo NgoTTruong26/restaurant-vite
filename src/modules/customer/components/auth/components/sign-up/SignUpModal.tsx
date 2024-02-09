@@ -16,7 +16,7 @@ export default function SignUpModal({ onClose }: Props) {
   const navigate = useNavigate();
   const { methods, onSubmit } = useFormSignUp();
 
-  const user = useSelector((state: RootState) => state.setUser.value);
+  const user = useSelector((state: RootState) => state.auth.value);
 
   if (user) {
     useEffect(() => {

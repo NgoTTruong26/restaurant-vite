@@ -18,7 +18,7 @@ export default function SignInModal({ onClose }: Props) {
   const { methods, onSubmit } = useFormSignIn();
 
   const { value: user, status: statusRedux } = useSelector(
-    (state: RootState) => state.setUser,
+    (state: RootState) => state.auth,
   );
 
   useEffect(() => {

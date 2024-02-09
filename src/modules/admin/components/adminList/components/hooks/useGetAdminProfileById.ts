@@ -1,17 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
-import { ApiAdmin } from 'configs/axiosInterceptor';
+import { apiAdmin } from 'configs/apiAdmin';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setAdmin } from 'redux/features/auth-admin/setAdminSlice';
+import { setAdmin } from 'redux/features/auth-admin/authAdminSlice';
 import { GetAdminDTO } from '../../dto/get-admins.dto';
 
 export default function useGetAdminProfileById(adminId: string) {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
-  const apiAdmin = ApiAdmin(() => {});
 
   const accessToken: string | null = localStorage.getItem(
     import.meta.env.VITE_ACCESS_TOKEN_ADMIN,

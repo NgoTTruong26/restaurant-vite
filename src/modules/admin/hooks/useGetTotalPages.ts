@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
-import { ApiAdmin } from 'configs/axiosInterceptor';
+import { apiAdmin } from 'configs/apiAdmin';
 
 export default function useGetTotalPages<T>(url: string) {
-  const apiAdmin = ApiAdmin(() => {});
-
   const getProfile = useQuery({
     queryKey: ['get_total_page_for_admin', url],
     queryFn: async () => {

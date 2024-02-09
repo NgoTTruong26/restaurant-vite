@@ -9,10 +9,10 @@ import {
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import { LoginDropdown } from 'Layout/interfaces/loginDropdown';
 import clsx from 'clsx';
-import useCheckAuth from 'modules/customer/components/auth/hooks/useCheckAuth';
 import { useSelector } from 'react-redux';
 import { Link, Location } from 'react-router-dom';
 import { RootState } from 'redux/app/store';
+import { signOut } from 'redux/features/auth/authSlice';
 import { setNavbarItemActive } from 'redux/features/set-active/setActiveSlice';
 
 interface Props {
@@ -26,9 +26,7 @@ const UserHeader: React.FC<Props> = ({
   router,
   dispatch,
 }: Props) => {
-  const user = useSelector((state: RootState) => state.setUser.value);
-
-  const { signOut } = useCheckAuth();
+  const user = useSelector((state: RootState) => state.auth.value);
 
   return (
     <Dropdown placement="bottom-end">
@@ -79,7 +77,11 @@ const UserHeader: React.FC<Props> = ({
         </DropdownSection>
 
         <DropdownSection>
-          <DropdownItem key="logout" color="danger" onClick={signOut}>
+          <DropdownItem
+            key="logout"
+            color="danger"
+            onClick={() => dispatch(signOut())}
+          >
             Log Out
           </DropdownItem>
         </DropdownSection>

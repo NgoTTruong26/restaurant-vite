@@ -1,8 +1,98 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
+import toast from 'react-hot-toast';
+import { store } from 'redux/app/store';
+import { signOut } from 'redux/features/auth/authSlice';
 import { IAxiosResponse } from './api';
 
-export function ApiClient(onUnauthenticated: Function) {
+export const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
+});
+
+apiClient.interceptors.request.use((config) => {
+  const token: string | null = localStorage.getItem(
+    import.meta.env.VITE_ACCESS_TOKEN,
+  );
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
+apiClient.interceptors.response.use(
+  async (response: AxiosResponse) => {
+    if (response.data.status === 401) {
+      const refreshToken = Cookies.get(import.meta.env.VITE_REFRESH_TOKEN);
+
+      if (refreshToken) {
+        try {
+          const { data } = (
+            await apiClient.post<IAxiosResponse<RefreshTokenDTO>>(
+              '/auth/refresh-token',
+            )
+          ).data;
+
+          if (data) {
+            localStorage.setItem(
+              import.meta.env.VITE_ACCESS_TOKEN,
+              data.accessToken,
+            );
+
+            response.config!.headers.Authorization = `Bearer ${data.accessToken}`;
+
+            return apiClient(response.config!);
+          }
+        } catch (error) {
+          store.dispatch(signOut());
+        }
+      }
+    }
+
+    return response;
+  },
+  async (error: AxiosError) => {
+    const config = error.config;
+    console.log(123);
+
+    if (
+      error.response?.status === 401 &&
+      config?.url !== '/auth/refresh-token'
+    ) {
+      const refreshToken = Cookies.get(import.meta.env.VITE_REFRESH_TOKEN);
+
+      if (!refreshToken) {
+        return Promise.reject(error);
+      }
+      try {
+        const { data } = (
+          await apiClient.post<IAxiosResponse<RefreshTokenDTO>>(
+            '/auth/refresh-token',
+          )
+        ).data;
+
+        if (data) {
+          localStorage.setItem(
+            import.meta.env.VITE_ACCESS_TOKEN,
+            data.accessToken,
+          );
+
+          config!.headers.Authorization = `Bearer ${data.accessToken}`;
+
+          return apiClient(config!);
+        }
+      } catch (error) {
+        toast.error('Session expired, please re-login');
+        signOut();
+      }
+    }
+    return Promise.reject(error);
+  },
+);
+
+/* export function ApiClient(onUnauthenticated: Function) {
   const newInstance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
@@ -112,7 +202,7 @@ export function ApiClient(onUnauthenticated: Function) {
 
   newInstance.interceptors.response.use(onResponseSuccess, onResponseError);
   return newInstance;
-}
+} */
 
 export function ApiAdmin(onUnauthenticated: Function) {
   const newInstance = axios.create({

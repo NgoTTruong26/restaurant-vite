@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
-import { ApiAdmin } from 'configs/axiosInterceptor';
+import { apiAdmin } from 'configs/apiAdmin';
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setAdmin } from 'redux/features/auth-admin/setAdminSlice';
+import { setAdmin } from 'redux/features/auth-admin/authAdminSlice';
 import { GetAdminDTO } from '../../adminList/dto/get-admins.dto';
 import { ChangePasswordDTO } from '../dto/admin-profile.dto';
 
@@ -12,8 +12,6 @@ function useGetAdminProfile() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
-  const apiAdmin = ApiAdmin(() => {});
 
   const accessToken: string | null = localStorage.getItem(
     import.meta.env.VITE_ACCESS_TOKEN_ADMIN,
@@ -44,8 +42,6 @@ function useGetAdminProfile() {
 
 function useChangePasswordAdmin() {
   return useMutation(async (inputChangePassword: ChangePasswordDTO) => {
-    const apiAdmin = ApiAdmin(() => {});
-
     const data = await toast.promise(
       apiAdmin.put<IAxiosResponse<null>>(
         'admin/auth/change-password',
@@ -65,4 +61,4 @@ function useChangePasswordAdmin() {
   });
 }
 
-export { useGetAdminProfile, useChangePasswordAdmin };
+export { useChangePasswordAdmin, useGetAdminProfile };

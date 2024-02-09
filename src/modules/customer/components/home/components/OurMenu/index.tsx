@@ -63,7 +63,7 @@ export default function OurMenu({ slidesPerView }: Props) {
             Yummy Menu
           </span>
         </div>
-        <div className="flex justify-center pb-5 w-full">
+        <div className="flex justify-center pb-5 w-full min-h-[560px]">
           <div className="flex flex-col items-center w-full">
             <div>Menu</div>
             <div
@@ -99,13 +99,11 @@ export default function OurMenu({ slidesPerView }: Props) {
                     title={`Set${buffetMenu.name}K`}
                     className="w-full"
                   >
-                    {buffet && setDish && (
-                      <DishesListPreview
-                        slidesPerView={slidesPerView}
-                        buffet={buffet}
-                        setDish={setDish}
-                      />
-                    )}
+                    <DishesListPreview
+                      slidesPerView={slidesPerView}
+                      buffet={buffet || ''}
+                      setDish={setDish || ''}
+                    />
                   </Tab>
                 ))}
               </Tabs>

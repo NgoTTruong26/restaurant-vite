@@ -4,17 +4,14 @@ import Days from 'components/Date/Days';
 import Months from 'components/Date/Months';
 import Years from 'components/Date/Years';
 import Field from 'components/field';
-import { queryClient } from 'main';
+import { queryClient } from 'configs/queryClient';
 import { GetGenderDTO } from 'modules/customer/components/user/components/accountInformation/dto/get-gender.dto';
-import {
-  GetPreviewProfileDTO,
-  GetUserProfileDTO,
-} from 'modules/customer/components/user/components/accountInformation/dto/get-user.dto';
+import { GetUserProfileDTO } from 'modules/customer/components/user/components/accountInformation/dto/get-user.dto';
 import { useFormUpdateProfile } from 'modules/customer/components/user/components/accountInformation/hooks/useFormUpdateProfile';
 import useGetGenders from 'modules/customer/components/user/components/accountInformation/hooks/useGetGenders';
 import { FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { setUser } from 'redux/features/auth/setUserSlice';
+import { setAdmin } from 'redux/features/auth-admin/authAdminSlice';
 import useUpdateProfileAdmin from '../hooks/useUpdateProfileAdmin';
 
 interface Props {
@@ -59,7 +56,7 @@ export default function Profile({ data }: Props) {
             dataRes.data,
           );
           dispatch(
-            setUser(dataRes.data || (null as GetPreviewProfileDTO | null)),
+            setAdmin(dataRes.data || (null as GetUserProfileDTO | null)),
           );
         },
       },

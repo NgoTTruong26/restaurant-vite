@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
-import { ApiClient } from 'configs/axiosInterceptor';
-import useCheckAuth from 'modules/customer/components/auth/hooks/useCheckAuth';
+import { apiClient } from 'configs/axiosInterceptor';
 import { toast } from 'react-hot-toast';
 import { EBookingStatus } from '../dto/booking-status.dto';
 import { GetBookingListResponse } from '../dto/get-booking-auth.dto';
@@ -18,7 +17,7 @@ export async function getBookingTableList(
 ) {
   try {
     return (
-      await ApiClient(signOut).get<IAxiosResponse<GetBookingListResponse>>(
+      await apiClient.get<IAxiosResponse<GetBookingListResponse>>(
         `/booking-table/get-bookings-table?page=${page}&take=${take}${
           bookingStatus ? '&status=' + bookingStatus : ''
         }`,
@@ -35,11 +34,9 @@ export default function useGetBookingTableList({
   page,
   bookingStatus,
 }: GetBookingTableListRequest) {
-  const { signOut } = useCheckAuth();
-
   return useQuery({
     queryKey: [`get_bookings_table`, take, page, bookingStatus],
     queryFn: async () =>
-      getBookingTableList({ take, page, bookingStatus }, signOut),
+      getBookingTableList({ take, page, bookingStatus }, () => {}),
   });
 }

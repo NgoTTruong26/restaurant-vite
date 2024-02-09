@@ -17,7 +17,7 @@ export default function Bookings() {
 
   const [dataBooking, setDataBooking] = useState<CreateBookingDTO>();
 
-  const userId = useSelector((state: RootState) => state.setUser.value?.id);
+  const userId = useSelector((state: RootState) => state.auth.value?.id);
 
   const { methods, bookingsForChildren } = useFormBooking();
 

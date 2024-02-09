@@ -5,12 +5,11 @@ import Years from 'components/Date/Years';
 import Field from 'components/field';
 
 import { Button } from '@nextui-org/react';
-import { queryClient } from 'main';
+import { queryClient } from 'configs/queryClient';
 import { FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { setUser } from 'redux/features/auth/setUserSlice';
 import { GetGenderDTO } from '../dto/get-gender.dto';
-import { GetPreviewProfileDTO, GetUserProfileDTO } from '../dto/get-user.dto';
+import { GetUserProfileDTO } from '../dto/get-user.dto';
 import { useFormUpdateProfile } from '../hooks/useFormUpdateProfile';
 import useGetGenders from '../hooks/useGetGenders';
 import useUpdateProfile from '../hooks/useUpdateProfile';
@@ -55,9 +54,7 @@ const Profile: React.FC<Props> = ({ data }) => {
             [`get_profile_user_${data.id}`],
             dataRes.data,
           );
-          dispatch(
-            setUser(dataRes.data || (null as GetPreviewProfileDTO | null)),
-          );
+          dispatch(setUser(dataRes.data || (null as GetUserProfileDTO | null)));
         },
       },
     );

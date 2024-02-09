@@ -48,7 +48,7 @@ export default function Header() {
 
   const navbarItem = state.setNavbarItemActive.value.navbarItemActive;
 
-  const user = state.setUser.value;
+  const user = state.auth.value;
 
   const handleOpenSignInModal = (selected: LoginDropdown['key']) => {
     setSelected(selected);

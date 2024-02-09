@@ -27,21 +27,19 @@ const LoadingDishesList: React.FC<Props> = ({ slidesPerView }) => {
         >
           {Array(3)
             .fill('')
-            .map((value, idx) => (
+            .map((_, idx) => (
               <SwiperSlide key={idx}>
                 <div
                   key={idx}
                   className={clsx(
-                    'w-full px-14 pb-10 flex flex-col justify-center items-center',
-                    ' max-md:px-10',
+                    'w-full px-4 min-w-[260px] flex flex-col justify-center items-center',
+                    ' max-md:min-w-[220px]',
                     ' max-sm:w-[70vw] max-sm:px-3 ',
                   )}
                 >
                   <div
                     className={clsx(
-                      'mb-2 w-full h-[18vw] max-h-[250px] rounded-2xl overflow-hidden',
-                      'max-md:h-[30vw]',
-                      'max-sm:h-[34vw]',
+                      'mb-2 w-full h-[18vw] min-h-[260px] max-h-[250px] rounded-2xl overflow-hidden',
                     )}
                   >
                     <SkeletonLoading />

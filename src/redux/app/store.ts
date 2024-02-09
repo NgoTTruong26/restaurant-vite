@@ -1,14 +1,14 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import listLastPageSliceReducer from 'redux/features/get-menu/listLastPageSlice';
-import setAdminReducer from '../features/auth-admin/setAdminSlice';
-import setUserReducer from '../features/auth/setUserSlice';
+import setAdminReducer from '../features/auth-admin/authAdminSlice';
+import authReducer from '../features/auth/authSlice';
 import setNavbarItemActiveReducer from '../features/set-active/setActiveSlice';
 
 export const store = configureStore({
   reducer: {
     setNavbarItemActive: setNavbarItemActiveReducer,
     setListLastPage: listLastPageSliceReducer,
-    setUser: setUserReducer,
+    auth: authReducer,
     setAdmin: setAdminReducer,
   },
 });

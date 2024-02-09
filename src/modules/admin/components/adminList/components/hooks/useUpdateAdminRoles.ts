@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
-import { ApiAdmin } from 'configs/axiosInterceptor';
-import { queryClient } from 'main';
+import { apiAdmin } from 'configs/apiAdmin';
+import { queryClient } from 'configs/queryClient';
 import { toast } from 'react-hot-toast';
 import { GetAdminDTO } from '../../dto/get-admins.dto';
 import { IUpdateRolesAdminDTO } from '../../dto/modify-role-admin.dto';
@@ -19,8 +19,6 @@ export default function useUpdateAdminRoles({
 }: Props) {
   return useMutation(
     async (inputUpdateProfile: IUpdateRolesAdminDTO) => {
-      const apiAdmin = ApiAdmin(() => {});
-
       const data = await toast.promise(
         apiAdmin.put<IAxiosResponse<GetAdminDTO>>(
           'admin/update-roles-admin',

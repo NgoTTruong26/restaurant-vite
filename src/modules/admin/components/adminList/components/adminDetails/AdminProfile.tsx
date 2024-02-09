@@ -3,7 +3,7 @@ import Days from 'components/Date/Days';
 import Months from 'components/Date/Months';
 import Years from 'components/Date/Years';
 import FieldOutline from 'components/field/FieldOutline';
-import { queryClient } from 'main';
+import { queryClient } from 'configs/queryClient';
 import { GetGenderDTO } from 'modules/customer/components/user/components/accountInformation/dto/get-gender.dto';
 import useGetGenders from 'modules/customer/components/user/components/accountInformation/hooks/useGetGenders';
 import { GetAdminDTO } from '../../dto/get-admins.dto';

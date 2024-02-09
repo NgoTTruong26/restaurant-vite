@@ -13,7 +13,7 @@ import useGetChildrenCategory from 'modules/customer/components/home/components/
 import { useEffect } from 'react';
 
 import { ModalBody, ModalHeader } from '@nextui-org/react';
-import { queryClient } from 'main';
+import { queryClient } from 'configs/queryClient';
 import OrderNotFound from 'modules/customer/components/bookingLookup/components/OrderNotFound';
 import { FormProvider } from 'react-hook-form';
 import { toast } from 'react-hot-toast';

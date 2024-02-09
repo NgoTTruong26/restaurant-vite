@@ -1,20 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { IAxiosResponse } from 'configs/api';
-import { ApiClient } from 'configs/axiosInterceptor';
-import useCheckAuth from 'modules/customer/components/auth/hooks/useCheckAuth';
+import { apiClient } from 'configs/axiosInterceptor';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from 'redux/features/auth/setUserSlice';
+import { setUser } from 'redux/features/auth/authSlice';
 import { GetUserProfileDTO } from '../dto/get-user.dto';
 
 export default function useGetUserProfile() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
-  const { signOut } = useCheckAuth();
-
-  const apiClient = ApiClient(signOut);
 
   const accessToken: string | null = localStorage.getItem(
     import.meta.env.VITE_ACCESS_TOKEN,
