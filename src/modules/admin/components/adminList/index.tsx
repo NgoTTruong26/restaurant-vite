@@ -6,6 +6,7 @@ import AdminDetails from './components/adminDetails/AdminDetails';
 import AdminList from './components/adminList';
 import FooterAdminList from './components/adminList/FooterAdminList';
 import CreateAdmin from './components/createAdmin';
+import { useDeleteCheckedAdmin } from './components/hooks/useDeleteCheckedAdmin';
 
 export default function AdminManagement() {
   const [currPage, setCurrPage] = useState<number>(1);
@@ -20,6 +21,8 @@ export default function AdminManagement() {
   const [showCreateAdmin, setShowCreateAdmin] = useState<boolean>(false);
 
   const [searchCharacters, setSearchCharacters] = useState<string>();
+
+  const { deleteCheckedAdmins } = useDeleteCheckedAdmin();
 
   const debouncedSearch = useRef(
     debounce((value: string) => {
@@ -84,6 +87,7 @@ export default function AdminManagement() {
           <AdminList
             currPage={currPage}
             filterRole={filterRole}
+            deleteCheckedAdmins={deleteCheckedAdmins}
             searchCharacters={searchCharacters}
             handleGetAdminId={handleGetAdminId}
             handleSetTotalAdmins={setTotalAdmins}
@@ -95,6 +99,8 @@ export default function AdminManagement() {
               totalPages={totalPages}
               currPage={currPage}
               handleSetPage={handleSetPage}
+              countCheckedAdmins={deleteCheckedAdmins.fields.length}
+              totalAdmins={totalAdmins}
             />
           )}
         </div>

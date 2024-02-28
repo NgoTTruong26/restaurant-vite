@@ -10,6 +10,8 @@ export default function useUpdateProfile() {
   return useMutation(async (inputUpdateProfile: IUpdateProfileDTO) => {
     const { day, month, year, ...other } = inputUpdateProfile;
 
+    console.log(other);
+
     const dataUpdateProfile: DataUpdateDTO = {
       ...other,
     };

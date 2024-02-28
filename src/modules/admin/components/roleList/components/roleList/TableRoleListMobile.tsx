@@ -1,25 +1,20 @@
-import clsx from 'clsx';
-import Button from 'components/Button';
-import { UseFieldArrayReturn } from 'react-hook-form';
-
-import FooterAdminList from './FooterRoleList';
 import { GetRoleListDTO } from '../../dto/get-roles.dto';
+import FooterAdminList from './FooterRoleList';
 
 interface Props {
   data: GetRoleListDTO;
   currPage: number;
-
+  countCheckedRoles: number;
   handleGetAdminId: (adminId: string) => void;
   handlePreviousPage: (previousPage: number | null) => void;
   handleSetPage: (page: number) => void;
   handleNextPage: (nextPage: number | null) => void;
 }
 
-export default function TableAdminListMobile({
+export default function TableRoleListMobile({
   data,
   currPage,
-
-  handleGetAdminId,
+  countCheckedRoles,
   handlePreviousPage,
   handleSetPage,
   handleNextPage,
@@ -141,6 +136,7 @@ export default function TableAdminListMobile({
 
         <div className="flex justify-center border-t-2 border-[#f2f2f2]">
           <FooterAdminList
+            countCheckedRoles={countCheckedRoles}
             data={data}
             currPage={currPage}
             handleNextPage={handleNextPage}

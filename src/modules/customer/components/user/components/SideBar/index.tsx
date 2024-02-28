@@ -32,7 +32,7 @@ const SideBar: React.FC<Props> = ({ user }) => {
             className={clsx(
               'hover:cursor-pointer hover:bg-primary-50 rounded-2xl [&>a]:px-3 [&>a]:py-2 text-primary',
               {
-                'text-red border border-primary  bg-primary-100 ':
+                'border border-primary !bg-primary-100 ':
                   `/user/${val.href}` === location.pathname ||
                   `/user/${val.href}` === `${location.pathname}/profile`,
               },

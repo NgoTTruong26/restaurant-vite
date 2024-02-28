@@ -1,6 +1,6 @@
 import { Button, ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import clsx from 'clsx';
-import Steps from 'components/Steps';
+import Steps, { Step } from 'components/Steps';
 import { AiOutlineUser } from 'react-icons/ai';
 import { BiPhone, BiTime } from 'react-icons/bi';
 import { BsCalendar2Date } from 'react-icons/bs';
@@ -33,7 +33,7 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
 
   return (
     <>
-      <ModalHeader className="flex flex-col gap-1 text-4xl text-center text-primary">
+      <ModalHeader className="flex flex-col gap-1 text-4xl text-center">
         My Order
       </ModalHeader>
       <ModalBody className="flex items-center">
@@ -44,11 +44,38 @@ const OrderDetails: React.FC<Props> = ({ handleCloseOrder, getBooking }) => {
             <div className="flex justify-center">
               <div className="w-4/5">
                 <Steps
-                  arrSteps={data.allBookingStatus.map((status) => ({
-                    label: status.name,
-                    step: status.step,
-                  }))}
+                  arrSteps={
+                    data.cancellation
+                      ? [
+                          ...data.allBookingStatus.reduce(
+                            (prevs: Step[], curr) => {
+                              if (curr.step <= data.bookingStatus.step) {
+                                return [
+                                  ...prevs,
+                                  {
+                                    label: curr.name,
+                                    step: curr.step,
+                                  },
+                                ];
+                              }
+
+                              return prevs;
+                            },
+                            [],
+                          ),
+                          {
+                            label: 'CANCELLED',
+                            step: data.bookingStatus.step + 1,
+                          },
+                        ]
+                      : data.allBookingStatus.map((status) => ({
+                          label: status.name,
+                          step: status.step,
+                        }))
+                  }
                   currentStep={data.bookingStatus.step}
+                  classProgress={data.cancellation ? 'before:!bg-primary' : ''}
+                  classItems={data.cancellation ? '!bg-primary' : ''}
                 />
               </div>
             </div>

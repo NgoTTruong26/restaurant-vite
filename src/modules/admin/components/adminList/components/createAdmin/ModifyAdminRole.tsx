@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 
+import useGetRoles from 'modules/admin/components/roleList/hooks/useGetRoles';
 import LoadingChildrenCategory from 'modules/customer/components/home/components/bookings/components/LoadingChildrenCategory';
 import { UseFieldArrayReturn } from 'react-hook-form';
 import { GrFormClose } from 'react-icons/gr';
 import { IInputDataCreateAdmin } from '.';
-import useGetRoles from '../../hooks/useGetRoles';
 
 interface Props {
   roles: UseFieldArrayReturn<IInputDataCreateAdmin, 'roles', 'id'>;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ModifyAdminRole: React.FC<Props> = ({ roles, handleCloseVisible }) => {
-  const { status, data } = useGetRoles();
+  const { status, data } = useGetRoles({});
 
   const handleChecked = (roleId: string, position: string) => {
     let index: number = 0;

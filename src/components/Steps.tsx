@@ -1,7 +1,7 @@
 import { Avatar } from '@nextui-org/react';
 import clsx from 'clsx';
 
-interface Step {
+export interface Step {
   step: number;
   label: string | number;
 }
@@ -11,9 +11,15 @@ interface Props {
   currentStep: number;
   classWrapp?: string;
   classItems?: string;
+  classProgress?: string;
 }
 
-export default function Steps({ arrSteps, currentStep }: Props) {
+export default function Steps({
+  arrSteps,
+  currentStep,
+  classProgress,
+  classItems,
+}: Props) {
   arrSteps.sort((next, curr) => {
     return next.step - curr.step;
   });
@@ -36,6 +42,7 @@ export default function Steps({ arrSteps, currentStep }: Props) {
               {
                 'before:!bg-primary': idx + 1 !== 1 && idx + 1 <= currentStep,
               },
+              classProgress,
             )}
           >
             <Avatar
@@ -46,6 +53,7 @@ export default function Steps({ arrSteps, currentStep }: Props) {
                 {
                   'bg-primary': idx + 1 <= currentStep,
                 },
+                classItems,
               )}
             />
             <span className="text-primary capitalize">

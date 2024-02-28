@@ -39,6 +39,9 @@ export default function OrderManagement() {
                     <ListBookingsTable bookingStatus={val.name} />
                   </Tab>
                 ))}
+                <Tab key="CANCELLED" title="CANCELLED">
+                  <ListBookingsTable cancellation />
+                </Tab>
               </Tabs>
             </div>
           )

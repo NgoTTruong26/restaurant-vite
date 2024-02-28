@@ -1,16 +1,14 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import debounce from 'lodash.debounce';
+import { useRef, useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import clsx from 'clsx';
-import HeaderRoleList from '../HeaderRoleList';
+import { IInputDeleteCheckedRole } from '../../dto/delete-role-list.dto';
 import useGetRoles from '../../hooks/useGetRoles';
+import HeaderRoleList from '../HeaderRoleList';
 import LoadingHeaderAdminList from '../LoadingHeaderRoleList';
 import LoadingRoleList from '../LoadingRoleList';
-import { useRef, useState } from 'react';
-import debounce from 'lodash.debounce';
-import { useNavigate } from 'react-router-dom';
-import useMediaQuery from 'hooks/useMediaQuery';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { IInputDeleteCheckedRole } from '../../dto/delete-role-list.dto';
 import TableRoleList from './TableRoleList';
 
 export default function RoleList() {
@@ -28,13 +26,16 @@ export default function RoleList() {
     ),
   );
 
-  const { data, status } = useGetRoles();
-
   const [searchCharacters, setSearchCharacters] = useState<string>();
 
   const { deleteCheckedRoles } = useDeleteCheckedRole();
 
-  const { isXsSmaller, isSmSmaller } = useMediaQuery();
+  /* const { isXsSmaller, isSmSmaller } = useMediaQuery(); */
+
+  const { data, status } = useGetRoles({
+    page: currPage,
+    search: searchCharacters,
+  });
 
   const debouncedSearch = useRef(
     debounce((value: string) => {
@@ -93,33 +94,34 @@ export default function RoleList() {
   ) : data ? (
     <>
       <HeaderRoleList totalRole={data?.total} handleSearch={debouncedSearch} />
-
-      {
-        !(isXsSmaller || isSmSmaller) ? (
-          <TableRoleList
-            deleteCheckedRoles={deleteCheckedRoles}
-            data={data}
-            currPage={currPage}
-            handleNextPage={handleNextPage}
-            handlePreviousPage={handlePreviousPage}
-            handleSetPage={handleSetPage}
-          />
-        ) : (
-          <></>
-        ) /* (
-        
-          <TableRoleListMobile
-          deleteCheckedAdmins={deleteCheckedAdmins}
+      <TableRoleList
+        deleteCheckedRoles={deleteCheckedRoles}
+        data={data}
+        currPage={currPage}
+        handleNextPage={handleNextPage}
+        handlePreviousPage={handlePreviousPage}
+        handleSetPage={handleSetPage}
+      />
+      {/* {!(isXsSmaller || isSmSmaller) ? (
+        <TableRoleList
+          deleteCheckedRoles={deleteCheckedRoles}
           data={data}
           currPage={currPage}
           handleNextPage={handleNextPage}
           handlePreviousPage={handlePreviousPage}
           handleSetPage={handleSetPage}
         />
-        
-        
-      ) */
-      }
+      ) : (
+        <TableRoleListMobile
+          deleteCheckedAdmins={deleteCheckedAdmins}
+          data={data}
+          currPage={currPage}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          handleSetPage={handleSetPage}
+          
+        />
+      )} */}
     </>
   ) : (
     <></>

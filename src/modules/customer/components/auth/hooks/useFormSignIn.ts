@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { formSchemaSignIn } from 'helpers/formSchemaSignIn';
 import { useForm } from 'react-hook-form';
 
+import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/features/auth/authSlice';
@@ -36,7 +37,8 @@ export function useFormSignIn() {
         );
 
         dispatch(setUser(user));
-        navigate('/', { replace: true });
+        navigate('/', { preventScrollReset: true });
+        toast.success('Sign in successfully');
       },
       onError() {
         dispatch(setUser(null));

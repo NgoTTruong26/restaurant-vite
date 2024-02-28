@@ -78,7 +78,7 @@ const AdminProfile: React.FC<Props> = ({ data }) => {
                       'max-sm:p-2 bg-[#ffffff]',
                     )}
                     src="https://lh5.googleusercontent.com/-mydS1cjmPIo/AAAAAAAAAAI/AAAAAAAAAco/ZYCSiYX747o/photo.jpg"
-                    alt="avatar"
+                    alt={data.fullName}
                   />
                 </div>
               </div>

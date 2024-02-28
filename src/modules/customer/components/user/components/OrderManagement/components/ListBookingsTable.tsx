@@ -9,11 +9,17 @@ import {
   Modal,
   ModalContent,
   Pagination,
+  Tooltip,
   useDisclosure,
 } from '@nextui-org/react';
 import clsx from 'clsx';
+import DialogModal from 'components/DialogModal';
+import { queryClient } from 'configs/queryClient';
 import OrderDetails from 'modules/customer/components/bookingLookup/components/OrderDetails';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { MdEventRepeat } from 'react-icons/md';
+import { useCancelBooking } from '../../services/cancelBooking';
 import { EBookingStatus } from '../dto/booking-status.dto';
 import useGetBookingsTable from '../hooks/useGetBookings';
 import LoadingListBooking from './LoadingListBooking';
@@ -21,20 +27,32 @@ import ReOrder from './ReOrder';
 
 interface Props {
   bookingStatus?: keyof typeof EBookingStatus;
+  cancellation?: boolean;
 }
 
-export default function ListBookingsTable({ bookingStatus }: Props) {
+export default function ListBookingsTable({
+  bookingStatus,
+  cancellation,
+}: Props) {
   const [page, setPage] = useState<number>(1);
 
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const [getBooking, setGetBooking] = useState<string>();
+  const [booking, setBooking] = useState<string>('');
 
   const disclosureOrderDetails = useDisclosure();
 
   const disclosureReOrder = useDisclosure();
 
-  const { data, status } = useGetBookingsTable({ page: page, bookingStatus });
+  const disclosureDialogcancelBooking = useDisclosure();
+
+  const { data, status } = useGetBookingsTable({
+    page: page,
+    status: bookingStatus,
+    cancellation,
+  });
+
+  const cancelBooking = useCancelBooking();
 
   useEffect(() => {
     if (data?.data) {
@@ -82,36 +100,57 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
                     </Card>
                   </div>
                   <div className="flex-1 w-full flex flex-col justify-between">
-                    <div className="flex flex-col space-y-1 max-sm:items-center">
-                      <div className="text-lg text-primary font-semibold">
-                        Set {booking.buffetMenu.name}K
+                    <div className="flex justify-between">
+                      <div className="flex flex-col space-y-1 max-sm:items-center">
+                        <div className="text-lg text-primary font-semibold">
+                          Set {booking.buffetMenu.name}K
+                        </div>
+                        <div className="flex">
+                          {booking.cancellation ? (
+                            <Chip
+                              size="sm"
+                              className={clsx('text-white bg-danger')}
+                            >
+                              CANCELLED
+                            </Chip>
+                          ) : (
+                            <Chip
+                              size="sm"
+                              className={clsx('text-white', {
+                                'bg-zinc-400':
+                                  booking.bookingStatus.name === 'PENDING',
+                                'bg-blue-300':
+                                  booking.bookingStatus.name === 'CONFIRMED',
+                                'bg-success':
+                                  booking.bookingStatus.name === 'SUCCESS',
+                              })}
+                            >
+                              {booking.bookingStatus.name}
+                            </Chip>
+                          )}
+                        </div>
+                        <div>
+                          Quantity:{' '}
+                          {booking.bookingsForChildren.reduce(
+                            (prevs: number, curr) => {
+                              return prevs + curr.quantity;
+                            },
+                            booking.numberPeople,
+                          )}
+                        </div>
                       </div>
-                      <div className="flex">
-                        <Chip
-                          size="sm"
-                          className={clsx('text-white', {
-                            'bg-zinc-400':
-                              booking.bookingStatus.name === 'PENDING',
-                            'bg-blue-300':
-                              booking.bookingStatus.name === 'CONFIRMED',
-                            'bg-success':
-                              booking.bookingStatus.name === 'SUCCESS',
-                            'bg-danger':
-                              booking.bookingStatus.name === 'CANCELLED',
-                          })}
-                        >
-                          {booking.bookingStatus.name}
-                        </Chip>
-                      </div>
-                      <div>
-                        Quantity:{' '}
-                        {booking.bookingsForChildren.reduce(
-                          (prevs: number, curr) => {
-                            return prevs + curr.quantity;
-                          },
-                          booking.numberPeople,
-                        )}
-                      </div>
+                      <Tooltip showArrow={true} content="Re-order">
+                        <Button
+                          variant="flat"
+                          color="primary"
+                          onClick={() => {
+                            setBooking(booking.id);
+                            disclosureReOrder.onOpen();
+                          }}
+                          children={<MdEventRepeat size={25} />}
+                          isIconOnly
+                        />
+                      </Tooltip>
                     </div>
                     <Divider className="my-4" />
                     <div className="w-full flex justify-between gap-3 max-md:flex-col">
@@ -136,21 +175,27 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
                         <Button
                           color="primary"
                           onClick={() => {
-                            setGetBooking(booking.id);
-                            disclosureReOrder.onOpen();
-                          }}
-                        >
-                          Re-order
-                        </Button>
-                        <Button
-                          color="primary"
-                          onClick={() => {
-                            setGetBooking(booking.id);
+                            setBooking(booking.id);
                             disclosureOrderDetails.onOpen();
                           }}
                         >
                           Order details
                         </Button>
+                        {!booking.cancellation ? (
+                          booking.bookingStatus.name !== 'SUCCESS' && (
+                            <Button
+                              color="primary"
+                              onClick={() => {
+                                disclosureDialogcancelBooking.onOpen();
+                                setBooking(booking.id);
+                              }}
+                            >
+                              Cancel Booking
+                            </Button>
+                          )
+                        ) : (
+                          <></>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -176,7 +221,7 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
         }}
       />
 
-      {getBooking && (
+      {booking && (
         <Modal
           backdrop="blur"
           isOpen={disclosureOrderDetails.isOpen}
@@ -185,15 +230,12 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
         >
           <ModalContent className="max-w-800 max-h-[80vh] overflow-y-auto">
             {(onClose) => (
-              <OrderDetails
-                handleCloseOrder={onClose}
-                getBooking={getBooking}
-              />
+              <OrderDetails handleCloseOrder={onClose} getBooking={booking} />
             )}
           </ModalContent>
         </Modal>
       )}
-      {getBooking && (
+      {booking && (
         <Modal
           backdrop="blur"
           isOpen={disclosureReOrder.isOpen}
@@ -202,11 +244,53 @@ export default function ListBookingsTable({ bookingStatus }: Props) {
         >
           <ModalContent className="max-w-800 max-h-[80vh] overflow-y-auto py-5">
             {(onClose) => (
-              <ReOrder handleCloseOrder={onClose} getBooking={getBooking} />
+              <ReOrder handleCloseOrder={onClose} getBooking={booking} />
             )}
           </ModalContent>
         </Modal>
       )}
+
+      <Modal
+        isDismissable={false}
+        isOpen={disclosureDialogcancelBooking.isOpen}
+        onClose={disclosureDialogcancelBooking.onClose}
+        className="max-w-600"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <DialogModal
+              textHeader={`Cancel Booking`}
+              body={
+                <span>
+                  Are you sure you want to Cancel Booking{' '}
+                  <strong>"{booking}"</strong>?
+                </span>
+              }
+              btnAcceptProps={{
+                children: 'Accept',
+                isLoading: cancelBooking.isLoading,
+                onClick: () =>
+                  cancelBooking.mutate(
+                    { idBooking: booking },
+                    {
+                      onSuccess: () => {
+                        queryClient
+                          .refetchQueries({
+                            queryKey: ['get_bookings_table'],
+                          })
+                          .then(() => {
+                            toast.success('Cancel booking successfully');
+                            onClose();
+                          });
+                      },
+                    },
+                  ),
+              }}
+              onClose={onClose}
+            />
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

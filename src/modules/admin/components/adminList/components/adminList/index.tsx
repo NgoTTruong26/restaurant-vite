@@ -1,15 +1,18 @@
-import useMediaQuery from 'hooks/useMediaQuery';
 import { useEffect } from 'react';
+import { UseFieldArrayReturn } from 'react-hook-form';
+import { IInputDeleteCheckedAdmin } from '../../dto/delete-admin-list.dto';
 import useGetAdminList from '../../hooks/useGetAdminList';
-import LoadingAdminList from '../LoadingAdminList';
-import { useDeleteCheckedAdmin } from '../hooks/useDeleteCheckedAdmin';
 import TableAdminList from './TableAdminList';
-import TableAdminListMobile from './TableAdminListMobile';
 
 interface Props {
   currPage: number;
   filterRole: string[];
   searchCharacters?: string;
+  deleteCheckedAdmins: UseFieldArrayReturn<
+    IInputDeleteCheckedAdmin,
+    'admins',
+    'id'
+  >;
   handleGetAdminId: (adminId: string) => void;
   handleSetTotalAdmins: (totalAdmins: number) => void;
   handleSetTotalPages: (totalPages: number | null) => void;
@@ -19,6 +22,7 @@ export default function AdminList({
   currPage,
   filterRole,
   searchCharacters,
+  deleteCheckedAdmins,
   handleGetAdminId,
   handleSetTotalAdmins,
   handleSetTotalPages,
@@ -41,16 +45,18 @@ export default function AdminList({
     }
   }, [data]);
 
-  const { deleteCheckedAdmins } = useDeleteCheckedAdmin();
-
-  const { isXsSmaller, isSmSmaller } = useMediaQuery();
+  /*  const { isXsSmaller, isSmSmaller } = useMediaQuery(); */
 
   console.log(data);
 
   return (
     <>
-      {isFetching && <LoadingAdminList />}
       {data ? (
+        <TableAdminList
+          deleteCheckedAdmins={deleteCheckedAdmins}
+          data={data}
+          handleGetAdminId={handleGetAdminId}
+        /> /* (
         <>
           {!(isXsSmaller || isSmSmaller) ? (
             <TableAdminList
@@ -66,6 +72,7 @@ export default function AdminList({
             />
           )}
         </>
+      ) */
       ) : (
         <></>
       )}

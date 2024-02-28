@@ -100,7 +100,7 @@ const TableAdminList: React.FC<Props> = ({ data, deleteCheckedAdmins }) => {
                 ' [&>th]:font-semibold [&>th]:p-3 [&>th]:bg-zinc-300 [&>th]:uppercase [&>th]:text-start [&>*:first-child]:rounded-l-xl [&>*:last-child]:rounded-r-xl overflow-hidden',
               )}
             >
-              <th className="!text-center">
+              <th className="flex justify-center h-full">
                 <Checkbox
                   size="md"
                   onValueChange={handleCheckedAll}

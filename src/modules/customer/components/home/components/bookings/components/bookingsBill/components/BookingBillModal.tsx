@@ -2,6 +2,7 @@ import { Button, ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import clsx from 'clsx';
 import { CreateBookingDTO } from 'modules/customer/components/home/components/bookings/dto/booking.dto';
 import React from 'react';
+import toast from 'react-hot-toast';
 import { AiOutlineUser } from 'react-icons/ai';
 import { BiPhone, BiTime } from 'react-icons/bi';
 import { BsCalendar2Date } from 'react-icons/bs';
@@ -34,12 +35,17 @@ const BookingBillModal: React.FC<Props> = ({
   );
 
   const onSubmit = (dataBooking: CreateBookingDTO) => {
-    createBooking.mutate(dataBooking);
+    createBooking.mutate(dataBooking, {
+      onSuccess: () => {
+        toast.success('Create booking successfully');
+        handleCloseBill();
+      },
+    });
   };
 
   return (
     <>
-      <ModalHeader className="flex flex-col gap-1 text-4xl text-center text-primary">
+      <ModalHeader className="flex flex-col gap-1 text-4xl text-center">
         My Order
       </ModalHeader>
       <ModalBody>
@@ -276,7 +282,11 @@ const BookingBillModal: React.FC<Props> = ({
         <Button color="danger" variant="light" onPress={handleCloseBill}>
           Close
         </Button>
-        <Button color="danger" onPress={() => onSubmit(dataBooking)}>
+        <Button
+          isLoading={createBooking.isLoading}
+          color="danger"
+          onPress={() => onSubmit(dataBooking)}
+        >
           Confirm
         </Button>
       </ModalFooter>

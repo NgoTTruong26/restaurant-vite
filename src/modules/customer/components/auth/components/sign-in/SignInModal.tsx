@@ -1,11 +1,7 @@
 import { Button, Checkbox, ModalBody, ModalFooter } from '@nextui-org/react';
 import Field from 'components/field';
-import { useEffect } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { FaLock, FaUser } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { RootState } from 'redux/app/store';
 import { useFormSignIn } from '../../hooks/useFormSignIn';
 
 interface Props {
@@ -13,25 +9,7 @@ interface Props {
 }
 
 export default function SignInModal({ onClose }: Props) {
-  const navigate = useNavigate();
-
-  const { methods, onSubmit } = useFormSignIn();
-
-  const { value: user, status: statusRedux } = useSelector(
-    (state: RootState) => state.auth,
-  );
-
-  useEffect(() => {
-    if (user) {
-      return navigate('/');
-    }
-  }, [user]);
-
-  console.log(user);
-
-  if (user || statusRedux === 'loading') {
-    return <div>Loading</div>;
-  }
+  const { methods, onSubmit, isLoading } = useFormSignIn();
 
   return (
     <FormProvider {...methods}>
@@ -81,7 +59,7 @@ export default function SignInModal({ onClose }: Props) {
           <Button color="danger" variant="flat" onPress={onClose}>
             Close
           </Button>
-          <Button type="submit" color="primary">
+          <Button isLoading={isLoading} type="submit" color="primary">
             Sign in
           </Button>
         </ModalFooter>

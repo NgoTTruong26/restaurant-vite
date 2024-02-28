@@ -110,7 +110,7 @@ export default function SignUpModal({ onClose }: Props) {
             Close
           </Button>
           <Button type="submit" color="primary">
-            Sign in
+            Sign up
           </Button>
         </ModalFooter>
       </form>

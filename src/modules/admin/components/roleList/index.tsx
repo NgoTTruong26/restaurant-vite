@@ -9,14 +9,9 @@ export default function RoleManagement() {
       </div>
 
       <div className="flex flex-col tab-border-none">
-        <div className="tabs [&>.tab-active]:shadow-lg">
-          <a className="tab tab-lg tab-lifted tab-active">Large</a>
-          <a className="tab tab-lg tab-lifted">Largeádasdasdasd</a>
-          <a className="tab tab-lg tab-lifted">Large</a>
-        </div>
         <div
           className={clsx(
-            'flex flex-col w-full h-full min-h-[75vh]',
+            'flex flex-col w-full h-full min-h-[75vh] p-8',
             'rounded-tl-none rounded-lg bg-[#ffffff] shadow-lg',
             ' overflow-x-auto whitespace-nowrap ',
             'max-md:max-h-[75vh]',

@@ -4,7 +4,7 @@ import { IoLocationOutline } from 'react-icons/io5';
 
 export default function Column1() {
   return (
-    <div className="flex-1 flex flex-col px-4 font-medium text-primary">
+    <div className="flex-1 flex flex-col px-4 font-medium">
       <div className="flex-col pb-5 border-b border-black border-dashed">
         <div className="font-medium">Buffet Restaurant T12</div>
         <div className="max-w-[69px] w-full pt-2">

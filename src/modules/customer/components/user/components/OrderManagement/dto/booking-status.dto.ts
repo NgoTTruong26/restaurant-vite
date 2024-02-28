@@ -2,7 +2,6 @@ export enum EBookingStatus {
   PENDING,
   CONFIRMED,
   SUCCESS,
-  CANCELLED,
 }
 
 export interface GetBookingStatusDTO {

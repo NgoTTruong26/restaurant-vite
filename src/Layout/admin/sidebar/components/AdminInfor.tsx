@@ -15,8 +15,6 @@ const AdminInfor: React.FC<Props> = ({
   handleSetSidebarMini,
   isSidebarMini,
 }) => {
-  console.log(isSidebarMini);
-
   const admin = useSelector((state: RootState) => state.setAdmin.value);
 
   const { isLgSmaller, isXlSmaller } = useMediaQuery();

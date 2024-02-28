@@ -2,9 +2,9 @@ import clsx from 'clsx';
 
 import { GrFormClose } from 'react-icons/gr';
 
+import useGetRoles from 'modules/admin/components/roleList/hooks/useGetRoles';
 import LoadingChildrenCategory from 'modules/customer/components/home/components/bookings/components/LoadingChildrenCategory';
 import { useEffect } from 'react';
-import useGetRoles from '../../hooks/useGetRoles';
 import { useFormModifyAdminRole } from '../hooks/useFormModifyAdminRole';
 import useUpdateAdminRoles from '../hooks/useUpdateAdminRoles';
 
@@ -27,7 +27,7 @@ const ModifyAdminRole: React.FC<Props> = ({
 }) => {
   const { methods, modifyAdminRole } = useFormModifyAdminRole();
 
-  const { status, data } = useGetRoles();
+  const { status, data } = useGetRoles({});
 
   const { mutate } = useUpdateAdminRoles({
     currPage,

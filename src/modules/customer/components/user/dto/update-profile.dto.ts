@@ -2,6 +2,7 @@ import { GetGenderDTO } from '../components/accountInformation/dto/get-gender.dt
 
 export interface IUpdateProfileDTO {
   id: string;
+  avatarUrl?: string | null;
   fullName: string;
   day?: string | null;
   month?: string | null;

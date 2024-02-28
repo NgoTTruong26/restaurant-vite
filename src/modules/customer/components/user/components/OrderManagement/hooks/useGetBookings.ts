@@ -8,19 +8,28 @@ import { GetBookingListResponse } from '../dto/get-booking-auth.dto';
 interface GetBookingTableListRequest {
   take?: number;
   page: number;
-  bookingStatus?: keyof typeof EBookingStatus;
+  cancellation?: boolean;
+  status?: keyof typeof EBookingStatus;
 }
 
-export async function getBookingTableList(
-  { take = 5, page, bookingStatus }: GetBookingTableListRequest,
-  signOut: () => void,
-) {
+export async function getBookingTableList({
+  take = 5,
+  page,
+  status,
+  cancellation,
+}: GetBookingTableListRequest) {
   try {
     return (
       await apiClient.get<IAxiosResponse<GetBookingListResponse>>(
-        `/booking-table/get-bookings-table?page=${page}&take=${take}${
-          bookingStatus ? '&status=' + bookingStatus : ''
-        }`,
+        `/booking-table/get-bookings-table`,
+        {
+          params: {
+            page,
+            take,
+            status,
+            cancellation,
+          },
+        },
       )
     ).data;
   } catch (error) {
@@ -32,11 +41,12 @@ export async function getBookingTableList(
 export default function useGetBookingTableList({
   take = 5,
   page,
-  bookingStatus,
+  status,
+  cancellation,
 }: GetBookingTableListRequest) {
   return useQuery({
-    queryKey: [`get_bookings_table`, take, page, bookingStatus],
+    queryKey: [`get_bookings_table`, take, page, status, cancellation],
     queryFn: async () =>
-      getBookingTableList({ take, page, bookingStatus }, () => {}),
+      getBookingTableList({ take, page, status, cancellation }),
   });
 }

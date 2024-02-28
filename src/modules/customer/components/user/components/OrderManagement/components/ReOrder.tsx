@@ -87,7 +87,7 @@ const ReOrder: React.FC<Props> = ({ getBooking, handleCloseOrder }) => {
 
   return (
     <>
-      <ModalHeader className="flex flex-col gap-1 text-4xl text-center text-primary">
+      <ModalHeader className="flex flex-col gap-1 text-4xl text-center">
         ReOrder
       </ModalHeader>
 

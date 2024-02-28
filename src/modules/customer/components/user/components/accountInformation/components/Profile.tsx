@@ -5,9 +5,15 @@ import Years from 'components/Date/Years';
 import Field from 'components/field';
 
 import { Button } from '@nextui-org/react';
+import { AxiosResponse } from 'axios';
+import LoadingIcons from 'components/LoadingIcons';
 import { queryClient } from 'configs/queryClient';
+import { accept, maxSize } from 'constants/upload';
+import useUpload from 'hooks/useUpload';
+import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { setUser } from 'redux/features/auth/authSlice';
 import { GetGenderDTO } from '../dto/get-gender.dto';
 import { GetUserProfileDTO } from '../dto/get-user.dto';
 import { useFormUpdateProfile } from '../hooks/useFormUpdateProfile';
@@ -20,6 +26,7 @@ interface Props {
 
 export interface IInputProfileDTO {
   fullName: string;
+  avatarUrl?: string | null;
   day?: string | null;
   month?: string | null;
   year?: string | null;
@@ -27,6 +34,8 @@ export interface IInputProfileDTO {
   nationality: string | null;
 }
 const Profile: React.FC<Props> = ({ data }) => {
+  const [avatarUrl, setAvatarUrl] = useState<string>(data.avatarUrl || '');
+
   const genders = useGetGenders();
 
   const { methods } = useFormUpdateProfile({
@@ -43,7 +52,20 @@ const Profile: React.FC<Props> = ({ data }) => {
 
   const dispatch = useDispatch();
 
-  const { mutate } = useUpdateProfile();
+  const { mutate, isLoading: isLoadingUpdate } = useUpdateProfile();
+
+  const onSuccess = (data: AxiosResponse<string>) => {
+    setAvatarUrl(data.data);
+    methods.setValue('avatarUrl', data.data, { shouldValidate: true });
+    return data.data;
+  };
+
+  const { getRootProps, isLoading: isPendingUpload } = useUpload<string>({
+    url: '/upload/image',
+    accept,
+    maxSize,
+    onSuccess,
+  });
 
   const onSubmit = (input: IInputProfileDTO) => {
     mutate(
@@ -83,19 +105,27 @@ const Profile: React.FC<Props> = ({ data }) => {
               >
                 <div className=" flex w-full justify-center max-sm:bg-gradient-to-b from-[#31b6e7] from-60% to-transparent to-60%">
                   <div
+                    {...getRootProps()}
                     className={clsx(
                       'flex justify-center h-28 min-w-[112px]',
                       'max-sm:h-40 max-sm:min-w-[140px]',
                     )}
                   >
-                    <img
-                      className={clsx(
-                        'w-full h-full rounded-full ',
-                        'max-sm:p-2 bg-[#ffffff]',
-                      )}
-                      src="https://lh5.googleusercontent.com/-mydS1cjmPIo/AAAAAAAAAAI/AAAAAAAAAco/ZYCSiYX747o/photo.jpg"
-                      alt="avatar"
-                    />
+                    {isPendingUpload ? (
+                      <LoadingIcons />
+                    ) : (
+                      <img
+                        className={clsx(
+                          'w-full h-full rounded-full ',
+                          'max-sm:p-2 bg-[#ffffff]',
+                        )}
+                        src={
+                          avatarUrl ||
+                          'https://lh5.googleusercontent.com/-mydS1cjmPIo/AAAAAAAAAAI/AAAAAAAAAco/ZYCSiYX747o/photo.jpg'
+                        }
+                        alt="avatar"
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="pl-4 col-span-3 flex items-center w-full">
@@ -199,6 +229,7 @@ const Profile: React.FC<Props> = ({ data }) => {
                 type="submit"
                 color="primary"
                 className="w-full max-w-[250px]"
+                isLoading={isLoadingUpdate || isPendingUpload}
               >
                 Submit
               </Button>

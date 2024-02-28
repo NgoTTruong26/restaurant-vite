@@ -1,6 +1,8 @@
-import { Button } from '@nextui-org/react';
+import { Checkbox, Tooltip } from '@nextui-org/react';
 import clsx from 'clsx';
 import { UseFieldArrayReturn } from 'react-hook-form';
+import { CiEdit } from 'react-icons/ci';
+import { ImBin } from 'react-icons/im';
 import { IInputDeleteCheckedRole, IRole } from '../../dto/delete-role-list.dto';
 import { GetRoleListDTO } from '../../dto/get-roles.dto';
 import FooterRoleList from './FooterRoleList';
@@ -49,6 +51,14 @@ const TableRoleList: React.FC<Props> = ({
     });
   };
 
+  const hasChecked: () => boolean = () => {
+    if (data) {
+      return data.roles.some((role) => arrayRole.includes(role.id));
+    }
+
+    return false;
+  };
+
   const isCheckedAll: () => boolean = () => {
     if (data) {
       return data.roles.every((role) => arrayRole.includes(role.id));
@@ -90,92 +100,90 @@ const TableRoleList: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex-1 flex flex-col justify-between overflow-x-auto overflow-y-auto">
-        <table className="flex-1 table w-full">
-          {/* head */}
-          <thead>
-            <tr
-              className={clsx(
-                '[&>th]:bg-[#ffffff] [&>th]:border-y-2 [&>th]:border-[#f2f2f2] [&>th]:uppercase',
-              )}
-            >
-              <th>
-                <input
-                  onChange={() => {
-                    handleCheckedAll();
-                  }}
-                  checked={isCheckedAll()}
-                  type="checkbox"
-                  className="checkbox"
-                />
-              </th>
-              <th>Name Position</th>
-              <th>Creator</th>
-              <th>Time Create</th>
-              <th>Number Employee</th>
-              <th className="w-28">
-                <div className="relative dropdown dropdown-hover">
-                  <label
-                    tabIndex={0}
-                    className="btn btn-active btn-ghost w-[90px]"
-                  >
-                    Action
-                  </label>
-                  <ul className="z-40 absolute right-0 p-2 menu dropdown-content bg-base-100 rounded-box shadow-lg min-w-[90px] bg-[#ffffff]">
-                    <li
-                      /* onClick={() => onHandleDeleteCheckedRole()} */
-                      className="w-full rounded-lg py-3 px-3 hover:bg-[#dfdfe0] hover:cursor-pointer text-center active:bg-[#d6d6d6]"
-                    >
-                      Delete Checked
-                    </li>
-                    <li className="w-full rounded-lg py-3 px-3 hover:bg-[#dfdfe0] hover:cursor-pointer text-center active:bg-[#d6d6d6]">
-                      Delete All Role
-                    </li>
-                  </ul>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            {data.roles.map((role, idx) => (
-              <tr key={idx}>
-                <th>
-                  <input
-                    onChange={() => handleChecked(role.id)}
-                    checked={deleteCheckedRoles.fields
-                      .map((role) => role.roleId)
-                      .includes(role.id)}
-                    type="checkbox"
-                    className="checkbox"
+      <div className="flex flex-col gap-5 overflow-hidden">
+        <div className=" bg-zinc-100 !p-4 w-full overflow-x-auto rounded-xl">
+          <table className={clsx('table w-full h-full border-collapse ')}>
+            {/* head */}
+            <thead className="sticky top-0 z-30 shadow-sm rounded-xl">
+              <tr
+                className={clsx(
+                  ' [&>th]:font-semibold [&>th]:p-3 [&>th]:bg-zinc-300 [&>th]:uppercase [&>th]:text-start [&>*:first-child]:rounded-l-xl [&>*:last-child]:rounded-r-xl overflow-hidden',
+                )}
+              >
+                <th className="flex justify-center h-full">
+                  <Checkbox
+                    size="md"
+                    onValueChange={handleCheckedAll}
+                    isSelected={isCheckedAll()}
+                    isIndeterminate={hasChecked() && !isCheckedAll()}
                   />
                 </th>
-                <td>{role.position}</td>
-                <td>Male</td>
-                <td>hi</td>
-                <td>hehe</td>
-
-                <th colSpan={1}>
-                  <Button
-                    /* onClick={() => handleGetRoleId(role.id)} */
-                    className="capitalize w-[90px]"
-                  >
-                    Details
-                  </Button>
+                <th>Name Position</th>
+                <th>Creator</th>
+                <th>Time Create</th>
+                <th>Time Update</th>
+                <th className="w-28">
+                  <div className="relative dropdown dropdown-hover">
+                    <label
+                      tabIndex={0}
+                      className="btn btn-active btn-ghost w-[90px]"
+                    >
+                      Action
+                    </label>
+                  </div>
                 </th>
               </tr>
-            ))}
-          </tbody>
-          {/* foot */}
-        </table>
-        <FooterRoleList
-          data={data}
-          currPage={currPage}
-          handleNextPage={handleNextPage}
-          handlePreviousPage={handlePreviousPage}
-          handleSetPage={handleSetPage}
-        />
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              {data.roles.map((role, idx) => (
+                <tr
+                  key={idx}
+                  className="[&>th]:px-3 [&>th]:py-3 [&>td]:px-3 [&>td]:py-3"
+                >
+                  <th>
+                    <Checkbox
+                      size="md"
+                      onValueChange={() => handleChecked(role.id)}
+                      isSelected={deleteCheckedRoles.fields
+                        .map((role) => role.roleId)
+                        .includes(role.id)}
+                    />
+                  </th>
+                  <td className="uppercase">{role.position}</td>
+                  <td>Male</td>
+                  <td>hi</td>
+                  <td>hehe</td>
+
+                  <th>
+                    <div className="relative flex items-center gap-3">
+                      <Tooltip content="Edit user">
+                        <span className="text-xl cursor-pointer active:opacity-50">
+                          <CiEdit />
+                        </span>
+                      </Tooltip>
+                      <Tooltip color="danger" content="Delete user">
+                        <span className="text-xl text-danger cursor-pointer active:opacity-50">
+                          <ImBin />
+                        </span>
+                      </Tooltip>
+                    </div>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+            {/* foot */}
+          </table>
+        </div>
       </div>
+      <FooterRoleList
+        data={data}
+        currPage={currPage}
+        countCheckedRoles={deleteCheckedRoles.fields.length}
+        handleNextPage={handleNextPage}
+        handlePreviousPage={handlePreviousPage}
+        handleSetPage={handleSetPage}
+      />
     </>
   );
 };
